@@ -210,6 +210,30 @@ def _gravar_e_mostrar_progresso(
     return arquivo_base
 
 
+def _salvar_bolao_individual(path: str, bolao: dict, cfg, mod_esperada) -> bool:
+    """Adiciona um unico bolao ao arquivo JSON existente (append incremental).
+    Se o arquivo nao existe, cria um novo com este bolao.
+    Evita duplicatas por hash_bolao."""
+    import hashlib
+    existente = []
+    if os.path.isfile(path):
+        try:
+            with open(path, encoding='utf-8') as f:
+                existente = json.load(f) or []
+        except Exception:
+            existente = []
+    # Checar duplicata por hash
+    h_novo = hashlib.md5(json.dumps(bolao, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:12]
+    for b in existente:
+        h_ex = hashlib.md5(json.dumps(b, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:12]
+        if h_ex == h_novo:
+            return False  # ja existe, nao duplica
+    existente.append(bolao)
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(existente, f, ensure_ascii=False, indent=2)
+    return True
+
+
 def _criar_arquivo_sessao_inicial(arquivo_base: str) -> str:
     """Cria JSON vazio na pasta — visivel no Explorer logo apos ENTER."""
     path = _path_json_sessao(arquivo_base)
@@ -644,15 +668,29 @@ def _filtrar_boloes_modalidade(boloes: list, mod_esperada) -> tuple[list, int]:
 
 
 def _modalidade_extracao(driver=None):
-    """Terminal (M1–M9) forçado, senão modalidade lida no site após Aplicar."""
+    """Terminal (M1–M9) forçado, senão modalidade lida no site após Aplicar.
+    Se falhar, pergunta no terminal para o usuario digitar manualmente."""
     if ROTULO_ARQUIVO:
         _out(f'  Parser terminal (forcado): {ROTULO_ARQUIVO.label}')
         return ROTULO_ARQUIVO
     if driver is not None:
         mod = ler_modalidade_aplicada_site(driver, _out)
         if mod:
+            _out(f'  Modalidade detectada no site: {mod.label}')
             return mod
-    _out('  Modalidade: nao detectada no site — use M6 etc. no terminal antes do [1].')
+    # Fallback: perguntar no terminal
+    _out('  Modalidade: nao detectada automaticamente no site.')
+    _out('  Exemplos: M1 (Mega-Sena), M2 (Quina), M6 (Dia de Sorte), QSJ, DSP')
+    try:
+        raw = input('  Digite a modalidade (M1-M9 / QSJ / DSP / nome): ').strip()
+    except EOFError:
+        return None
+    if raw:
+        mod = resolver_modalidade_menu(raw)
+        if mod:
+            _out(f'  [OK] Modalidade: {mod.label}')
+            return mod
+    _out('  Modalidade invalida — extracao cancelada.')
     return None
 
 
@@ -950,9 +988,24 @@ def _capturar_pagina_atual(
         )
         painel['arquivo_base'] = arquivo_prog
 
+    # Salvar cada bolao individualmente assim que e capturado (incremental)
+    _boloes_salvos_pagina: list = []
+
+    def _on_bolao_capturado(bolao: dict):
+        """Chamado a cada bolao capturado — salva imediatamente no arquivo."""
+        if not arquivo_base:
+            return
+        bolao['pagina'] = pagina
+        path = _path_json_sessao(arquivo_base)
+        if _salvar_bolao_individual(path, bolao, cfg, mod_esperada):
+            _boloes_salvos_pagina.append(bolao)
+            kb = _kb_arquivo(path)
+            _out(f'  [+] {bolao.get("nome_loterica", "?")[:25]} | pag {pagina} | {kb:.1f} KB')
+
     novos = detalhar_pagina_ate_esperado(
         driver, cfg, parser_slug, hashes, n_esperado, codigos, print,
         on_progresso=_on_progresso_detalhar if arquivo_base else None,
+        on_bolao=_on_bolao_capturado if arquivo_base else None,
     )
 
     if not novos and n_esperado == 0:
@@ -1177,10 +1230,41 @@ def _loop_extracao_paginas(
     return subset_final, hashes, painel, arquivo_base
 
 
+def _salvar_boloes_incremental(
+    novos_boloes: list,
+    arquivo_base: str,
+    cfg,
+    mod_esperada,
+) -> int:
+    """Salva cada bolao individualmente no arquivo JSON (append).
+    Retorna quantos foram adicionados (nao duplicatas)."""
+    if not novos_boloes:
+        return 0
+    path = _path_json_sessao(arquivo_base)
+    added = 0
+    for b in novos_boloes:
+        if _salvar_bolao_individual(path, b, cfg, mod_esperada):
+            added += 1
+    if added:
+        kb = _kb_arquivo(path)
+        total = 0
+        try:
+            with open(path, encoding='utf-8') as f:
+                total = len(json.load(f) or [])
+        except Exception:
+            pass
+        _out(f'  [INCREMENTAL] +{added} bolao(oes) salvo(s) | total: {total} | {kb:.1f} KB')
+    return added
+
+
 def _perguntar_concurso(mod_label: str) -> str:
-    """Pergunta o concurso ao usuario. ENTER = detecta automaticamente."""
+    """Pergunta o concurso ao usuario. ENTER = detecta automaticamente.
+    O nome do arquivo sera: boloes_{concurso}_{modalidade}.json
+    Exemplo: boloes_3020_mega-sena.json"""
     _out(f'\n  Modalidade detectada: {mod_label}')
-    _out('  Digite o numero do concurso (ex.: 3021) ou ENTER para detectar automaticamente:')
+    _out('  O nome do arquivo sera: boloes_{concurso}_{modalidade}.json')
+    _out('  Exemplo: boloes_3020_mega-sena.json')
+    _out('  Digite o numero do concurso (ex.: 3020) ou ENTER para detectar automaticamente:')
     try:
         resp = input('  Concurso: ').strip()
     except EOFError:
@@ -1190,6 +1274,7 @@ def _perguntar_concurso(mod_label: str) -> str:
         digits = re.sub(r'\D', '', resp)
         if digits:
             _out(f'  [OK] Concurso informado: {digits}')
+            _out(f'  [OK] Arquivo: boloes_{digits}_{mod_label.lower().replace(" ", "-")}.json')
             return digits
     _out('  Concurso sera detectado automaticamente dos boloes.')
     return ''
@@ -1224,18 +1309,18 @@ def extrair_automatico() -> Tuple[list, Optional[str]]:
 
     mod = _modalidade_extracao(driver)
     if not mod:
-        _out('\n  >>> EXTRAÇÃO CANCELADA: modalidade não detectada no site.')
+        _out('\n  >>> EXTRAÇÃO CANCELADA: modalidade não detectada.')
         _out('  No site: clique no card Dia de Sorte, filtre Aldeota, Aplicar, ENTER aqui.')
-        _out('  Ou force antes do [1]: M6 (Dia de Sorte) no terminal.')
+        _out('  Ou forçe antes do [1]: M6 (Dia de Sorte) no terminal.')
         return [], None
 
     lot_txt = 'QUALQUER' if cfg.qualquer_loterica else (cfg.termo or '(manual)')
-    _out(f'\n  === CONFIRMADO (site) ===')
-    _out(f'  Lotérica alvo : {lot_txt}')
+    _out(f'\n  === CONFIRMADO ===')
+    _out(f'  Loterica alvo : {lot_txt}')
     _out(f'  Modalidade    : {mod.label}')
     _out(f'  Dezenas filtro: {cfg.qtd_dezenas or "qualquer"}')
 
-    # Pergunta o concurso para montar o nome do arquivo
+    # Pergunta o concurso para montar o nome do arquivo ANTES de extrair
     concurso_digitado = _perguntar_concurso(mod.label)
 
     mod_slug = mod.slug if mod else 'boloes'
@@ -1245,9 +1330,10 @@ def extrair_automatico() -> Tuple[list, Optional[str]]:
     print('\n' + '=' * 60)
     print('  EXTRACAO AUTOMATICA')
     print('=' * 60)
+    print(f'  Arquivo: {arquivo_base}.json')
     print('  Pagina 1 = filtro que voce aplicou no site')
     print('  Paginas 2, 3… = Seguinte automatico ate botao desabilitar')
-    print('  Sem lotérica no filtro = baixa de TODOS os estados da modalidade')
+    print(f'  Salvamento: incremental (cada bolao salvo imediatamente)')
     print(LEGENDA_API)
 
     boloes, _, _, ab = _loop_extracao_paginas(

@@ -12,6 +12,7 @@ Endpoint exemplo (path Base64):
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import time
@@ -1354,16 +1355,18 @@ def detalhar_pagina_ate_esperado(
     log_fn: Optional[Callable[[str], None]] = None,
     max_rodadas: int = 15,
     on_progresso: Optional[Callable[[int, int], None]] = None,
+    on_bolao: Optional[Callable[[Dict[str, Any]], None]] = None,
 ) -> List[Dict[str, Any]]:
     """
     Dispara detalhar-bolao de todos os cards da pagina (sem popup visivel).
     on_progresso(n_ok, meta): chamado quando novos boloes entram nas capturas.
+    on_bolao(bolao): chamado a cada bolao individual capturado (para salvamento incremental).
     """
     _modo_silencioso(driver, True)
     try:
         return _detalhar_pagina_ate_esperado_impl(
             driver, filtro_cfg, parser_slug, hashes_vistos, n_esperado,
-            codigos_pagina, log_fn, max_rodadas, on_progresso,
+            codigos_pagina, log_fn, max_rodadas, on_progresso, on_bolao,
         )
     finally:
         _modo_silencioso(driver, False)
@@ -1379,12 +1382,14 @@ def _detalhar_pagina_ate_esperado_impl(
     log_fn: Optional[Callable[[str], None]] = None,
     max_rodadas: int = 15,
     on_progresso: Optional[Callable[[int, int], None]] = None,
+    on_bolao: Optional[Callable[[Dict[str, Any]], None]] = None,
 ) -> List[Dict[str, Any]]:
     hashes_inicio = len(hashes_vistos)
     boloes_novos: List[Dict[str, Any]] = []
     estagnacao = 0
     meta = n_esperado
     ultimo_prog = 0
+    _boloes_vistos_rodada: set = set()
 
     def _notificar_progresso() -> None:
         nonlocal ultimo_prog
@@ -1396,11 +1401,29 @@ def _detalhar_pagina_ate_esperado_impl(
             except Exception:
                 pass
 
+    def _notificar_bolao(bolao: dict) -> None:
+        """Chama on_bolao para cada bolao novo capturado nesta pagina."""
+        if not on_bolao:
+            return
+        try:
+            h = json.dumps(bolao, sort_keys=True, ensure_ascii=False)
+            h = hashlib.md5(h.encode()).hexdigest()[:12]
+            if h in _boloes_vistos_rodada:
+                return
+            _boloes_vistos_rodada.add(h)
+            on_bolao(bolao)
+        except Exception:
+            pass
+
     for rodada in range(1, max_rodadas + 1):
         chunk = coletar_boloes_das_capturas(
             driver, hashes_vistos, log_fn, filtro_cfg, parser_slug, filtrar_dezenas=False,
         )
         boloes_novos.extend(chunk)
+        # Notificar cada bolao individual (salvamento incremental)
+        if chunk and on_bolao:
+            for b in chunk:
+                _notificar_bolao(b)
         n_ok_pagina = len(hashes_vistos) - hashes_inicio
         if chunk:
             _notificar_progresso()
