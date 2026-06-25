@@ -188,7 +188,7 @@ def parse_modalidades_input(raw: str) -> List[ModalidadeBolaoConfig]:
     return resultado
 
 
-def cfg_qualquer_loterica(qtd_dezenas: Optional[int] = 15) -> FiltroLotericaConfig:
+def cfg_qualquer_loterica(qtd_dezenas: Optional[int] = None) -> FiltroLotericaConfig:
     """Todas as lotéricas da lista/página — filtra só pela qtd. de dezenas por aposta."""
     return FiltroLotericaConfig(
         termo='',
@@ -197,6 +197,36 @@ def cfg_qualquer_loterica(qtd_dezenas: Optional[int] = 15) -> FiltroLotericaConf
         qtd_dezenas=qtd_dezenas,
         varrer_dezenas=False,
         qualquer_loterica=True,
+    )
+
+
+def ajustar_qtd_dezenas_modalidade(
+    cfg: FiltroLotericaConfig,
+    mod: Optional[ModalidadeBolaoConfig],
+    log_fn: LogFn = None,
+) -> FiltroLotericaConfig:
+    """Ignora qtd. dezenas do site se estiver fora da faixa da modalidade ativa."""
+    if not cfg or not mod or cfg.qtd_dezenas is None:
+        return cfg
+    try:
+        n = int(cfg.qtd_dezenas)
+    except (TypeError, ValueError):
+        return cfg
+    c = mod.cfg
+    if c.min_dez <= n <= c.max_dez:
+        return cfg
+    _log(
+        f'  [FILTRO] Dezenas {n} ignoradas — fora da faixa de {mod.label} '
+        f'({c.min_dez}–{c.max_dez}). Usando qualquer qtd. nesta modalidade.',
+        log_fn,
+    )
+    return FiltroLotericaConfig(
+        termo=cfg.termo,
+        codigo=cfg.codigo,
+        nome=cfg.nome,
+        qtd_dezenas=None,
+        varrer_dezenas=cfg.varrer_dezenas,
+        qualquer_loterica=cfg.qualquer_loterica,
     )
 
 
@@ -490,6 +520,22 @@ def bolao_atende_filtro(dados: dict, cfg: FiltroLotericaConfig) -> bool:
     if cfg.qtd_dezenas is None:
         return True
     return bolao_apostas_todas_com_n_dezenas(dados, cfg.qtd_dezenas)
+
+
+def bolao_atende_filtro_coleta(
+    dados: dict,
+    cfg: FiltroLotericaConfig,
+    *,
+    filtrar_dezenas: bool = True,
+) -> bool:
+    """Coleta API em tempo real: filtrar_dezenas=False pula só qtd. de dezenas (filtro final na página)."""
+    if not cfg:
+        return True
+    if not filtrar_dezenas:
+        if cfg.qualquer_loterica or (not (cfg.termo or '').strip() and not cfg.codigo):
+            return True
+        return bolao_corresponde_loterica(dados, cfg)
+    return bolao_atende_filtro(dados, cfg)
 
 
 def _ler_qtd_dezenas_do_site(driver) -> Optional[int]:
@@ -803,17 +849,15 @@ def _ler_modalidade_card_ativo_site(driver) -> Optional[ModalidadeBolaoConfig]:
 
 def ler_modalidade_aplicada_site(driver, log_fn: LogFn = None) -> Optional[ModalidadeBolaoConfig]:
     """
-    Le a modalidade ATIVA no site (prioridade: lista API > angular > card > DOM).
-    Deve ser chamada APOS login + modalidade + Aplicar, antes de limpar capturas.
+    Le a modalidade ATIVA no site (prioridade: card > angular > lista API > DOM).
+    Card/angular detectam QSJ/DSP; a API da lista costuma mandar só QUINA/MEGA.
     """
     from boloes_pasta_bds import detectar_modalidade_site
 
-    raw_api = _ler_modalidade_da_lista_api(driver)
-    if raw_api:
-        mod = resolver_modalidade_api(raw_api) or resolver_modalidade_menu(raw_api)
-        if mod:
-            _log(f'  [MODALIDADE DETECTADA] {mod.label} | via: lista API ({raw_api})', log_fn)
-            return mod
+    mod_card = _ler_modalidade_card_ativo_site(driver)
+    if mod_card:
+        _log(f'  [MODALIDADE DETECTADA] {mod_card.label} | via: card ativo no site', log_fn)
+        return mod_card
 
     raw_ang = _ler_modalidade_angular_site(driver)
     if raw_ang:
@@ -822,10 +866,12 @@ def ler_modalidade_aplicada_site(driver, log_fn: LogFn = None) -> Optional[Modal
             _log(f'  [MODALIDADE DETECTADA] {mod.label} | via: angular ({raw_ang})', log_fn)
             return mod
 
-    mod_card = _ler_modalidade_card_ativo_site(driver)
-    if mod_card:
-        _log(f'  [MODALIDADE DETECTADA] {mod_card.label} | via: card ativo no site', log_fn)
-        return mod_card
+    raw_api = _ler_modalidade_da_lista_api(driver)
+    if raw_api:
+        mod = resolver_modalidade_api(raw_api) or resolver_modalidade_menu(raw_api)
+        if mod:
+            _log(f'  [MODALIDADE DETECTADA] {mod.label} | via: lista API ({raw_api})', log_fn)
+            return mod
 
     slug = detectar_modalidade_site(driver)
     if slug:

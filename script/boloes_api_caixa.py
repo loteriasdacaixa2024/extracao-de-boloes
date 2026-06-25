@@ -34,6 +34,22 @@ LEGENDA_API = """
 # True = nunca usa clique visivel com popup (mais rapido). BOLOES_POPUP_VISIVEL=1 para desativar.
 SEM_POPUP_VISIVEL = os.environ.get('BOLOES_POPUP_VISIVEL', '0') != '1'
 
+# Controle por funcao (sobrescreve SEM_POPUP_VISIVEL quando definido). None = usa env var.
+_modo_silencioso_forcado: Optional[bool] = None
+
+
+def definir_modo_silencioso(valor: bool) -> None:
+    """Define modo silencioso global (True = invisivel, False = visivel, None = auto)."""
+    global _modo_silencioso_forcado
+    _modo_silencioso_forcado = valor
+
+
+def modo_silencioso_ativo() -> bool:
+    """Retorna True se modo silencioso ativo ( considera override por funcao)."""
+    if _modo_silencioso_forcado is not None:
+        return _modo_silencioso_forcado
+    return SEM_POPUP_VISIVEL
+
 
 def _explicar_via_js(via: str, log_fn: Optional[Callable[[str], None]]) -> None:
     if not log_fn:
@@ -1220,7 +1236,7 @@ def disparar_detalhes_via_js(
             driver, filtro_cfg, log_fn, max_itens, offset_codigos, codigos_pagina, n_total,
         )
     finally:
-        if not SEM_POPUP_VISIVEL:
+        if not modo_silencioso_ativo():
             _modo_silencioso(driver, False)
 
 
@@ -1312,7 +1328,7 @@ def _fallback_clique_silencioso(
             return max(n, depois - antes_det)
         time.sleep(0.4)
 
-    if SEM_POPUP_VISIVEL:
+    if modo_silencioso_ativo():
         if log_fn:
             log_fn('  [API] Sem popup visivel — fim desta rodada (dados via capturas se houver).')
         return max(ok_js, 0)
@@ -1468,6 +1484,9 @@ def _detalhar_pagina_ate_esperado_impl(
         )
         if chunk2:
             boloes_novos.extend(chunk2)
+            if on_bolao:
+                for b in chunk2:
+                    _notificar_bolao(b)
             _notificar_progresso()
 
         if n_disp == 0:
@@ -1609,8 +1628,10 @@ def coletar_boloes_das_capturas(
         for bolao in _extrair_boloes_de_captura(data, parser_slug):
             if filtro_cfg:
                 try:
-                    from boloes_filtro_loterica import bolao_atende_filtro
-                    if not bolao_atende_filtro(bolao, filtro_cfg):
+                    from boloes_filtro_loterica import bolao_atende_filtro_coleta
+                    if not bolao_atende_filtro_coleta(
+                        bolao, filtro_cfg, filtrar_dezenas=filtrar_dezenas,
+                    ):
                         continue
                 except Exception:
                     pass

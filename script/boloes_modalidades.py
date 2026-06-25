@@ -209,6 +209,24 @@ def modalidade_por_slug(slug: str) -> Optional[ModalidadeMenu]:
     return None
 
 
+def modalidades_compativeis(mod_bolao: Optional[ModalidadeMenu], mod_esperada: Optional[ModalidadeMenu]) -> bool:
+    """Bolão (mod_bolao) pertence à modalidade escolhida no site (mod_esperada)."""
+    if not mod_bolao or not mod_esperada:
+        return True
+    if mod_bolao.slug == mod_esperada.slug:
+        return True
+    # Concurso especial no site (QSJ, DSP…): API grava slug base (quina, mega-sena…)
+    if mod_esperada.especial:
+        return (
+            mod_bolao.parser_slug == mod_esperada.parser_slug
+            or mod_bolao.slug == mod_esperada.parser_slug
+        )
+    # Modalidade regular: não misturar com concurso especial do mesmo jogo
+    if mod_bolao.especial and mod_bolao.parser_slug == mod_esperada.parser_slug:
+        return False
+    return False
+
+
 def concurso_para_arquivo(concurso: Any) -> str:
     """Normaliza concurso para nome de arquivo — ex.: 364, 4482."""
     digits = re.sub(r'\D', '', str(concurso or ''))

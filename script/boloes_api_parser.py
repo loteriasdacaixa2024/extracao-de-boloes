@@ -175,32 +175,43 @@ def _resolver_modalidade_bolao(
     Retorna (catalog_slug, parser_slug, label).
     Prioridade: API Caixa (MEGA_SENA…) > terminal escolhido > trevos > fallback.
     """
-    from boloes_modalidades import TODAS_MODALIDADES, resolver_modalidade_api, resolver_modalidade_menu
+    from boloes_modalidades import (
+        TODAS_MODALIDADES,
+        modalidades_compativeis,
+        resolver_modalidade_api,
+        resolver_modalidade_menu,
+    )
+
+    hint_mod = None
+    if parser_slug_hint:
+        hint_mod = next(
+            (m for m in TODAS_MODALIDADES
+             if m.slug == parser_slug_hint or m.parser_slug == parser_slug_hint),
+            None,
+        )
 
     modalidade_txt = _texto_modalidade_payload(payload)
+
+    # Concurso especial: API costuma mandar só QUINA/MEGA — prioriza hint do site/terminal
+    if hint_mod and hint_mod.especial:
+        return hint_mod.slug, hint_mod.parser_slug, hint_mod.label
 
     if modalidade_txt:
         mod = resolver_modalidade_api(modalidade_txt)
         if mod:
-            if parser_slug_hint and log_fn:
-                hint_mod = next(
-                    (m for m in TODAS_MODALIDADES
-                     if m.slug == parser_slug_hint or m.parser_slug == parser_slug_hint),
-                    None,
-                )
-                if hint_mod and hint_mod.slug != mod.slug:
+            if hint_mod and not modalidades_compativeis(mod, hint_mod):
+                if log_fn:
                     log_fn(
                         f'  [API] Modalidade {mod.label} ({modalidade_txt}) '
-                        f'— terminal tinha {hint_mod.label}, usando API.'
+                        f'— site/terminal = {hint_mod.label}, usando site/terminal.'
                     )
+                return hint_mod.slug, hint_mod.parser_slug, hint_mod.label
             return mod.slug, mod.parser_slug, mod.label
 
-    if parser_slug_hint:
-        for m in TODAS_MODALIDADES:
-            if m.slug == parser_slug_hint or m.parser_slug == parser_slug_hint:
-                if log_fn:
-                    log_fn(f'  [TERMINAL] Modalidade: {m.label}')
-                return m.slug, m.parser_slug, m.label
+    if hint_mod:
+        if log_fn:
+            log_fn(f'  [TERMINAL] Modalidade: {hint_mod.label}')
+        return hint_mod.slug, hint_mod.parser_slug, hint_mod.label
 
     if payload.get('trevos') or payload.get('listaTrevos'):
         for ap in payload.get('apostas') or []:

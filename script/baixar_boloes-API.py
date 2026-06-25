@@ -2,13 +2,14 @@
 """
 Extrator de bolões via API (interceptação JSON) — Caixa.
 
-Fluxo [1] AUTOMÁTICO (principal):
-  1. Edge abre o site — faça LOGIN, modalidade, filtros e Aplicar
-  2. Volte ao terminal e pressione ENTER
-  3. Script extrai página 1, 2, 3… (Seguinte) até o botão desabilitar
-  4. JSON em json-boloes/
+Fluxo [1] AUTOMATICO — Clique Invisivel:
+  1. Credenciais (CPF/senha) informadas 1x no terminal ou em login_caixa_config.json
+  2. Modalidade e concurso informados no terminal
+  3. Edge abre → login automático → navega para modalidade → extrai 100%
+  4. JSON em json-boloes/ cresce em tempo real
 
-Fluxo [2] MANUAL (opcional): ENTER a cada página / vários filtros na mesma sessão.
+Fluxo [2] AUTOMATICO — Clique Visivel:
+  Mesmo fluxo [1], mas cliques visiveis na tela para monitoramento.
 """
 from __future__ import annotations
 
@@ -23,6 +24,7 @@ from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeou
 from typing import Optional, Tuple
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 if SCRIPT_DIR not in sys.path:
@@ -55,9 +57,21 @@ from boloes_modalidades import (
     resolver_modalidade_menu,
 )
 from boloes_consolidar import consolidar_sessao, hashes_pagina, salvar_json_boloes
+from boloes_login_caixa import (
+    CONFIG_EXAMPLE,
+    CONFIG_PATH,
+    CredenciaisCaixa,
+    apagar_config_login,
+    carregar_config_login,
+    executar_login_automatico,
+    salvar_config_login,
+)
 from boloes_filtro_loterica import (
     FiltroLotericaConfig,
+    LogFn,
+    ModalidadeBolaoConfig,
     _carregar_config_cache,
+    aplicar_filtro_loterica,
     bolao_atende_filtro,
     bolao_corresponde_loterica,
     cfg_qualquer_loterica,
@@ -68,7 +82,7 @@ from boloes_filtro_loterica import (
     ler_filtro_aplicado_site,
     ler_modalidade_aplicada_site,
     parse_termo_loterica,
-    aplicar_filtro_loterica,
+    selecionar_modalidade_bolao,
     ir_proxima_pagina_lista,
     ir_para_pagina_lista,
     preparar_pagina_loterica,
@@ -94,6 +108,7 @@ FILTRO_LOTERICA: Optional[FiltroLotericaConfig] = None
 ROTULO_ARQUIVO = None
 ROTULO_NOME = 'modalidade atual'
 SESSAO_AUTORIZADA = False
+_cfg_credenciais_login: Optional[CredenciaisCaixa] = None
 
 
 def _out(msg: str = '') -> None:
@@ -208,30 +223,6 @@ def _gravar_e_mostrar_progresso(
     if _salvar_json_progresso(path, subset):
         _imprimir_linha_arquivo(arquivo_base, len(subset), pag=pagina, pag_ok=n_ok, pag_meta=meta)
     return arquivo_base
-
-
-def _salvar_bolao_individual(path: str, bolao: dict, cfg, mod_esperada) -> bool:
-    """Adiciona um unico bolao ao arquivo JSON existente (append incremental).
-    Se o arquivo nao existe, cria um novo com este bolao.
-    Evita duplicatas por hash_bolao."""
-    import hashlib
-    existente = []
-    if os.path.isfile(path):
-        try:
-            with open(path, encoding='utf-8') as f:
-                existente = json.load(f) or []
-        except Exception:
-            existente = []
-    # Checar duplicata por hash
-    h_novo = hashlib.md5(json.dumps(bolao, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:12]
-    for b in existente:
-        h_ex = hashlib.md5(json.dumps(b, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:12]
-        if h_ex == h_novo:
-            return False  # ja existe, nao duplica
-    existente.append(bolao)
-    with open(path, 'w', encoding='utf-8') as f:
-        json.dump(existente, f, ensure_ascii=False, indent=2)
-    return True
 
 
 def _criar_arquivo_sessao_inicial(arquivo_base: str) -> str:
@@ -377,6 +368,24 @@ def _trocar_modalidade_por_entrada(entrada: str) -> bool:
     return _aplicar_modalidade(mod)
 
 
+def _tentar_login_automatico() -> bool:
+    """Sim → Acessar → CPF → e-mail → senha (boloes_login_caixa.py)."""
+    cfg = carregar_config_login()
+    if not cfg.cpf or not cfg.senha:
+        _out('\n  [LOGIN] Credenciais nao configuradas. Crie:')
+        _out(f'    {CONFIG_PATH}')
+        _out(f'  (Copie de {CONFIG_EXAMPLE})')
+        return False
+
+    _out('\n  [LOGIN] Automatico: Sim → Acessar → CPF → codigo e-mail → senha...')
+    ok = executar_login_automatico(driver, log_fn=_out, url_boloes=URL_BOLOES)
+    if ok:
+        _out('  [LOGIN] OK — sessao ativa.')
+    else:
+        _out('  [LOGIN] Falhou — complete o login manualmente no Edge.')
+    return ok
+
+
 def iniciar_navegador() -> bool:
     global driver
     if driver is not None:
@@ -389,8 +398,9 @@ def iniciar_navegador() -> bool:
         driver.set_page_load_timeout(45)
         instalar_interceptador_api(driver)
         driver.get(URL_BOLOES)
-        _out('Edge aberto — faca LOGIN no navegador.')
-        _out('(Captura so comeca apos ENTER com sessao detectada.)')
+        time.sleep(1.5)
+        _out('Edge aberto — login automatico (Sim/Acessar/CPF/e-mail)...')
+        _tentar_login_automatico()
         return True
     except Exception as exc:
         print(f'\n>>> ERRO ao abrir Edge: {exc}')
@@ -587,7 +597,7 @@ def aguardar_site_pronto() -> bool:
     print('\n' + '=' * 60)
     print('  PREPARE NO SITE — depois ENTER aqui')
     print('=' * 60)
-    print('\n  1. LOGIN na Caixa')
+    print('\n  1. LOGIN (automatico se login_caixa_config.json existir)')
     print('  2. Escolha a MODALIDADE')
     print('  3. Filtros (estado, dezenas, loterica…) + APLICAR — pagina 1')
     print('  4. Volte aqui e pressione ENTER')
@@ -668,29 +678,15 @@ def _filtrar_boloes_modalidade(boloes: list, mod_esperada) -> tuple[list, int]:
 
 
 def _modalidade_extracao(driver=None):
-    """Terminal (M1–M9) forçado, senão modalidade lida no site após Aplicar.
-    Se falhar, pergunta no terminal para o usuario digitar manualmente."""
+    """Terminal (M1–M9) forçado, senão modalidade lida no site após Aplicar."""
     if ROTULO_ARQUIVO:
         _out(f'  Parser terminal (forcado): {ROTULO_ARQUIVO.label}')
         return ROTULO_ARQUIVO
     if driver is not None:
         mod = ler_modalidade_aplicada_site(driver, _out)
         if mod:
-            _out(f'  Modalidade detectada no site: {mod.label}')
             return mod
-    # Fallback: perguntar no terminal
-    _out('  Modalidade: nao detectada automaticamente no site.')
-    _out('  Exemplos: M1 (Mega-Sena), M2 (Quina), M6 (Dia de Sorte), QSJ, DSP')
-    try:
-        raw = input('  Digite a modalidade (M1-M9 / QSJ / DSP / nome): ').strip()
-    except EOFError:
-        return None
-    if raw:
-        mod = resolver_modalidade_menu(raw)
-        if mod:
-            _out(f'  [OK] Modalidade: {mod.label}')
-            return mod
-    _out('  Modalidade invalida — extracao cancelada.')
+    _out('  Modalidade: nao detectada no site — use M6 etc. no terminal antes do [1].')
     return None
 
 
@@ -753,12 +749,18 @@ def _renomear_json_sessao(arquivo_base: str, boloes: list, mod) -> str:
 
 
 def preparar_login_unico() -> bool:
-    """Abre Edge + login. Mesma sessão para vários filtros manuais depois."""
+    """Abre Edge + login automatico. Mesma sessão para vários filtros manuais depois."""
     global SESSAO_AUTORIZADA
     SESSAO_AUTORIZADA = False
     if not iniciar_navegador():
         return False
-    print('\n  Edge aberto — faca LOGIN (script aguarda, nada roda ainda).')
+    if not _usuario_logado_caixa():
+        _out('  [LOGIN] Tentando novamente apos abrir o site...')
+        _tentar_login_automatico()
+    if _usuario_logado_caixa():
+        print('\n  Sessao logada — pronta para configurar filtros no site.')
+        return True
+    print('\n  Login automatico incompleto — complete no Edge se necessario.')
     if not aguardar_login_caixa():
         return False
     if not _usuario_logado_caixa():
@@ -785,6 +787,45 @@ def _capturas_da_rodada(rodada: int) -> list[str]:
     return sorted(glob.glob(pat))
 
 
+def _recuperar_boloes_arquivo_captura(
+    dbg_path: str,
+    cfg: FiltroLotericaConfig,
+    mod_esperada,
+) -> list:
+    """Monta bolões a partir de um JSON de debug (capturas-api)."""
+    from boloes_consolidar import boloes_de_capturas_api
+
+    qtd_save = None if cfg.qualquer_loterica else cfg.qtd_dezenas
+    brutos = boloes_de_capturas_api(
+        [dbg_path], cfg.codigo if not cfg.qualquer_loterica else None, qtd_save,
+    )
+    filtrados = _boloes_do_filtro(brutos, cfg)
+    filtrados, _ = _filtrar_boloes_modalidade(filtrados, mod_esperada)
+    return filtrados
+
+
+def _mesclar_boloes_recuperados(
+    rec: list,
+    boloes: list,
+    hashes: set,
+    pagina: int,
+    rodada_filtro: int,
+) -> int:
+    """Adiciona bolões recuperados à sessão (deduplicado por hash)."""
+    n = 0
+    for b in rec:
+        h = b.get('hash_bolao')
+        if not h or h in hashes:
+            continue
+        hashes.add(h)
+        b['pagina'] = pagina
+        b['indice'] = len(boloes) + 1
+        b['rodada_filtro'] = rodada_filtro
+        boloes.append(b)
+        n += 1
+    return n
+
+
 def _recuperar_boloes_das_capturas(
     cfg: FiltroLotericaConfig,
     parser_slug: str,
@@ -801,7 +842,10 @@ def _recuperar_boloes_das_capturas(
     if not arquivos:
         return []
 
-    brutos = boloes_de_capturas_api(arquivos, cfg.codigo if not cfg.qualquer_loterica else None, cfg.qtd_dezenas)
+    qtd_save = None if cfg.qualquer_loterica else cfg.qtd_dezenas
+    brutos = boloes_de_capturas_api(
+        arquivos, cfg.codigo if not cfg.qualquer_loterica else None, qtd_save,
+    )
     boloes = _boloes_do_filtro(brutos, cfg)
     if not boloes and brutos:
         _out(f'  [RECUPERO] {len(brutos)} bolão(ões) na API, mas 0 passaram no filtro {cfg.termo or cfg.codigo}.')
@@ -847,7 +891,12 @@ def _diagnosticar_capturas_sem_filtro(cfg: FiltroLotericaConfig, parser_slug: st
 def _boloes_do_filtro(boloes: list, cfg: FiltroLotericaConfig) -> list:
     if not cfg:
         return list(boloes)
+    # Modo [1] qualquer lotérica: dezenas só no filtro do site — não descarta no save.
     if cfg.qualquer_loterica or (
+        not (cfg.termo or '').strip() and not cfg.codigo
+    ):
+        return list(boloes)
+    if (
         not (cfg.termo or '').strip() and not cfg.codigo and cfg.qtd_dezenas is not None
     ):
         return [b for b in boloes if bolao_atende_filtro(b, cfg)]
@@ -918,8 +967,17 @@ def _capturar_pagina_atual(
         meta_preservar = ler_metadados_paginacao_api(driver)
         if meta_preservar:
             painel['paginacao_api'] = meta_preservar
-        limpar_capturas_api(driver)
-        if not manual:
+        if manual:
+            print(f'  [FILTRO] Pagina {pagina} — modo manual (mantem capturas ja carregadas no site).')
+            print('  [TELA] Procurando botoes Detalhes na pagina...')
+            n_det = aguardar_detalhes_visiveis(driver, minimo=1, timeout=12, log_fn=print)
+            if n_det:
+                print(f'  [TELA] Pagina {pagina}: {n_det} botao(oes) Detalhes visiveis.')
+            else:
+                print('  [TELA] Nenhum botao Detalhes — usando capturas API ja interceptadas...')
+            time.sleep(0.8)
+        else:
+            limpar_capturas_api(driver)
             print(f'  [PAGINA] Avancando para pagina {pagina} (Seguinte)...')
             if not ir_proxima_pagina_lista(driver, print):
                 if cfg.termo:
@@ -956,8 +1014,6 @@ def _capturar_pagina_atual(
                 aguardar_detalhes_visiveis(driver, minimo=1, timeout=10)
             elif pagina >= 2:
                 print('  [PAGINA] Lista vazia — confira filtro manual ou navegacao.')
-        else:
-            print(f'  [FILTRO] Pagina {pagina} — modo manual (voce navegou).')
 
     aguardar_capturas_api(driver, minimo=1, timeout=12)
 
@@ -988,33 +1044,18 @@ def _capturar_pagina_atual(
         )
         painel['arquivo_base'] = arquivo_prog
 
-    # Salvar cada bolao individualmente assim que e capturado (incremental)
-    _boloes_salvos_pagina: list = []
-
-    def _on_bolao_capturado(bolao: dict):
-        """Chamado a cada bolao capturado — salva imediatamente no arquivo."""
-        if not arquivo_base:
-            return
-        bolao['pagina'] = pagina
-        path = _path_json_sessao(arquivo_base)
-        if _salvar_bolao_individual(path, bolao, cfg, mod_esperada):
-            _boloes_salvos_pagina.append(bolao)
-            kb = _kb_arquivo(path)
-            _out(f'  [+] {bolao.get("nome_loterica", "?")[:25]} | pag {pagina} | {kb:.1f} KB')
-
     novos = detalhar_pagina_ate_esperado(
         driver, cfg, parser_slug, hashes, n_esperado, codigos, print,
         on_progresso=_on_progresso_detalhar if arquivo_base else None,
-        on_bolao=_on_bolao_capturado if arquivo_base else None,
     )
 
-    if not novos and n_esperado == 0:
+    if not novos:
         from boloes_api_caixa import coletar_boloes_das_capturas
         novos = coletar_boloes_das_capturas(
-            driver, hashes, print, cfg, parser_slug, filtrar_dezenas=True,
+            driver, hashes, print, None, parser_slug, filtrar_dezenas=False,
         )
         if novos:
-            print(f'  [RECUPERO] {len(novos)} bolão(ões) via lista API (sem botões Detalhes).')
+            print(f'  [RECUPERO] {len(novos)} bolão(ões) salvos via capturas API (sem botões Detalhes).')
 
     n_caps = len(ler_capturas_api(driver))
     painel['capturas_ultima_pagina'] = n_caps
@@ -1146,7 +1187,15 @@ def _loop_extracao_paginas(
             print(f'  Capturas API:\n{resumo_capturas(driver)}')
             dbg = os.path.join(PASTA_CAPTURAS, f'api_r{rodada_filtro}_p{pagina}_{int(time.time())}.json')
             salvar_capturas_brutas(driver, dbg)
-            print(f'  Debug: {dbg}')
+            kb_dbg = _kb_arquivo(dbg)
+            print(f'  Debug: {dbg} ({kb_dbg:.1f} KB — dados brutos da API, nao e o JSON final)')
+            rec = _recuperar_boloes_arquivo_captura(dbg, cfg, mod_esperada)
+            n_rec = _mesclar_boloes_recuperados(rec, boloes, hashes, pagina, rodada_filtro)
+            if n_rec:
+                print(f'  [RECUPERO] {n_rec} bolão(ões) do debug -> JSON de bolões.')
+                page_boloes = _boloes_do_filtro(
+                    [b for b in boloes if b.get('pagina') == pagina], cfg,
+                )
 
         subset = _boloes_do_filtro(boloes, cfg)
         subset, desc_mod = _filtrar_boloes_modalidade(subset, mod_esperada)
@@ -1170,9 +1219,11 @@ def _loop_extracao_paginas(
             kb = _kb_arquivo(path_final)
             _out(f'  [ARQUIVO] {os.path.basename(path_final)} | pag {pagina} | {len(subset)} reg | {kb:.1f} KB')
 
-        salvar_parcial(subset, arquivo_base, pagina, quiet=True)
+        salvar_parcial(subset, arquivo_base, pagina, quiet=len(subset) == 0)
         if subset:
             _consolidar_e_resumir(subset, mod_esperada)
+        elif os.path.isfile(_path_json_sessao(arquivo_base)):
+            _imprimir_linha_arquivo(arquivo_base, 0, pag=pagina)
 
         if voce_encerra:
             print(
@@ -1230,41 +1281,10 @@ def _loop_extracao_paginas(
     return subset_final, hashes, painel, arquivo_base
 
 
-def _salvar_boloes_incremental(
-    novos_boloes: list,
-    arquivo_base: str,
-    cfg,
-    mod_esperada,
-) -> int:
-    """Salva cada bolao individualmente no arquivo JSON (append).
-    Retorna quantos foram adicionados (nao duplicatas)."""
-    if not novos_boloes:
-        return 0
-    path = _path_json_sessao(arquivo_base)
-    added = 0
-    for b in novos_boloes:
-        if _salvar_bolao_individual(path, b, cfg, mod_esperada):
-            added += 1
-    if added:
-        kb = _kb_arquivo(path)
-        total = 0
-        try:
-            with open(path, encoding='utf-8') as f:
-                total = len(json.load(f) or [])
-        except Exception:
-            pass
-        _out(f'  [INCREMENTAL] +{added} bolao(oes) salvo(s) | total: {total} | {kb:.1f} KB')
-    return added
-
-
 def _perguntar_concurso(mod_label: str) -> str:
-    """Pergunta o concurso ao usuario. ENTER = detecta automaticamente.
-    O nome do arquivo sera: boloes_{concurso}_{modalidade}.json
-    Exemplo: boloes_3020_mega-sena.json"""
+    """Pergunta o concurso ao usuario. ENTER = detecta automaticamente."""
     _out(f'\n  Modalidade detectada: {mod_label}')
-    _out('  O nome do arquivo sera: boloes_{concurso}_{modalidade}.json')
-    _out('  Exemplo: boloes_3020_mega-sena.json')
-    _out('  Digite o numero do concurso (ex.: 3020) ou ENTER para detectar automaticamente:')
+    _out('  Digite o numero do concurso (ex.: 3021) ou ENTER para detectar automaticamente:')
     try:
         resp = input('  Concurso: ').strip()
     except EOFError:
@@ -1274,77 +1294,9 @@ def _perguntar_concurso(mod_label: str) -> str:
         digits = re.sub(r'\D', '', resp)
         if digits:
             _out(f'  [OK] Concurso informado: {digits}')
-            _out(f'  [OK] Arquivo: boloes_{digits}_{mod_label.lower().replace(" ", "-")}.json')
             return digits
     _out('  Concurso sera detectado automaticamente dos boloes.')
     return ''
-
-def extrair_automatico() -> Tuple[list, Optional[str]]:
-    """[1] Edge abre o site -> voce prepara tudo -> ENTER -> extrai ate Seguinte desabilitar."""
-    global SESSAO_AUTORIZADA
-
-    if driver is None:
-        if not iniciar_navegador():
-            return [], None
-    elif not _no_site_boloes():
-        try:
-            driver.get(URL_BOLOES)
-            time.sleep(2)
-        except Exception:
-            pass
-
-    SESSAO_AUTORIZADA = False
-    if not aguardar_site_pronto():
-        return [], None
-
-    SESSAO_AUTORIZADA = True
-
-    _out('\n  Lendo filtros e modalidade do site (apos seu Aplicar)...')
-    cfg = ler_filtro_aplicado_site(driver, _out)
-    if not cfg:
-        _out('  [AVISO] Filtro não lido — usando modalidade do site + todas lotéricas.')
-        cfg = _cfg_filtro_site()
-    elif cfg.qualquer_loterica:
-        _out('  [OK] Todas lotéricas / todos estados — só filtra pela modalidade escolhida.')
-
-    mod = _modalidade_extracao(driver)
-    if not mod:
-        _out('\n  >>> EXTRAÇÃO CANCELADA: modalidade não detectada.')
-        _out('  No site: clique no card Dia de Sorte, filtre Aldeota, Aplicar, ENTER aqui.')
-        _out('  Ou forçe antes do [1]: M6 (Dia de Sorte) no terminal.')
-        return [], None
-
-    lot_txt = 'QUALQUER' if cfg.qualquer_loterica else (cfg.termo or '(manual)')
-    _out(f'\n  === CONFIRMADO ===')
-    _out(f'  Loterica alvo : {lot_txt}')
-    _out(f'  Modalidade    : {mod.label}')
-    _out(f'  Dezenas filtro: {cfg.qtd_dezenas or "qualquer"}')
-
-    # Pergunta o concurso para montar o nome do arquivo ANTES de extrair
-    concurso_digitado = _perguntar_concurso(mod.label)
-
-    mod_slug = mod.slug if mod else 'boloes'
-    parser_slug = mod.parser_slug if mod else ''
-    arquivo_base = gerar_arquivo_base(cfg, mod, concurso_digitado)
-
-    print('\n' + '=' * 60)
-    print('  EXTRACAO AUTOMATICA')
-    print('=' * 60)
-    print(f'  Arquivo: {arquivo_base}.json')
-    print('  Pagina 1 = filtro que voce aplicou no site')
-    print('  Paginas 2, 3… = Seguinte automatico ate botao desabilitar')
-    print(f'  Salvamento: incremental (cada bolao salvo imediatamente)')
-    print(LEGENDA_API)
-
-    boloes, _, _, ab = _loop_extracao_paginas(
-        cfg, parser_slug, mod_slug, arquivo_base, manual_paginas=False, mod_esperada=mod,
-    )
-    if boloes:
-        mod_final = extrair_modalidade_de_boloes(boloes) or mod
-        ab = _renomear_json_sessao(ab, boloes, mod_final)
-        _validar_modalidade_coerencia(mod_final, boloes)
-    return boloes, ab
-
 
 def _carregar_config_inicio() -> bool:
     """Carrega loterica salva — modalidade NAO vem do cache (evita Dia de Sorte fantasma)."""
@@ -1356,6 +1308,415 @@ def _carregar_config_inicio() -> bool:
     ROTULO_ARQUIVO = None
     ROTULO_NOME = 'modalidade atual'
     return bool(FILTRO_LOTERICA)
+
+
+# =============================================================================
+# NOVOS FLUXOS AUTOMATICOS (modo invisivel / modo visivel)
+# =============================================================================
+
+def _prompt_credenciais() -> CredenciaisCaixa:
+    """Pergunta CPF/senha 1x. Se login_caixa_config.json existir, oferece usar cached."""
+    global _cfg_credenciais_login
+    cached = carregar_config_login()
+    if cached.cpf and cached.senha:
+        print(f'\n  [LOGIN] Credenciais salvas em {CONFIG_PATH}')
+        try:
+            resp = input('  Usar credenciais salvas? [S/n] ').strip().lower()
+        except EOFError:
+            resp = 's'
+        if resp != 'n':
+            _cfg_credenciais_login = cached
+            return cached
+
+    print('\n  [LOGIN] Digite suas credenciais da Caixa:')
+    try:
+        cpf = input('    CPF (somente numeros): ').strip()
+        cpf = re.sub(r'\D', '', cpf)
+        senha = input('    Senha: ').strip()
+    except (EOFError, KeyboardInterrupt):
+        return CredenciaisCaixa()
+
+    if not cpf or not senha:
+        print('  [LOGIN] Credenciais invalidas — abortando.')
+        return CredenciaisCaixa()
+
+    creds = CredenciaisCaixa(cpf=cpf, senha=senha)
+    _cfg_credenciais_login = creds
+
+    try:
+        salvar = input('  Salvar para login_caixa_config.json? [S/n] ').strip().lower()
+    except EOFError:
+        salvar = 's'
+    if salvar != 'n':
+        try:
+            salvar_config_login(cpf, senha)
+            print(f'  [LOGIN] Salvo em {CONFIG_PATH}')
+        except Exception as exc:
+            print(f'  [AVISO] Nao foi possivel salvar: {exc}')
+    return creds
+
+
+def _prompt_modalidade():
+    """Lista M1-M9 + especiais, pede 1 tecla. Retorna ModalidadeBolaoConfig ou None."""
+    print('\n  === MODALIDADE ===')
+    print('  [1] Mega-Sena     [2] Quina         [3] Lotofacil')
+    print('  [4] Lotomania     [5] Timemania     [6] Dia de Sorte')
+    print('  [7] Super Sete    [8] Dupla Sena    [9] +Milionaria')
+    print('  Especiais: QSJ | DSP | LTI | MSV | MS3')
+    try:
+        opcao = input('\n  Modalidade: ').strip()
+    except (EOFError, KeyboardInterrupt):
+        return None
+    if not opcao:
+        return None
+    mod = resolver_modalidade_menu(opcao)
+    if not mod:
+        print('  Modalidade invalida.')
+        return None
+    _aplicar_modalidade(mod)
+    return mod
+
+
+def _prompt_concurso() -> str:
+    """Pergunta o concurso ao usuario. ENTER = detecta automaticamente."""
+    print('\n  === CONCURSO ===')
+    print('  Digite o numero do concurso (ex.: 3021) ou ENTER para detectar automaticamente:')
+    try:
+        resp = input('  Concurso: ').strip()
+    except (EOFError, KeyboardInterrupt):
+        return ''
+    if resp:
+        digits = re.sub(r'\D', '', resp)
+        if digits:
+            print(f'  [OK] Concurso informado: {digits}')
+            return digits
+    print('  Concurso sera detectado automaticamente dos boloes.')
+    return ''
+
+
+def _navegar_para_modalidade(driver, mod) -> bool:
+    """Clica no card da modalidade no site. Retorna True se conseguiu."""
+    # Verifica se ja esta na modalidade correta
+    atual = ler_modalidade_aplicada_site(driver, _out)
+    if atual and atual.slug == mod.slug:
+        _out(f'  [SITE] Modalidade {mod.label} ja esta ativa.')
+        return True
+
+    _out(f'  [SITE] Navegando para modalidade {mod.label}...')
+    try:
+        if selecionar_modalidade_bolao(driver, mod, log_fn=_out):
+            time.sleep(2.0)
+            atual = ler_modalidade_aplicada_site(driver, _out)
+            if atual and atual.slug == mod.slug:
+                _out(f'  [SITE] Modalidade {mod.label} selecionada com sucesso.')
+                return True
+    except Exception as exc:
+        _out(f'  [SITE] Erro ao selecionar modalidade: {exc}')
+
+    # Fallback: tenta clicar em qualquer elemento com o texto da modalidade
+    _out(f'  [SITE] Tentando fallback para {mod.label}...')
+    try:
+        for sel in ['div[class*="card"]', 'button[class*="card"]', '[class*="modalidade"]', 'button', 'a']:
+            for el in driver.find_elements(By.CSS_SELECTOR, sel):
+                txt = (el.text or '').strip()
+                if txt.lower() == mod.label.lower() or mod.label.lower() in txt.lower():
+                    if el.is_displayed():
+                        try:
+                            driver.execute_script('arguments[0].scrollIntoView({block:"center"});', el)
+                            el.click()
+                            time.sleep(2.0)
+                            atual = ler_modalidade_aplicada_site(driver, _out)
+                            if atual and atual.slug == mod.slug:
+                                _out(f'  [SITE] Modalidade {mod.label} selecionada (fallback).')
+                                return True
+                        except Exception:
+                            continue
+    except Exception:
+        pass
+
+    _out(f'  [SITE] AVISO: nao foi possivel selecionar {mod.label} automaticamente.')
+    _out('  Confirme manualmente no site e pressione ENTER...')
+    try:
+        input('  ENTER para continuar... ')
+    except EOFError:
+        pass
+    return True
+
+
+def _aplicar_filtros_automaticamente(driver, cfg: FiltroLotericaConfig) -> bool:
+    """Aplica loteria + dezenas + clica Aplicar."""
+    if not cfg or (not cfg.termo and not cfg.qualquer_loterica and cfg.qtd_dezenas is None):
+        _out('  [FILTRO] Nenhum filtro configurado — usando padrao do site.')
+        return True
+
+    _out('  [FILTRO] Aplicando filtros automaticamente...')
+    try:
+        aplicar_filtro_loterica(driver, cfg, _out)
+        time.sleep(2.0)
+        _out('  [FILTRO] Filtros aplicados.')
+        return True
+    except Exception as exc:
+        _out(f'  [FILTRO] Erro ao aplicar filtros: {exc}')
+        return True
+
+
+def _salvar_checkpoint(arquivo_base: str, pagina: int, hashes: set, boloes: list) -> None:
+    """Salva estado atual para retomar em caso de falha."""
+    path = _path_json_sessao(arquivo_base).replace('.json', '.checkpoint.json')
+    try:
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump({
+                'arquivo_base': arquivo_base,
+                'ultima_pagina_completa': pagina,
+                'hashes_processados': list(hashes),
+                'total_boloes': len(boloes),
+                'timestamp': time.strftime('%Y-%m-%dT%H:%M:%S'),
+            }, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+
+def _carregar_checkpoint(arquivo_base: str) -> Optional[dict]:
+    """Carrega checkpoint se existir. Retorna None se nao houver."""
+    path = _path_json_sessao(arquivo_base).replace('.json', '.checkpoint.json')
+    if not os.path.isfile(path):
+        return None
+    try:
+        with open(path, encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def _iniciar_ou_retomar(arquivo_base: str, mod) -> tuple:
+    """Se existe checkpoint, pergunta se quer retomar. Retorna (pagina_inicial, hashes, boloes)."""
+    ck = _carregar_checkpoint(arquivo_base)
+    if not ck:
+        return 1, set(), []
+
+    print(f'\n  [RECUPERO] Extracao anterior incompleta encontrada:')
+    print(f'    Pagina: {ck.get("ultima_pagina_completa")}')
+    print(f'    Boloes: {ck.get("total_boloes")}')
+    print(f'    Data: {ck.get("timestamp")}')
+    try:
+        resp = input('  Continuar de onde parou? [S/n] ').strip().lower()
+    except EOFError:
+        resp = 's'
+
+    if resp == 'n':
+        return 1, set(), []
+
+    # Carrega boloes ja salvos
+    path_json = _path_json_sessao(arquivo_base)
+    boloes_existentes = []
+    if os.path.isfile(path_json):
+        try:
+            with open(path_json, encoding='utf-8') as f:
+                boloes_existentes = json.load(f) or []
+        except Exception:
+            pass
+
+    hashes = set()
+    for b in boloes_existentes:
+        h = b.get('hash_bolao')
+        if h:
+            hashes.add(h)
+
+    pagina_inicio = ck.get('ultima_pagina_completa', 1) + 1
+    print(f'  [RECUPERO] Retomando da pagina {pagina_inicio} com {len(boloes_existentes)} boloes ja salvos.')
+    return pagina_inicio, hashes, boloes_existentes
+
+
+def _extrair_modo(visivel: bool) -> tuple:
+    """
+    Fluxo 100% automatico para ambos os modos.
+    Retorna (boloes, arquivo_base).
+    """
+    global SESSAO_AUTORIZADA, _cfg_credenciais_login
+
+    from boloes_api_caixa import definir_modo_silencioso
+
+    # 1. Credenciais
+    creds = _prompt_credenciais()
+    if not creds.cpf or not creds.senha:
+        _out('\n  [EXTRACAO] Credenciais obrigatorias — abortando.')
+        return [], None
+
+    # 2. Modalidade
+    mod = _prompt_modalidade()
+    if not mod:
+        _out('\n  [EXTRACAO] Modalidade obrigatoria — abortando.')
+        return [], None
+
+    # 3. Concurso
+    concurso_digitado = _prompt_concurso()
+
+    # 4. Configura modo silencioso
+    definir_modo_silencioso(not visivel)
+    modo_txt = 'VISIVEL' if visivel else 'INVISIVEL'
+    _out(f'\n  [MODO] Execucao automatica — Clique {modo_txt}')
+
+    # 5. Abrir navegador e logar
+    if not iniciar_navegador():
+        _out('\n  [EXTRACAO] Falha ao abrir navegador — abortando.')
+        definir_modo_silencioso(None)
+        return [], None
+
+    SESSAO_AUTORIZADA = True
+
+    # 6. Login automatico
+    _out('\n  [LOGIN] Realizando login automatico...')
+    from boloes_login_caixa import executar_login_automatico
+    login_ok = executar_login_automatico(driver, log_fn=_out, url_boloes=URL_BOLOES)
+    if not login_ok:
+        _out('\n  [LOGIN] Login automatico falhou — complete manualmente no Edge.')
+        _out('  (O script continua apos login manual)')
+        try:
+            input('  ENTER apos login manual... ')
+        except EOFError:
+            pass
+
+    # 7. Navegar para modalidade
+    _navegar_para_modalidade(driver, mod)
+
+    # 8. Configurar filtro padrao (qualquer loteria + 15 dezenas)
+    cfg = cfg_qualquer_loterica(15)
+    _aplicar_filtros_automaticamente(driver, cfg)
+
+    # 8b. Pausa para usuario revisar/ajustar filtros no site antes da extracao
+    _out('\n  [FILTROS] Filtros padrao aplicados (qualquer loteria + 15 dezenas).')
+    _out('  Se quiser ajustar loteria, dezenas ou outros filtros, faca agora no navegador.')
+    try:
+        input('  Pressione ENTER quando estiver pronto para iniciar a extracao... ')
+    except EOFError:
+        pass
+    _out('  [FILTROS] Iniciando extracao...')
+
+    # 9. Preparar arquivo
+    mod_slug = mod.slug if mod else 'boloes'
+    parser_slug = mod.parser_slug if mod else ''
+    arquivo_base = gerar_arquivo_base(cfg, mod, concurso_digitado)
+
+    # 10. Verificar checkpoint
+    pagina_inicio, hashes_inicio, boloes_inicio = _iniciar_ou_retomar(arquivo_base, mod)
+
+    # 11. Loop de extracao
+    print('\n' + '=' * 60)
+    print(f'  EXTRACAO AUTOMATICA — Clique {modo_txt}')
+    print('=' * 60)
+    print(f'  Modalidade: {mod.label}')
+    print(f'  Concurso: {concurso_digitado or "auto-detect"}')
+    print(f'  JSON: {PASTA_JSON}')
+    print(LEGENDA_API)
+
+    boloes = list(boloes_inicio)
+    hashes = set(hashes_inicio)
+
+    # Criar arquivo inicial se nao existe
+    if not boloes:
+        _criar_arquivo_sessao_inicial(arquivo_base)
+    else:
+        # Carregar arquivo existente
+        path_json = _path_json_sessao(arquivo_base)
+        if not os.path.isfile(path_json):
+            _criar_arquivo_sessao_inicial(arquivo_base)
+
+    painel = _novo_painel_extracao()
+    painel['arquivo_base'] = arquivo_base
+    inicio = time.time()
+
+    while True:
+        print(f'\n>>> Processando PAGINA {pagina_inicio}...')
+        n_novos = _capturar_pagina_atual(
+            cfg, parser_slug, hashes, pagina_inicio, boloes, False, painel, mod,
+            arquivo_base=painel.get('arquivo_base', arquivo_base),
+        )
+        arquivo_base = painel.get('arquivo_base', arquivo_base)
+
+        if n_novos == -2:
+            print(f'\n  {MSG_ULTIMA_PAGINA}')
+            break
+        if n_novos < 0:
+            if tem_proxima_pagina(driver):
+                print('  [PAGINA] Erro na captura, mas Seguinte habilitado — tentando proxima...')
+                pagina_inicio += 1
+                continue
+            if ultima_pagina_detectada(driver):
+                print(f'\n  {MSG_ULTIMA_PAGINA}')
+                break
+            print('\n  Extracao interrompida (sessao).')
+            break
+
+        page_boloes = _boloes_do_filtro(
+            [b for b in boloes if b.get('pagina') == pagina_inicio], cfg,
+        )
+
+        if page_boloes:
+            subset = _boloes_do_filtro(boloes, cfg)
+            subset, _ = _filtrar_boloes_modalidade(subset, mod)
+            if subset:
+                arquivo_base = _renomear_json_sessao(arquivo_base, subset, mod)
+                painel['arquivo_base'] = arquivo_base
+                path_final = os.path.join(PASTA_JSON, f'{arquivo_base}.json')
+                kb = _kb_arquivo(path_final)
+                _out(f'  [ARQUIVO] {os.path.basename(path_final)} | pag {pagina_inicio} | {len(subset)} reg | {kb:.1f} KB')
+                salvar_parcial(subset, arquivo_base, pagina_inicio)
+                _consolidar_e_resumir(subset, mod)
+
+            # Salvar checkpoint para recuperacao
+            _salvar_checkpoint(arquivo_base, pagina_inicio, hashes, boloes)
+
+        # Verificar se ha mais paginas
+        if tem_proxima_pagina(driver):
+            pagina_inicio += 1
+            continue
+        if ultima_pagina_detectada(driver):
+            print(f'\n  {MSG_ULTIMA_PAGINA}')
+            break
+        print('  [PAGINA] Seguinte nao visivel — aguardando...')
+        time.sleep(2.0)
+        if tem_proxima_pagina(driver):
+            pagina_inicio += 1
+            continue
+        if ultima_pagina_detectada(driver):
+            print(f'\n  {MSG_ULTIMA_PAGINA}')
+            break
+        print('  [AVISO] Paginacao indeterminada — tentando avancar mesmo assim.')
+        pagina_inicio += 1
+
+    # 12. Final
+    tempo = int(time.time() - inicio)
+    subset_final = _boloes_do_filtro(boloes, cfg)
+    subset_final, _ = _filtrar_boloes_modalidade(subset_final, mod)
+    if not subset_final:
+        recuperados = _recuperar_boloes_das_capturas(
+            cfg, parser_slug, mod_slug, arquivo_base, 1,
+        )
+        if recuperados:
+            subset_final = _boloes_do_filtro(recuperados, cfg) or recuperados
+            boloes = recuperados
+
+    _imprimir_resumo_final(subset_final, hashes, painel, arquivo_base, cfg, tempo)
+
+    # Reset modo silencioso
+    definir_modo_silencioso(None)
+
+    if subset_final:
+        _out(f'\n  Arquivo final: {os.path.join(PASTA_JSON, f"{arquivo_base}.json")}')
+    elif painel.get('capturas_api', 0) > 0:
+        _out('\n  [AVISO] Extracao vazia apesar de capturas API — veja [DIAG] acima.')
+
+    return subset_final, arquivo_base
+
+
+def extrair_automatico_invisivel() -> tuple:
+    """[1] Automático — Clique Invisivel (sem popup, sem interacao)."""
+    return _extrair_modo(visivel=False)
+
+
+def extrair_automatico_visivel() -> tuple:
+    """[2] Automático — Clique Visivel (cliques visiveis, sem interacao)."""
+    return _extrair_modo(visivel=True)
 
 
 def _resolver_cfg_filtro_rodada() -> Optional[FiltroLotericaConfig]:
@@ -1401,117 +1762,6 @@ def _resolver_cfg_filtro_rodada() -> Optional[FiltroLotericaConfig]:
     return None
 
 
-def extrair_sessao_multi_filtros() -> None:
-    """
-    Mesma sessao logada:
-    - Voce aplica filtro no site → ENTER → script detecta filtro e baixa pagina 1
-    - Mesmo filtro: paginas 2, 3, 4, 5… — voce navega no site → ENTER a cada uma
-    - FIM encerra o filtro atual; troca filtro no site → ENTER → comeca pag. 1 de novo
-    """
-    global SESSAO_AUTORIZADA
-
-    print('\n' + '=' * 60)
-    print('  MODO FILTRO MANUAL — MESMA SESSAO LOGADA')
-    print('=' * 60)
-    print('\n  Login 1x → filtro no site → ENTER → baixa pag. 1')
-    print('  Mesmo filtro: pag. 2, 3, 4, 5… → ENTER a cada pagina → FIM')
-    print('  Novo filtro: aplique no site (pag. 1) → ENTER → repete')
-    print(LEGENDA_API)
-
-    if driver is None:
-        if not preparar_login_unico():
-            return
-    elif not _usuario_logado_caixa():
-        if _no_site_boloes():
-            print('\n  [AVISO] Login nao confirmado pela API, mas site de boloes aberto — continuando.')
-        else:
-            print('\n  Sessao expirada — faca login de novo.')
-            if not preparar_login_unico():
-                return
-
-    mod_slug = ROTULO_ARQUIVO.slug if ROTULO_ARQUIVO else 'quina'
-    parser_slug = ROTULO_ARQUIVO.parser_slug if ROTULO_ARQUIVO else 'quina'
-
-    rodada = 1
-    resumos_rodadas: list = []
-
-    while True:
-        if not aguardar_filtro_manual_pagina1(rodada=rodada):
-            break
-
-        cfg = _resolver_cfg_filtro_rodada()
-        if not cfg or not (cfg.termo or cfg.codigo or cfg.qualquer_loterica):
-            _out('\n  Rodada cancelada — voltando ao menu.')
-            break
-
-        if cfg.qualquer_loterica:
-            dez = cfg.qtd_dezenas or 15
-            _out(f'\n  Modo: QUALQUER lotérica | somente {dez} dezenas por aposta')
-
-        mod = _modalidade_extracao(driver)
-        mod_slug = mod.slug if mod else mod_slug
-        parser_slug = mod.parser_slug if mod else parser_slug
-
-        SESSAO_AUTORIZADA = True
-        limpar_capturas_api(driver)
-
-        # Pergunta o concurso (mesma logica do modo automatico)
-        if rodada == 1:
-            concurso_digitado = _perguntar_concurso(mod.label if mod else 'desconhecida')
-        else:
-            concurso_digitado = ''
-        arquivo_base = gerar_arquivo_base(cfg, mod, concurso_digitado)
-
-        print(f'\n  Iniciando rodada {rodada} — somente filtro detectado acima.')
-        boloes, hashes, painel, arquivo_base = _loop_extracao_paginas(
-            cfg, parser_slug, mod_slug, arquivo_base,
-            manual_paginas=True,
-            rodada_filtro=rodada,
-            voce_encerra=True,
-            mod_esperada=mod,
-        )
-
-        resumos_rodadas.append({
-            'rodada': rodada,
-            'loterica': cfg.termo,
-            'dezenas': cfg.qtd_dezenas or 'qualquer',
-            'registros': len(boloes),
-            'arquivo': f'{arquivo_base}.json',
-        })
-
-        print('\n' + '-' * 60)
-        print(
-            f'  RODADA {rodada} CONCLUIDA — {len(boloes)} registro(s) | '
-            f'filtro {cfg.termo} | dez. {cfg.qtd_dezenas or "qualquer"}'
-        )
-        print('-' * 60)
-
-        try:
-            resp = input('\n>>> Aplicar OUTRO filtro no site? [S/n] ').strip().lower()
-        except EOFError:
-            break
-        if resp == 'n':
-            break
-        rodada += 1
-        print('\n  Mesma sessao — novo filtro no site, comecando pela pagina 1.')
-
-    if resumos_rodadas:
-        print('\n' + '=' * 60)
-        print('  RESUMO — TODOS OS FILTROS DESTA SESSAO')
-        print('=' * 60)
-        total = 0
-        for r in resumos_rodadas:
-            print(
-                f"  Rodada {r['rodada']}: {r['registros']:>4} reg. | "
-                f"{r['loterica']} | dez.{r['dezenas']} | {r['arquivo']}"
-            )
-            total += r['registros']
-        print(f'\n  Total: {total} registro(s) em {len(resumos_rodadas)} filtro(s).')
-        print('=' * 60)
-    else:
-        print('\n  Nenhum filtro concluido.')
-
-
 def menu_principal() -> None:
     global FILTRO_LOTERICA, ROTULO_ARQUIVO, ROTULO_NOME
 
@@ -1524,12 +1774,14 @@ def menu_principal() -> None:
             _imprimir_tabela_modalidades_resumida()
             print(f'\n  JSON: {PASTA_JSON}')
             print('  Arquivo: boloes_{concurso}_{modalidade}_CONSOLIDADO.json')
-            print('\n[1] EXTRAIR AUTOMATICO')
-            print('    -> Edge abre -> login + modalidade + filtros NO SITE')
-            print('    -> ENTER aqui -> Seguinte ate desabilitar -> JSON em json-boloes/')
-            print('[2] EXTRAIR MANUAL (ENTER a cada pagina / varios filtros)')
-            print('[3] Consolidar capturas-api/')
-            print('[M] Tabela completa de modalidades')
+            print('\n[1] AUTOMATICO — Clique Invisivel')
+            print('    Sem popup, sem confirmacao, sem interacao do usuario.')
+            print('    Credenciais lidas de login_caixa_config.json OU digitadas agora.')
+            print('\n[2] AUTOMATICO — Clique Visivel')
+            print('    Cliques visiveis na tela (monitoramento).')
+            print('    Sem popup, sem confirmacao, sem interacao do usuario.')
+            print('\n[3] Consolidar capturas-api/')
+            print('[4] Tabela completa de modalidades')
             print('[0] Fechar navegador')
             print('-' * 60)
             print('  Opcional: M1-M9 | QSJ | DSP — so se quiser forcar parser')
@@ -1551,17 +1803,19 @@ def menu_principal() -> None:
             if opcao in ('4', '5', '6', '7', '8', '9'):
                 if _trocar_modalidade_rapida(opcao):
                     continue
-            if opcao not in ('0', '1', '2', '3', 'M'):
+            if opcao not in ('0', '1', '2', '3', '4', 'M'):
                 mod_direto = resolver_modalidade_menu(opcao)
                 if mod_direto:
                     _aplicar_modalidade(mod_direto)
                     continue
             if opcao == '1':
-                extrair_automatico()
+                extrair_automatico_invisivel()
             elif opcao == '2':
-                extrair_sessao_multi_filtros()
+                extrair_automatico_visivel()
             elif opcao == '3':
                 _menu_consolidar_capturas()
+            elif opcao == '4':
+                imprimir_menu_modalidades()
             elif opcao == '0':
                 fechar_navegador()
                 print('\n>>> Navegador fechado. Press CTRL+C to quit')
