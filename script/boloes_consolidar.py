@@ -184,3 +184,92 @@ def consolidar_arquivos_captura(
 
 def hashes_pagina(boloes: List[dict]) -> Set[str]:
     return {h for b in boloes if (h := _hash_de(b))}
+
+
+def hashes_de_lista(boloes: List[dict]) -> Set[str]:
+    """Todos os hash_bolao de uma lista (continuidade / deduplicação)."""
+    return hashes_pagina(boloes)
+
+
+def caminho_json_sessao(pasta_json: str, arquivo_base: str) -> str:
+    """Caminho completo do JSON de sessão (sem extensão no arquivo_base)."""
+    base = (arquivo_base or '').removesuffix('.json')
+    return os.path.join(pasta_json, f'{base}.json')
+
+
+def _concurso_norm(concurso: Any) -> str:
+    return re.sub(r'\D', '', str(concurso or '')) or 'sem-concurso'
+
+
+def localizar_arquivo_sessao_existente(
+    pasta_json: str,
+    arquivo_base: str = '',
+    mod_slug: str = '',
+    concurso: str = '',
+) -> Tuple[Optional[str], List[dict]]:
+    """
+    Localiza o JSON de sessão já gravado para continuidade inteligente.
+    Prioridade: nome exato → concurso+modalidade → maior arquivo boloes_*_{mod}.json.
+    """
+    candidatos: List[str] = []
+    vistos: Set[str] = set()
+
+    def _add(path: str) -> None:
+        norm = os.path.normcase(os.path.abspath(path))
+        if norm not in vistos:
+            vistos.add(norm)
+            candidatos.append(path)
+
+    if arquivo_base:
+        _add(caminho_json_sessao(pasta_json, arquivo_base))
+
+    conc = _concurso_norm(concurso) if concurso else ''
+    mod = re.sub(r'[^a-z0-9\-]+', '-', (mod_slug or '').lower()).strip('-')
+    if conc and conc != 'sem-concurso' and mod:
+        _add(caminho_json_sessao(pasta_json, f'boloes_{conc}_{mod}'))
+
+    if mod:
+        for path in glob.glob(os.path.join(pasta_json, f'boloes_*_{mod}.json')):
+            if '_CONSOLIDADO' in os.path.basename(path):
+                continue
+            _add(path)
+
+    melhor_path: Optional[str] = None
+    melhor_dados: List[dict] = []
+    conc_alvo = conc if conc and conc != 'sem-concurso' else ''
+
+    for path in candidatos:
+        if not os.path.isfile(path):
+            continue
+        dados = carregar_json_boloes(path)
+        if not dados:
+            continue
+        if conc_alvo:
+            base = os.path.basename(path)
+            m = re.match(r'boloes_(\d+)_', base)
+            if m and m.group(1) != conc_alvo:
+                continue
+        if len(dados) >= len(melhor_dados):
+            melhor_path = path
+            melhor_dados = dados
+
+    return melhor_path, melhor_dados
+
+
+def salvar_json_continuacao(
+    path: str,
+    boloes_sessao: List[dict],
+) -> Tuple[List[dict], int, int]:
+    """
+    Continuidade inteligente: mescla bolões da sessão com o arquivo existente.
+    Retorna (lista_final, qtd_novos, qtd_anteriores).
+    Nunca apaga registros já armazenados; ignora duplicados por hash_bolao.
+    """
+    anteriores = carregar_json_boloes(path)
+    total_anterior = len(anteriores)
+    if not boloes_sessao:
+        return anteriores, 0, total_anterior
+    final, novos = mesclar_listas(anteriores, boloes_sessao)
+    if final:
+        salvar_json_boloes(path, final)
+    return final, novos, total_anterior

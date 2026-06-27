@@ -12,9 +12,7 @@ Endpoint exemplo (path Base64):
 
 from __future__ import annotations
 
-import hashlib
 import json
-import os
 import time
 from typing import Any, Callable, Dict, List, Optional, Set
 
@@ -26,29 +24,9 @@ from boloes_api_parser import extrair_todos_boloes_json, parse_lista_boloes_api
 API_PREFIX = 'silce-servico-rest'
 
 LEGENDA_API = """
-  Modo RAPIDO (padrao): detalhar-bolao via API/JS — SEM popup na tela (~0,2 s/bolao).
-  Fallback: clique silencioso (modal oculto por CSS). Nunca abre popup visivel.
+  Modo VISIVEL: clica em cada botao Detalhes na tela (voce ve o popup abrir/fechar).
   Contagem: botoes Detalhes visiveis = meta por pagina. JSON via interceptacao API.
 """
-
-# True = nunca usa clique visivel com popup (mais rapido). BOLOES_POPUP_VISIVEL=1 para desativar.
-SEM_POPUP_VISIVEL = os.environ.get('BOLOES_POPUP_VISIVEL', '0') != '1'
-
-# Controle por funcao (sobrescreve SEM_POPUP_VISIVEL quando definido). None = usa env var.
-_modo_silencioso_forcado: Optional[bool] = None
-
-
-def definir_modo_silencioso(valor: bool) -> None:
-    """Define modo silencioso global (True = invisivel, False = visivel, None = auto)."""
-    global _modo_silencioso_forcado
-    _modo_silencioso_forcado = valor
-
-
-def modo_silencioso_ativo() -> bool:
-    """Retorna True se modo silencioso ativo ( considera override por funcao)."""
-    if _modo_silencioso_forcado is not None:
-        return _modo_silencioso_forcado
-    return SEM_POPUP_VISIVEL
 
 
 def _explicar_via_js(via: str, log_fn: Optional[Callable[[str], None]]) -> None:
@@ -251,6 +229,66 @@ def ler_metadados_paginacao_api(driver) -> Optional[dict]:
         if melhor is None or meta['pagina_atual'] >= melhor['pagina_atual']:
             melhor = meta
     return melhor
+
+
+def detectar_concurso_api(driver) -> Optional[str]:
+    """Detecta o concurso a partir das capturas da API na página atual.
+
+    Lê o campo 'concurso' ou 'numeroConcurso' do primeiro item encontrado
+    nas capturas de detalhar-bolao ou recuperar-boloes-disponiveis.
+    Retorna None se nenhum concurso for encontrado.
+    """
+    from boloes_api_parser import parse_bolao_api
+
+    def _extrair_de_payload(payload: Any) -> Optional[str]:
+        if not isinstance(payload, dict):
+            return None
+        val = payload.get('concurso') or payload.get('numeroConcurso')
+        if val is None:
+            return None
+        digits = str(val).strip()
+        return digits if digits.isdigit() else None
+
+    for cap in ler_capturas_api(driver):
+        url = (cap.get('url') or '').lower()
+        data = cap.get('data')
+
+        # 1) detalhar-bolao: mais confiável, payload é o bolão completo
+        if 'detalhar-bolao' in url or '/detalhar' in url:
+            b = parse_bolao_api(data)
+            if b and b.get('concurso'):
+                return b['concurso']
+            # fallback: lê payload direto
+            val = _extrair_de_payload(data)
+            if val:
+                return val
+
+        # 2) recuperar-boloes-disponiveis: lista, cada item pode ter concurso
+        if 'recuperar-boloes' in url or 'boloes-disponiveis' in url:
+            if isinstance(data, dict):
+                root = data
+                for chave in ('payload', 'dados', 'data', 'resultado'):
+                    if isinstance(root.get(chave), dict):
+                        root = root[chave]
+                        break
+                if isinstance(root, dict):
+                    val = _extrair_de_payload(root)
+                    if val:
+                        return val
+                    # procura em listas dentro do dict
+                    for chave in ('boloes', 'itens', 'lista', 'registros', 'dados'):
+                        if isinstance(root.get(chave), list):
+                            for item in root[chave]:
+                                val = _extrair_de_payload(item)
+                                if val:
+                                    return val
+            elif isinstance(data, list):
+                for item in data:
+                    val = _extrair_de_payload(item)
+                    if val:
+                        return val
+
+    return None
 
 
 def tem_mais_paginas_api(driver, pagina_processada: Optional[int] = None) -> Optional[bool]:
@@ -967,7 +1005,7 @@ var codigos = arguments[0];
 var offsetBtns = arguments[1] || 0;
 var maxItens = arguments[2] || 55;
 var callback = arguments[arguments.length - 1];
-var delay = 260;
+var delay = 520;
 var RE_DETALHES = /detalh/i;
 var RE_FALLBACK = /ver |comprar|apostar|cotas|jogo/i;
 
@@ -1224,31 +1262,11 @@ def disparar_detalhes_via_js(
     max_itens: int = 55,
     offset_codigos: int = 0,
     codigos_pagina: Optional[List[str]] = None,
-    n_total: int = 0,
 ) -> int:
     """
-    Detalhar-bolao via Angular/codigoBolao ou clique silencioso (CSS oculta modal).
-    Sem popup visivel por padrao (SEM_POPUP_VISIVEL).
+    Tenta detalhar-bolao via Angular/codigoBolao (sem popup visível).
+    Fallback: cliques silenciosos (CSS oculta modal). Último fallback: clique normal.
     """
-    _modo_silencioso(driver, True)
-    try:
-        return _disparar_detalhes_via_js_impl(
-            driver, filtro_cfg, log_fn, max_itens, offset_codigos, codigos_pagina, n_total,
-        )
-    finally:
-        if not modo_silencioso_ativo():
-            _modo_silencioso(driver, False)
-
-
-def _disparar_detalhes_via_js_impl(
-    driver,
-    filtro_cfg=None,
-    log_fn: Optional[Callable[[str], None]] = None,
-    max_itens: int = 55,
-    offset_codigos: int = 0,
-    codigos_pagina: Optional[List[str]] = None,
-    n_total: int = 0,
-) -> int:
     cfg_cod = filtro_cfg
     if filtro_cfg and getattr(filtro_cfg, 'qtd_dezenas', None) is not None:
         try:
@@ -1278,10 +1296,9 @@ def _disparar_detalhes_via_js_impl(
         )
     except Exception as exc:
         if log_fn:
-            log_fn(f'  [API] JS rapido falhou ({exc}) — clique silencioso (sem popup)...')
-        return _fallback_clique_silencioso(
-            driver, log_fn, max_itens, offset_codigos, n_total,
-        )
+            log_fn(f'  [API] JS silencioso falhou ({exc}) — fallback clique...')
+        _modo_silencioso(driver, False)
+        return disparar_detalhes_api_pagina(driver, log_fn, max_itens)
 
     ok = int((resultado or {}).get('ok') or 0)
     via = (resultado or {}).get('via') or '?'
@@ -1291,53 +1308,17 @@ def _disparar_detalhes_via_js_impl(
         log_fn(f'  [API] JS via={via} | disparos={ok} | capturas+={novas}')
         _explicar_via_js(via, log_fn)
 
-    if ok > 0:
-        time.sleep(0.25)
-        aguardar_capturas_api(driver, minimo=1, timeout=8)
-        if novas > 0 or contar_respostas_detalhar(driver) > 0:
-            return ok
-
-    if log_fn:
-        log_fn('  [API] JS sem JSON ainda — clique silencioso (modal oculto, sem popup)...')
-    return _fallback_clique_silencioso(
-        driver, log_fn, max_itens, offset_codigos, n_total, ok_js=ok,
-    )
-
-
-def _fallback_clique_silencioso(
-    driver,
-    log_fn: Optional[Callable[[str], None]] = None,
-    max_itens: int = 55,
-    offset: int = 0,
-    n_total: int = 0,
-    ok_js: int = 0,
-) -> int:
-    """Cliques com modal oculto — retentativas antes de desistir (nunca popup visivel se SEM_POPUP_VISIVEL)."""
-    antes_det = contar_respostas_detalhar(driver)
-    for tentativa in range(1, 4):
-        if tentativa > 1 and log_fn:
-            log_fn(f'  [API] Retentativa silenciosa {tentativa}/3...')
-        n = disparar_detalhes_api_pagina(
-            driver, log_fn, max_itens, silencioso=True, manter_silencioso=True,
-        )
-        aguardar_capturas_api(driver, minimo=1, timeout=10)
-        depois = contar_respostas_detalhar(driver)
-        if n > 0 and depois > antes_det:
-            return n
-        if depois > antes_det:
-            return max(n, depois - antes_det)
-        time.sleep(0.4)
-
-    if modo_silencioso_ativo():
+    if ok == 0 or novas == 0:
         if log_fn:
-            log_fn('  [API] Sem popup visivel — fim desta rodada (dados via capturas se houver).')
-        return max(ok_js, 0)
+            log_fn('  [API] JS nao gerou JSON — fallback clique com modal oculto...')
+            log_fn('  → Clicou nos botoes, mas modal oculto (nao deve piscar na tela).')
+        _modo_silencioso(driver, True)
+        n = disparar_detalhes_api_pagina(driver, log_fn, max_itens, silencioso=True)
+        _modo_silencioso(driver, False)
+        return n
 
-    if log_fn:
-        log_fn('  [API] Fallback final: clique visivel em Detalhes...')
-    return disparar_detalhes_visivel(
-        driver, log_fn, max_itens=max_itens, offset=offset, n_total=n_total,
-    )
+    time.sleep(0.8)
+    return ok
 
 
 def disparar_detalhes_sem_popup(
@@ -1349,15 +1330,10 @@ def disparar_detalhes_sem_popup(
     codigos_pagina: Optional[List[str]] = None,
     n_total: int = 0,
 ) -> int:
-    """Entrada unificada: modo rapido (JS/API, sem popup). Fallback: oculto → visivel."""
-    return disparar_detalhes_via_js(
-        driver,
-        filtro_cfg=filtro_cfg,
-        log_fn=log_fn,
-        max_itens=max_itens,
-        offset_codigos=offset_codigos,
-        codigos_pagina=codigos_pagina,
-        n_total=n_total,
+    """Entrada unificada: clique VISIVEL em cada botao Detalhes (popup na tela)."""
+    del filtro_cfg, codigos_pagina
+    return disparar_detalhes_visivel(
+        driver, log_fn, max_itens=max_itens, offset=offset_codigos, n_total=n_total,
     )
 
 
@@ -1370,79 +1346,29 @@ def detalhar_pagina_ate_esperado(
     codigos_pagina: List[str],
     log_fn: Optional[Callable[[str], None]] = None,
     max_rodadas: int = 15,
-    on_progresso: Optional[Callable[[int, int], None]] = None,
-    on_bolao: Optional[Callable[[Dict[str, Any]], None]] = None,
+    on_progresso: Optional[Callable[[List[Dict[str, Any]]], None]] = None,
 ) -> List[Dict[str, Any]]:
     """
-    Dispara detalhar-bolao de todos os cards da pagina (sem popup visivel).
-    on_progresso(n_ok, meta): chamado quando novos boloes entram nas capturas.
-    on_bolao(bolao): chamado a cada bolao individual capturado (para salvamento incremental).
+    Clica em todos os Detalhes da pagina (rodadas ate bater meta ou esgotar botoes).
+
+    Se on_progresso for informado, e chamado a cada rodada com os bolões
+    coletados ate o momento (permite salvar em tempo real).
     """
-    _modo_silencioso(driver, True)
-    try:
-        return _detalhar_pagina_ate_esperado_impl(
-            driver, filtro_cfg, parser_slug, hashes_vistos, n_esperado,
-            codigos_pagina, log_fn, max_rodadas, on_progresso, on_bolao,
-        )
-    finally:
-        _modo_silencioso(driver, False)
-
-
-def _detalhar_pagina_ate_esperado_impl(
-    driver,
-    filtro_cfg,
-    parser_slug: str,
-    hashes_vistos: Set[str],
-    n_esperado: int,
-    codigos_pagina: List[str],
-    log_fn: Optional[Callable[[str], None]] = None,
-    max_rodadas: int = 15,
-    on_progresso: Optional[Callable[[int, int], None]] = None,
-    on_bolao: Optional[Callable[[Dict[str, Any]], None]] = None,
-) -> List[Dict[str, Any]]:
     hashes_inicio = len(hashes_vistos)
     boloes_novos: List[Dict[str, Any]] = []
     estagnacao = 0
     meta = n_esperado
-    ultimo_prog = 0
-    _boloes_vistos_rodada: set = set()
-
-    def _notificar_progresso() -> None:
-        nonlocal ultimo_prog
-        n_ok = len(hashes_vistos) - hashes_inicio
-        if on_progresso and n_ok > ultimo_prog:
-            ultimo_prog = n_ok
-            try:
-                on_progresso(n_ok, meta)
-            except Exception:
-                pass
-
-    def _notificar_bolao(bolao: dict) -> None:
-        """Chama on_bolao para cada bolao novo capturado nesta pagina."""
-        if not on_bolao:
-            return
-        try:
-            h = json.dumps(bolao, sort_keys=True, ensure_ascii=False)
-            h = hashlib.md5(h.encode()).hexdigest()[:12]
-            if h in _boloes_vistos_rodada:
-                return
-            _boloes_vistos_rodada.add(h)
-            on_bolao(bolao)
-        except Exception:
-            pass
 
     for rodada in range(1, max_rodadas + 1):
         chunk = coletar_boloes_das_capturas(
             driver, hashes_vistos, log_fn, filtro_cfg, parser_slug, filtrar_dezenas=False,
         )
         boloes_novos.extend(chunk)
-        # Notificar cada bolao individual (salvamento incremental)
-        if chunk and on_bolao:
-            for b in chunk:
-                _notificar_bolao(b)
         n_ok_pagina = len(hashes_vistos) - hashes_inicio
-        if chunk:
-            _notificar_progresso()
+
+        # Callback de progresso (salvar em tempo real)
+        if on_progresso and chunk:
+            on_progresso(boloes_novos)
 
         n_tela = contar_detalhes_pagina(driver, preparar=False, log_fn=log_fn)
         if n_tela > meta:
@@ -1479,15 +1405,6 @@ def _detalhar_pagina_ate_esperado_impl(
             n_total=meta or n_tela,
         )
         aguardar_capturas_api(driver, minimo=1, timeout=12)
-        chunk2 = coletar_boloes_das_capturas(
-            driver, hashes_vistos, log_fn, filtro_cfg, parser_slug, filtrar_dezenas=False,
-        )
-        if chunk2:
-            boloes_novos.extend(chunk2)
-            if on_bolao:
-                for b in chunk2:
-                    _notificar_bolao(b)
-            _notificar_progresso()
 
         if n_disp == 0:
             estagnacao += 1
@@ -1503,6 +1420,8 @@ def _detalhar_pagina_ate_esperado_impl(
         driver, hashes_vistos, log_fn, filtro_cfg, parser_slug, filtrar_dezenas=False,
     )
     boloes_novos.extend(chunk)
+    if on_progresso and chunk:
+        on_progresso(boloes_novos)
     return boloes_novos
 
 
@@ -1537,19 +1456,18 @@ def disparar_detalhes_api_pagina(
     log_fn: Optional[Callable[[str], None]] = None,
     max_cliques: int = 55,
     silencioso: bool = False,
-    manter_silencioso: bool = False,
 ) -> int:
     """
     Clica em Detalhes de cada card — dispara boloes/detalhar-bolao na API.
-    silencioso=True: modal oculto via CSS (sem popup na tela).
+    silencioso=True: modal oculto via CSS (fallback).
     """
     if silencioso:
         _modo_silencioso(driver, True)
 
     driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-    time.sleep(0.35 if silencioso else 0.8)
+    time.sleep(0.5 if silencioso else 0.8)
     driver.execute_script('window.scrollTo(0, 0);')
-    time.sleep(0.2 if silencioso else 0.5)
+    time.sleep(0.3 if silencioso else 0.5)
 
     seletores = [
         'button.btn-primary',
@@ -1581,12 +1499,12 @@ def disparar_detalhes_api_pagina(
         if silencioso:
             log_fn('  → Clicou nos botoes, mas modal oculto (nao deve piscar na tela).')
 
-    espera = 0.28 if silencioso else 1.1
+    espera = 0.55 if silencioso else 1.1
     cliques = 0
     for btn in botoes[:max_cliques]:
         try:
             driver.execute_script('arguments[0].scrollIntoView({block:"center"});', btn)
-            time.sleep(0.08 if silencioso else 0.25)
+            time.sleep(0.15 if silencioso else 0.25)
             try:
                 btn.click()
             except Exception:
@@ -1598,7 +1516,7 @@ def disparar_detalhes_api_pagina(
         except Exception:
             continue
 
-    if silencioso and not manter_silencioso:
+    if silencioso:
         _modo_silencioso(driver, False)
 
     if log_fn:
@@ -1606,7 +1524,7 @@ def disparar_detalhes_api_pagina(
             log_fn(f'  [API] {cliques} detalhes disparados — aguardando JSON...')
         else:
             log_fn('  [API] Nenhum botão Detalhes encontrado na página.')
-    time.sleep(0.6 if silencioso else 1.5)
+    time.sleep(1.5)
     return cliques
 
 
@@ -1628,10 +1546,8 @@ def coletar_boloes_das_capturas(
         for bolao in _extrair_boloes_de_captura(data, parser_slug):
             if filtro_cfg:
                 try:
-                    from boloes_filtro_loterica import bolao_atende_filtro_coleta
-                    if not bolao_atende_filtro_coleta(
-                        bolao, filtro_cfg, filtrar_dezenas=filtrar_dezenas,
-                    ):
+                    from boloes_filtro_loterica import bolao_atende_filtro
+                    if not bolao_atende_filtro(bolao, filtro_cfg):
                         continue
                 except Exception:
                     pass

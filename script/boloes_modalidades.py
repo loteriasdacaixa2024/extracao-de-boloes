@@ -169,7 +169,7 @@ def resolver_modalidade_menu(termo: str) -> Optional[ModalidadeMenu]:
 
     norm = _norm_busca(termo)
     norm_sub = norm.replace(' ', '')
-    candidatos: List[tuple[int, ModalidadeMenu]] = []
+    candidatos = []
     for mod in TODAS_MODALIDADES:
         for alvo in (mod.label, mod.tecla, mod.slug.replace('-', ' ')) + tuple(mod.keywords):
             if not alvo:
@@ -177,10 +177,11 @@ def resolver_modalidade_menu(termo: str) -> Optional[ModalidadeMenu]:
             na = _norm_busca(str(alvo))
             na_sub = na.replace(' ', '')
             if na and (na == norm or norm in na or na in norm or na_sub == norm_sub):
-                candidatos.append((len(na), mod))
+                is_exact = (na == norm or na_sub == norm_sub)
+                candidatos.append((is_exact, len(na), mod))
     if candidatos:
-        candidatos.sort(key=lambda x: -x[0])
-        return candidatos[0][1]
+        candidatos.sort(key=lambda x: (x[0], x[1]), reverse=True)
+        return candidatos[0][2]
     return None
 
 
@@ -207,24 +208,6 @@ def modalidade_por_slug(slug: str) -> Optional[ModalidadeMenu]:
         if mod.slug == s or mod.parser_slug == s:
             return mod
     return None
-
-
-def modalidades_compativeis(mod_bolao: Optional[ModalidadeMenu], mod_esperada: Optional[ModalidadeMenu]) -> bool:
-    """Bolão (mod_bolao) pertence à modalidade escolhida no site (mod_esperada)."""
-    if not mod_bolao or not mod_esperada:
-        return True
-    if mod_bolao.slug == mod_esperada.slug:
-        return True
-    # Concurso especial no site (QSJ, DSP…): API grava slug base (quina, mega-sena…)
-    if mod_esperada.especial:
-        return (
-            mod_bolao.parser_slug == mod_esperada.parser_slug
-            or mod_bolao.slug == mod_esperada.parser_slug
-        )
-    # Modalidade regular: não misturar com concurso especial do mesmo jogo
-    if mod_bolao.especial and mod_bolao.parser_slug == mod_esperada.parser_slug:
-        return False
-    return False
 
 
 def concurso_para_arquivo(concurso: Any) -> str:

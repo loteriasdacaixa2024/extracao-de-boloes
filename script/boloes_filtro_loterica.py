@@ -38,7 +38,6 @@ from boloes_modalidades import (  # noqa: E402
     imprimir_menu_modalidades,
     ler_modalidade_terminal,
     resolver_modalidade_menu,
-    resolver_modalidade_api,
 )
 
 CATALOGO_MODALIDADES = TODAS_MODALIDADES
@@ -188,7 +187,7 @@ def parse_modalidades_input(raw: str) -> List[ModalidadeBolaoConfig]:
     return resultado
 
 
-def cfg_qualquer_loterica(qtd_dezenas: Optional[int] = None) -> FiltroLotericaConfig:
+def cfg_qualquer_loterica(qtd_dezenas: Optional[int] = 15) -> FiltroLotericaConfig:
     """Todas as lotéricas da lista/página — filtra só pela qtd. de dezenas por aposta."""
     return FiltroLotericaConfig(
         termo='',
@@ -197,36 +196,6 @@ def cfg_qualquer_loterica(qtd_dezenas: Optional[int] = None) -> FiltroLotericaCo
         qtd_dezenas=qtd_dezenas,
         varrer_dezenas=False,
         qualquer_loterica=True,
-    )
-
-
-def ajustar_qtd_dezenas_modalidade(
-    cfg: FiltroLotericaConfig,
-    mod: Optional[ModalidadeBolaoConfig],
-    log_fn: LogFn = None,
-) -> FiltroLotericaConfig:
-    """Ignora qtd. dezenas do site se estiver fora da faixa da modalidade ativa."""
-    if not cfg or not mod or cfg.qtd_dezenas is None:
-        return cfg
-    try:
-        n = int(cfg.qtd_dezenas)
-    except (TypeError, ValueError):
-        return cfg
-    c = mod.cfg
-    if c.min_dez <= n <= c.max_dez:
-        return cfg
-    _log(
-        f'  [FILTRO] Dezenas {n} ignoradas — fora da faixa de {mod.label} '
-        f'({c.min_dez}–{c.max_dez}). Usando qualquer qtd. nesta modalidade.',
-        log_fn,
-    )
-    return FiltroLotericaConfig(
-        termo=cfg.termo,
-        codigo=cfg.codigo,
-        nome=cfg.nome,
-        qtd_dezenas=None,
-        varrer_dezenas=cfg.varrer_dezenas,
-        qualquer_loterica=cfg.qualquer_loterica,
     )
 
 
@@ -522,22 +491,6 @@ def bolao_atende_filtro(dados: dict, cfg: FiltroLotericaConfig) -> bool:
     return bolao_apostas_todas_com_n_dezenas(dados, cfg.qtd_dezenas)
 
 
-def bolao_atende_filtro_coleta(
-    dados: dict,
-    cfg: FiltroLotericaConfig,
-    *,
-    filtrar_dezenas: bool = True,
-) -> bool:
-    """Coleta API em tempo real: filtrar_dezenas=False pula só qtd. de dezenas (filtro final na página)."""
-    if not cfg:
-        return True
-    if not filtrar_dezenas:
-        if cfg.qualquer_loterica or (not (cfg.termo or '').strip() and not cfg.codigo):
-            return True
-        return bolao_corresponde_loterica(dados, cfg)
-    return bolao_atende_filtro(dados, cfg)
-
-
 def _ler_qtd_dezenas_do_site(driver) -> Optional[int]:
     """Lê quantidade de dezenas selecionada no filtro do site."""
     try:
@@ -724,172 +677,10 @@ def _ler_loterica_da_lista_api(driver) -> str:
     return max(lotericas.items(), key=lambda x: x[1])[0]
 
 
-def _ler_modalidade_da_lista_api(driver) -> str:
-    """Modalidade dominante na ultima resposta de lista (campo modalidade da API)."""
-    try:
-        from boloes_api_caixa import ler_capturas_api, _eh_url_lista_boloes
-    except ImportError:
-        return ''
-
-    contagem: dict[str, int] = {}
-
-    def registrar(item: dict) -> None:
-        if not isinstance(item, dict) or not item.get('codigoBolao'):
-            return
-        mod = (
-            item.get('modalidade')
-            or item.get('nomeModalidade')
-            or item.get('siglaModalidade')
-            or ''
-        )
-        if isinstance(mod, dict):
-            mod = mod.get('nome') or mod.get('descricao') or mod.get('sigla') or ''
-        mod = str(mod or '').strip()
-        if mod:
-            contagem[mod] = contagem.get(mod, 0) + 1
-
-    def walk(node, depth: int = 0) -> None:
-        if depth > 14:
-            return
-        if isinstance(node, dict):
-            if node.get('codigoBolao'):
-                registrar(node)
-            for val in node.values():
-                walk(val, depth + 1)
-        elif isinstance(node, list):
-            for item in node:
-                walk(item, depth + 1)
-
-    for cap in reversed(ler_capturas_api(driver)):
-        if not _eh_url_lista_boloes(cap.get('url') or ''):
-            continue
-        walk(cap.get('data'))
-        if contagem:
-            break
-
-    if not contagem:
-        return ''
-    return max(contagem.items(), key=lambda x: x[1])[0]
-
-
-def _ler_modalidade_angular_site(driver) -> str:
-    try:
-        return (driver.execute_script("""
-            if (typeof angular === 'undefined') return '';
-            var sc = angular.element(document.body).scope();
-            for (var d = 0; d < 20 && sc; d++) {
-                var keys = [
-                    'modalidadeSelecionada', 'modalidadeBolao', 'nomeModalidade',
-                    'modalidade', 'tipoModalidade', 'siglaModalidade', 'modalidadeAtual'
-                ];
-                for (var k = 0; k < keys.length; k++) {
-                    var v = sc[keys[k]];
-                    if (v) {
-                        if (typeof v === 'object')
-                            v = v.nome || v.descricao || v.sigla || v.codigo || v.label;
-                        if (v && String(v).trim()) return String(v).trim();
-                    }
-                }
-                if (sc.filtro) {
-                    var fm = sc.filtro.modalidade || sc.filtro.nomeModalidade
-                        || sc.filtro.modalidadeSelecionada;
-                    if (fm) {
-                        if (typeof fm === 'object')
-                            fm = fm.nome || fm.descricao || fm.sigla;
-                        if (fm && String(fm).trim()) return String(fm).trim();
-                    }
-                }
-                sc = sc.$parent;
-            }
-            return '';
-        """) or '').strip()
-    except Exception:
-        return ''
-
-
-def _ler_modalidade_card_ativo_site(driver) -> Optional[ModalidadeBolaoConfig]:
-    try:
-        texto = driver.execute_script("""
-            function vis(el) {
-                if (!el) return false;
-                var st = window.getComputedStyle(el);
-                return st.display !== 'none' && st.visibility !== 'hidden' && el.offsetParent !== null;
-            }
-            function pickText(el) {
-                var t = (el.innerText || el.textContent || '').trim();
-                return t && t.length < 80 ? t : '';
-            }
-            var sels = [
-                '[class*="modalidade"][class*="active"]',
-                '[class*="modalidade"][class*="ativo"]',
-                '[class*="modalidade"][class*="selected"]',
-                '[class*="card"][class*="active"]',
-                '[class*="card"][class*="selected"]',
-                '[class*="card"][class*="ativo"]',
-                '[aria-selected="true"]'
-            ];
-            for (var s = 0; s < sels.length; s++) {
-                var nodes = document.querySelectorAll(sels[s]);
-                for (var i = 0; i < nodes.length; i++) {
-                    if (!vis(nodes[i])) continue;
-                    var t = pickText(nodes[i]);
-                    if (t) return t;
-                }
-            }
-            return '';
-        """) or ''
-        if texto:
-            mod = resolver_modalidade_api(texto) or resolver_modalidade_menu(texto)
-            if mod:
-                return mod
-    except Exception:
-        pass
-    return None
-
-
-def ler_modalidade_aplicada_site(driver, log_fn: LogFn = None) -> Optional[ModalidadeBolaoConfig]:
-    """
-    Le a modalidade ATIVA no site (prioridade: card > angular > lista API > DOM).
-    Card/angular detectam QSJ/DSP; a API da lista costuma mandar só QUINA/MEGA.
-    """
-    from boloes_pasta_bds import detectar_modalidade_site
-
-    mod_card = _ler_modalidade_card_ativo_site(driver)
-    if mod_card:
-        _log(f'  [MODALIDADE DETECTADA] {mod_card.label} | via: card ativo no site', log_fn)
-        return mod_card
-
-    raw_ang = _ler_modalidade_angular_site(driver)
-    if raw_ang:
-        mod = resolver_modalidade_api(raw_ang) or resolver_modalidade_menu(raw_ang)
-        if mod:
-            _log(f'  [MODALIDADE DETECTADA] {mod.label} | via: angular ({raw_ang})', log_fn)
-            return mod
-
-    raw_api = _ler_modalidade_da_lista_api(driver)
-    if raw_api:
-        mod = resolver_modalidade_api(raw_api) or resolver_modalidade_menu(raw_api)
-        if mod:
-            _log(f'  [MODALIDADE DETECTADA] {mod.label} | via: lista API ({raw_api})', log_fn)
-            return mod
-
-    slug = detectar_modalidade_site(driver)
-    if slug:
-        mod = resolver_modalidade_menu(slug)
-        if mod:
-            _log(f'  [MODALIDADE DETECTADA] {mod.label} | via: DOM ({slug})', log_fn)
-            return mod
-
-    _log('  [MODALIDADE] Nao detectei modalidade no site.', log_fn)
-    _log('  → Card da modalidade ativo + lista carregada + botao Aplicar.', log_fn)
-    return None
-
-
 def ler_filtro_aplicado_site(driver, log_fn: LogFn = None) -> Optional[FiltroLotericaConfig]:
     """
     Lê o filtro que VOCE aplicou no site (campo lotérica + dezenas).
-    Campo lotérica vazio = TODAS lotéricas / todos estados visíveis na modalidade.
-    Não infere lotérica a partir dos cards da lista (evita restringir a 1 estado).
+    O script usa isso para baixar SOMENTE bolões deste filtro.
     """
     _scroll_para_filtros(driver)
     termo = ''
@@ -925,15 +716,28 @@ def ler_filtro_aplicado_site(driver, log_fn: LogFn = None) -> Optional[FiltroLot
             pass
 
     if not termo:
+        termo = _ler_loterica_texto_pagina(driver)
+        if termo:
+            fonte = 'texto da pagina (sidebar/cards)'
+
+    if not termo:
+        termo = _ler_loterica_da_lista_api(driver)
+        if termo:
+            fonte = 'lista API (apos Aplicar)'
+
+    if not termo:
         qtd_dezenas = _ler_qtd_dezenas_do_site(driver)
-        cfg = cfg_qualquer_loterica(qtd_dezenas)
-        dez_txt = str(qtd_dezenas) if qtd_dezenas else 'qualquer'
-        _log(
-            f'  [FILTRO DETECTADO] Qualquer lotérica | Dezenas: {dez_txt} | via: site (sem lotérica no filtro)',
-            log_fn,
-        )
-        _log('  → Modalidade do site + TODAS lotéricas/estados — paginação até Seguinte desabilitar.', log_fn)
-        return cfg
+        if qtd_dezenas:
+            cfg = cfg_qualquer_loterica(qtd_dezenas)
+            _log(
+                f'  [FILTRO DETECTADO] Qualquer lotérica | Dezenas: {qtd_dezenas} | via: site (sem lotérica)',
+                log_fn,
+            )
+            _log('  → Baixando bolões de TODAS as lotéricas visíveis com essa qtd. de dezenas.', log_fn)
+            return cfg
+        _log('  [FILTRO] Nao detectei lotérica no site.', log_fn)
+        _log('  → No site: só 15 dezenas + estado (ex. SP), sem lotérica — ou digite * no terminal.', log_fn)
+        return None
 
     qtd_dezenas = _ler_qtd_dezenas_do_site(driver)
     codigo, nome = parse_termo_loterica(termo)
@@ -1784,9 +1588,10 @@ def _tem_proxima_pagina(driver) -> bool:
 
 
 def eh_ultima_pagina(driver) -> bool:
-    """True somente quando Seguinte existe e está desabilitado (fim real da paginação)."""
+    """True quando Seguinte existe desabilitado ou não há próxima página."""
     _scroll_para_paginacao(driver)
-    return _estado_botao_seguinte(driver) == 'desabilitado'
+    estado = _estado_botao_seguinte(driver)
+    return estado in ('desabilitado', 'ausente')
 
 
 def _filtro_loterica_no_campo(valor_campo: str, cfg: FiltroLotericaConfig) -> bool:
@@ -2444,17 +2249,14 @@ def tem_proxima_pagina(driver) -> bool:
 
 
 def ultima_pagina_detectada(driver) -> bool:
-    """True quando Seguinte está desabilitado (fim das páginas no site)."""
+    """True quando Seguinte está desabilitado ou ausente (fim das páginas no site)."""
     for espera in (0, 1.2, 2.0):
         if espera:
             time.sleep(espera)
         _scroll_para_paginacao(driver)
-        estado = _estado_botao_seguinte(driver)
-        if estado == 'habilitado':
+        if _estado_botao_seguinte(driver) == 'habilitado':
             return False
-        if estado == 'desabilitado':
-            return True
-    return False
+    return eh_ultima_pagina(driver)
 
 
 def ir_para_pagina_lista(driver, destino: int, log_fn: LogFn = None) -> bool:
