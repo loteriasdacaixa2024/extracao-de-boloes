@@ -1,0 +1,186 @@
+[
+  {
+    "data": {
+      "codigo": "246AF53-114AF53-NAE",
+      "mensagem": "Unauthorized",
+      "tipo": 2
+    },
+    "ts": 1783185834776,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL3JlY3VwZXJhci1ib2xvZXMtZGlzcG9uaXZlaXM=/?q=%5B%1E;%1F%C2%BA5%0C:%3C%C2%BD%11%C2%98f%C3%88%C3%B1%C2%A3%0Caxe%11%C3%AB%C3%95%C2%A7%C2%87%0E%0F!%C3%A8m%C3%A0%C2%83%C2%BD,%C2%88%C3%98D%C2%97%11hnd%C3%BE%18%C3%8D%038%C2%B2%C2%B6%C3%BE$M%0D%09B%C2%99L%C2%BD%11tZf%C3%97%C2%A2%C2%A1%C3%BA%7D%C2%8E%C2%91%C3%8F%C2%A7%C3%90%C3%A4%1E%C2%B2m%C3%9E%C2%81h%08%22%C2%81zE%1F%C2%A9uo1%06%C2%A7%C2%AF%C2%9EO%03%C2%86%03%C3%A4%1A%C2%A9F%7F%C3%A4%C2%AC%C3%BFc%C3%A7A%C3%B2%C3%83)%1B!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-04T14:14:09.450",
+      "payload": {
+        "mapa": {
+          "cachePublicKeyCliente": false,
+          "concursoMega30Anos": 3010,
+          "consultaMinhasApostas": true,
+          "descricaoSSOIndisponivel": "A página solicitada está em manutenção. Tente novamente em alguns instantes.<br>",
+          "grupoCpfsAcessamNovoConferenciaAposta": 100,
+          "grupoDeCpfsQueAcessamOBff": "0",
+          "grupoDeCpfsQueAcessamOBffPiloto": "0;61082584380;00990840158",
+          "grupoDeCpfsQueAcessamOServicoDaAzure": "100",
+          "habilitaExclusaoAutimaticaCotas": true,
+          "habilitaVendaCotasBolao": true,
+          "habilitarConferenciaAutomaticaApostas": true,
+          "hostMicroServicoApostadorHabilitado": "100;00990840158;61082584380;46251634120;72291834134;08696173627;00079648622",
+          "hostMicroServicoApostadorHabilitadoPiloto": "100",
+          "hostMicroServicoApostadorPiloto": "https://silce.carrinho.plt.caixa.gov.br/loterias-web-plt/apostador/v1/",
+          "hostMicroServicoApostadorProducao": "https://silce.carrinho.caixa.gov.br/loterias-web/apostador/v1/",
+          "hostMicroServicoBff": "-",
+          "hostMicroServicoBffPiloto": "https://silce.carrinho.plt.caixa.gov.br/loterias-web-plt/bff/v1",
+          "hostMicroServicoCarrinhoPiloto": "https://silce.carrinho.plt.caixa.gov.br/loterias-web-plt/carrinho/v1",
+          "hostMicroServicoCarrinhoProducao": "https://silce.carrinho.caixa.gov.br/loterias-web/carrinho/v1",
+          "hostMicroServicoConferenciaAposta": "https://mobileloterias.caixa.gov.br/silce-servico-rest/rest/v2",
+          "hostMicroServicoConferenciaApostaWeb": "https://www.loteriasonline.caixa.gov.br/silce-servico-rest/rest/v2",
+          "hostNovoMicroServicoConferenciaApostaPilotoWeb": "https://pilotoloterias.caixa.gov.br/loterias/silce-consulta-apostas/",
+          "hostNovoMicroServicoConferenciaApostaProducaoWeb": "-",
+          "linkDownload": "simlo.caixa",
+          "mostrar6meses+": false,
+          "mostrarLinkAlteracaoSSO": false,
+          "mostrarPagina": false,
+          "nomeAmbiente": "prd",
+          "nuvemApikey": "635c94f6079c4c909e88389564c7e0fb",
+          "tempoCacheEscudos": {
+            "calendar": 1782825451000,
+            "day": 30,
+            "diaSemana": true,
+            "finalDeSemana": false,
+            "hora": {
+              "calendar": -59958268949000,
+              "horaDoDia": 10,
+              "minuto": 17,
+              "segundo": 31,
+              "time": -59958268949000
+            },
+            "month": 6,
+            "passado": true,
+            "time": 1782825451000,
+            "timeInMillis": 1782825451000,
+            "year": 2026
+          },
+          "tempoCacheMeiosPagamento": "3600",
+          "temposPermitidosSuspensao": [
+            "24h",
+            "48h",
+            "7 dias",
+            "15 dias",
+            "30 dias"
+          ]
+        }
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783185834928,
+    "url": "/silce-servico-rest/rest/v1/cGFyYW1ldHJvcy9jb25maWd1cmF2ZWlzLXdlYg==/"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-04T14:19:16.558",
+      "payload": {
+        "mapa": {
+          "cabecalho": " \r\n  \r\n \r\n<span mso-fareast-font-family:calibricolor:blackmso-highlight:aquamso-fareast-language:en-us;\"=\"\">Portal Loterias CAIXA: agora você pode apostar na sorte de onde estiver.</span><br>",
+          "cabecalhoBolao": "Aposte nos Bolões CAIXA",
+          "cabecalhoSecundarioBolao": "aumente suas chances de ganhar!",
+          "descricaoDiaSorteHome": "Aposte, hoje pode ser o seu dia.",
+          "descricaoDuplaEspHome": "A mesma aposta, duas chances de ganhar.",
+          "descricaoDuplaSenaHome": "A mesma aposta, duas chances de ganhar.",
+          "descricaoInstantaneaHome": "Diversão a todo instante",
+          "descricaoLotecaHome": "Sua paixão por futebol pode te tornar campeão.",
+          "descricaoLotofacilEspHome": "Ganhar ficou fácil, aposte!",
+          "descricaoLotofacilHome": "Ganhar ficou fácil, aposte.",
+          "descricaoLotogolHome": "Chutando os gols da rodada, você pode acertar no prêmio.",
+          "descricaoLotomaniaHome": "Fácil de apostar e de ganhar.",
+          "descricaoMaisMilionariaHome": "Super prêmios e muitas chances de ganhar.",
+          "descricaoMegaEspHome": "A loteria que paga milhões para o acertador dos seis números sorteados.",
+          "descricaoMegaSenaHome": "Aposte e concorra a milhões.",
+          "descricaoQuinaEspHome": "Prêmio estimado em 250 milhões é só na Quina de São João. ",
+          "descricaoQuinaHome": "Com sorteios todos os dias você aumenta suas chances de ganhar.",
+          "descricaoSuperSeteHome": "Seja um Super Ganhador com 7 números em 7 colunas!",
+          "descricaoTimemaniaHome": "Seu palpite pode render uma bolada.",
+          "mensagemBaixarApp01": "Baixe o Aplicativo das Loterias CAIXA e tenha uma experiência completa na palma da mão!",
+          "mensagemBaixarApp02": "Para baixar o aplicativo, clique em uma das lojas abaixo ou aponte a câmera do celular para o QR Code!",
+          "nomeAmbiente": "prd",
+          "nuvemApikey": "635c94f6079c4c909e88389564c7e0fb",
+          "texto1HeaderAbaLinkLoterico": "Aposte nos Bolões CAIXA",
+          "texto1HeaderAbaLotericaFavorita": "Aposte nos Bolões CAIXA",
+          "texto2HeaderAbaLinkLoterico": "aumente as suas chances de ganhar!",
+          "texto2HeaderAbaLotericaFavorita": "aumente as suas chances de ganhar!",
+          "urlBaixarAppAndroid": "https://play.google.com/store/apps/details?id=br.gov.caixa.loterias.apostas",
+          "urlBaixarAppIOS": "https://apps.apple.com/br/app/loterias-caixa/id1436530324"
+        }
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783185834931,
+    "url": "/silce-servico-rest/rest/v1/cGFyYW1ldHJvcy9wZy1pbmljaWFs/"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-04T14:14:09.450",
+      "payload": {
+        "mapa": {
+          "cachePublicKeyCliente": false,
+          "concursoMega30Anos": 3010,
+          "consultaMinhasApostas": true,
+          "descricaoSSOIndisponivel": "A página solicitada está em manutenção. Tente novamente em alguns instantes.<br>",
+          "grupoCpfsAcessamNovoConferenciaAposta": 100,
+          "grupoDeCpfsQueAcessamOBff": "0",
+          "grupoDeCpfsQueAcessamOBffPiloto": "0;61082584380;00990840158",
+          "grupoDeCpfsQueAcessamOServicoDaAzure": "100",
+          "habilitaExclusaoAutimaticaCotas": true,
+          "habilitaVendaCotasBolao": true,
+          "habilitarConferenciaAutomaticaApostas": true,
+          "hostMicroServicoApostadorHabilitado": "100;00990840158;61082584380;46251634120;72291834134;08696173627;00079648622",
+          "hostMicroServicoApostadorHabilitadoPiloto": "100",
+          "hostMicroServicoApostadorPiloto": "https://silce.carrinho.plt.caixa.gov.br/loterias-web-plt/apostador/v1/",
+          "hostMicroServicoApostadorProducao": "https://silce.carrinho.caixa.gov.br/loterias-web/apostador/v1/",
+          "hostMicroServicoBff": "-",
+          "hostMicroServicoBffPiloto": "https://silce.carrinho.plt.caixa.gov.br/loterias-web-plt/bff/v1",
+          "hostMicroServicoCarrinhoPiloto": "https://silce.carrinho.plt.caixa.gov.br/loterias-web-plt/carrinho/v1",
+          "hostMicroServicoCarrinhoProducao": "https://silce.carrinho.caixa.gov.br/loterias-web/carrinho/v1",
+          "hostMicroServicoConferenciaAposta": "https://mobileloterias.caixa.gov.br/silce-servico-rest/rest/v2",
+          "hostMicroServicoConferenciaApostaWeb": "https://www.loteriasonline.caixa.gov.br/silce-servico-rest/rest/v2",
+          "hostNovoMicroServicoConferenciaApostaPilotoWeb": "https://pilotoloterias.caixa.gov.br/loterias/silce-consulta-apostas/",
+          "hostNovoMicroServicoConferenciaApostaProducaoWeb": "-",
+          "linkDownload": "simlo.caixa",
+          "mostrar6meses+": false,
+          "mostrarLinkAlteracaoSSO": false,
+          "mostrarPagina": false,
+          "nomeAmbiente": "prd",
+          "nuvemApikey": "635c94f6079c4c909e88389564c7e0fb",
+          "tempoCacheEscudos": {
+            "calendar": 1782825451000,
+            "day": 30,
+            "diaSemana": true,
+            "finalDeSemana": false,
+            "hora": {
+              "calendar": -59958268949000,
+              "horaDoDia": 10,
+              "minuto": 17,
+              "segundo": 31,
+              "time": -59958268949000
+            },
+            "month": 6,
+            "passado": true,
+            "time": 1782825451000,
+            "timeInMillis": 1782825451000,
+            "year": 2026
+          },
+          "tempoCacheMeiosPagamento": "3600",
+          "temposPermitidosSuspensao": [
+            "24h",
+            "48h",
+            "7 dias",
+            "15 dias",
+            "30 dias"
+          ]
+        }
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783185834936,
+    "url": "/silce-servico-rest/rest/v1/cGFyYW1ldHJvcy9jb25maWd1cmF2ZWlzLXdlYg==/"
+  }
+]

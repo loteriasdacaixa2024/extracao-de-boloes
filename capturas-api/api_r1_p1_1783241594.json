@@ -1,0 +1,2475 @@
+[
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:13:19.441",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              3,
+              10,
+              13,
+              15,
+              18,
+              19,
+              23,
+              24,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "ABR",
+              "nome": "Abril",
+              "numero": 4
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              2,
+              4,
+              5,
+              13,
+              16,
+              18,
+              26,
+              27
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "NOV",
+              "nome": "Novembro",
+              "numero": 11
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": true,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 14598,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "21.014598-6",
+          "dv": 6,
+          "dvMunicipio": 6,
+          "id": 14598,
+          "idMunicipio": 3980,
+          "idUF": 35,
+          "logradouro": "AV NOVE DE JULHO 280                              ",
+          "nome": "VAPT -  VUPT LOTERIAS LTDA                                                                                         ",
+          "nomeFantasia": "VAPT -  VUPT LOTERIAS",
+          "nomeMunicipio": "POA                                ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.014598-6",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 6,
+            "numero": 3980
+          },
+          "nome": "POA",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "VAPT -  VUPT LOTERIAS",
+        "nomeRazaoSocial": "VAPT -  VUPT LOTERIAS LTDA",
+        "qtdApostas": 2,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 25,
+        "qtdCotaDisponivel": 23,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 25,
+        "qtdCotaVendidas": 2,
+        "qtdNumeros": 9,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 9.71,
+        "vrCotaSemTarifa": 7.2,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 62.99,
+        "vrTarifaServicoCota": 2.51,
+        "vrTarifaServicoUltimaCota": 2.75,
+        "vrTotalBolaoComTarifa": 242.99,
+        "vrTotalBolaoSemTarifa": 180,
+        "vrUltimaCotaComTarifa": 9.95,
+        "vrUltimaCotaSemTarifa": 7.2
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783239198227,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%B7%C3%8B4g%C2%99%C2%8B%C2%B63%5C:_%C2%A7%19%1A%1D%C2%BB%C2%B7%C3%97%C3%AF%22%C3%B9%02S%C2%BF%25W%C2%B9%C2%9E%C3%B7%C3%8B%C2%96%C3%B1!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:13:26.771",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              1,
+              6,
+              11,
+              17,
+              20,
+              22,
+              23,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JUN",
+              "nome": "Junho",
+              "numero": 6
+            }
+          },
+          {
+            "dezenas": [
+              2,
+              8,
+              11,
+              13,
+              18,
+              21,
+              24,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAI",
+              "nome": "Maio",
+              "numero": 5
+            }
+          },
+          {
+            "dezenas": [
+              8,
+              10,
+              12,
+              13,
+              24,
+              25,
+              26,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "DEZ",
+              "nome": "Dezembro",
+              "numero": 12
+            }
+          },
+          {
+            "dezenas": [
+              2,
+              6,
+              11,
+              15,
+              16,
+              18,
+              21,
+              29
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "ABR",
+              "nome": "Abril",
+              "numero": 4
+            }
+          },
+          {
+            "dezenas": [
+              4,
+              11,
+              15,
+              16,
+              21,
+              23,
+              28,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "AGO",
+              "nome": "Agosto",
+              "numero": 8
+            }
+          },
+          {
+            "dezenas": [
+              2,
+              4,
+              12,
+              13,
+              14,
+              21,
+              23,
+              28
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JAN",
+              "nome": "Janeiro",
+              "numero": 1
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              9,
+              11,
+              15,
+              20,
+              21,
+              25,
+              29
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "NOV",
+              "nome": "Novembro",
+              "numero": 11
+            }
+          },
+          {
+            "dezenas": [
+              3,
+              5,
+              7,
+              18,
+              21,
+              25,
+              26,
+              27
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAR",
+              "nome": "Março",
+              "numero": 3
+            }
+          },
+          {
+            "dezenas": [
+              5,
+              12,
+              15,
+              16,
+              19,
+              25,
+              29,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "OUT",
+              "nome": "Outubro",
+              "numero": 10
+            }
+          },
+          {
+            "dezenas": [
+              6,
+              7,
+              10,
+              14,
+              20,
+              22,
+              27,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JUL",
+              "nome": "Julho",
+              "numero": 7
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": false,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 20926,
+        "lotericaFormatada": {
+          "bairro": "JARDIM SAO PAULO                        ",
+          "codigo": "21.020926-7",
+          "dv": 7,
+          "dvMunicipio": 8,
+          "id": 20926,
+          "idMunicipio": 5030,
+          "idUF": 35,
+          "logradouro": "RUA QUARENTA E OITO                               ",
+          "nome": "LOTERICA PRESTES MAIA LTDA ME                                                                                      ",
+          "nomeFantasia": "LOTERICA PRESTES MAIA",
+          "nomeMunicipio": "SAO PAULO                          ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.020926-7",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 8,
+            "numero": 5030
+          },
+          "nome": "SAO PAULO",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "LOTERICA PRESTES MAIA",
+        "nomeRazaoSocial": "LOTERICA PRESTES MAIA LTDA ME",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 20,
+        "qtdCotaDisponivel": 18,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 20,
+        "qtdCotaVendidas": 2,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 13.5,
+        "vrCotaSemTarifa": 10,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 70,
+        "vrTarifaServicoCota": 3.5,
+        "vrTarifaServicoUltimaCota": 3.5,
+        "vrTotalBolaoComTarifa": 270,
+        "vrTotalBolaoSemTarifa": 200,
+        "vrUltimaCotaComTarifa": 13.5,
+        "vrUltimaCotaSemTarifa": 10
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783239205604,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A5%C3%91d%C2%B2%C3%A8%01%C3%AD%C2%A7D%C3%8C%C3%BAy%C3%81%09%C2%86%C2%B5I%C2%98%5E%C3%AFK%C2%BE%C2%AA%3F%C3%A3%C2%A66%06%C2%BB8%C2%A1%C2%83!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:15:46.544",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              2,
+              5,
+              6,
+              7,
+              8,
+              9,
+              11,
+              14,
+              21,
+              24,
+              28,
+              29,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "SET",
+              "nome": "Setembro",
+              "numero": 9
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": true,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 7959,
+        "lotericaFormatada": {
+          "bairro": "BELA VISTA                              ",
+          "codigo": "21.007959-2",
+          "dv": 2,
+          "dvMunicipio": 8,
+          "id": 7959,
+          "idMunicipio": 5030,
+          "idUF": 35,
+          "logradouro": "AV BRIG LUIZ ANTONIO                              ",
+          "nome": "BRIGADEIRO LOTERIAS LTDA ME                                                                                        ",
+          "nomeFantasia": "BRIGADEIRO LOTERIAS",
+          "nomeMunicipio": "SAO PAULO                          ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.007959-2",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 8,
+            "numero": 5030
+          },
+          "nome": "SAO PAULO",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "BRIGADEIRO LOTERIAS",
+        "nomeRazaoSocial": "BRIGADEIRO LOTERIAS LTDA ME",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 58,
+        "qtdCotaDisponivel": 54,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 58,
+        "qtdCotaVendidas": 4,
+        "qtdNumeros": 13,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 99.84,
+        "vrCotaSemTarifa": 73.96,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 1501.5,
+        "vrTarifaServicoCota": 25.88,
+        "vrTarifaServicoUltimaCota": 26.34,
+        "vrTotalBolaoComTarifa": 5791.5,
+        "vrTotalBolaoSemTarifa": 4290,
+        "vrUltimaCotaComTarifa": 100.62,
+        "vrUltimaCotaSemTarifa": 74.28
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783239346441,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%A2%C3%AA_X%C3%AE%C3%81%01%23%C2%83%C3%A6%C2%81%C3%8A%C3%86%C3%98%3C%C3%A3i%0E%22!%C2%97%15%C2%97+K%5D%C2%83%15%C2%8B@%C3%BF%C2%A1!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:36:37.733",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              2,
+              5,
+              8,
+              13,
+              15,
+              21,
+              22,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JUL",
+              "nome": "Julho",
+              "numero": 7
+            }
+          },
+          {
+            "dezenas": [
+              3,
+              6,
+              9,
+              21,
+              22,
+              25,
+              26,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JAN",
+              "nome": "Janeiro",
+              "numero": 1
+            }
+          },
+          {
+            "dezenas": [
+              5,
+              8,
+              13,
+              16,
+              20,
+              24,
+              28,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "AGO",
+              "nome": "Agosto",
+              "numero": 8
+            }
+          },
+          {
+            "dezenas": [
+              4,
+              14,
+              15,
+              18,
+              20,
+              22,
+              23,
+              27
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JUN",
+              "nome": "Junho",
+              "numero": 6
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              6,
+              16,
+              18,
+              20,
+              23,
+              27,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAR",
+              "nome": "Março",
+              "numero": 3
+            }
+          },
+          {
+            "dezenas": [
+              5,
+              11,
+              13,
+              16,
+              17,
+              19,
+              25,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "NOV",
+              "nome": "Novembro",
+              "numero": 11
+            }
+          },
+          {
+            "dezenas": [
+              4,
+              5,
+              10,
+              11,
+              25,
+              29,
+              30,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "FEV",
+              "nome": "Fevereiro",
+              "numero": 2
+            }
+          },
+          {
+            "dezenas": [
+              4,
+              7,
+              10,
+              19,
+              25,
+              28,
+              29,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "OUT",
+              "nome": "Outubro",
+              "numero": 10
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              3,
+              9,
+              14,
+              16,
+              20,
+              21,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "ABR",
+              "nome": "Abril",
+              "numero": 4
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              3,
+              4,
+              7,
+              11,
+              12,
+              14,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "DEZ",
+              "nome": "Dezembro",
+              "numero": 12
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": false,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 22107,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "21.022107-0",
+          "dv": 0,
+          "dvMunicipio": 6,
+          "id": 22107,
+          "idMunicipio": 335,
+          "idUF": 35,
+          "logradouro": "RUA ANGELO SANCHES PARRA                          ",
+          "nome": "CASA LOTERICA CAVALINHO DE OURO LTDA ME                                                                            ",
+          "nomeFantasia": "LOTERICA CAVALINHO DE OURO",
+          "nomeMunicipio": "ARCO-IRIS                          ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.022107-0",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 6,
+            "numero": 335
+          },
+          "nome": "ARCO-IRIS",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "LOTERICA CAVALINHO DE OURO",
+        "nomeRazaoSocial": "CASA LOTERICA CAVALINHO DE OURO LTDA ME",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 20,
+        "qtdCotaDisponivel": 20,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 20,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 13.5,
+        "vrCotaSemTarifa": 10,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 70,
+        "vrTarifaServicoCota": 3.5,
+        "vrTarifaServicoUltimaCota": 3.5,
+        "vrTotalBolaoComTarifa": 270,
+        "vrTotalBolaoSemTarifa": 200,
+        "vrUltimaCotaComTarifa": 13.5,
+        "vrUltimaCotaSemTarifa": 10
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240596893,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1AV%C2%9A%60%C2%8D%C3%A4iD%7D%C2%97%C2%A0%C2%80%C3%99%C2%ABP%C3%80%C3%AA%3Dci%C2%99i!%C3%9B3%04%7C8%C2%AB%C2%94%C3%AE1%1E!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:36:37.733",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              2,
+              3,
+              7,
+              10,
+              13,
+              17,
+              20,
+              21,
+              24,
+              30
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "JUN",
+              "nome": "Junho",
+              "numero": 6
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": true,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 5377,
+        "lotericaFormatada": {
+          "bairro": "JARDIM DAS PAINEIRAS                    ",
+          "codigo": "21.005377-1",
+          "dv": 1,
+          "dvMunicipio": 1,
+          "id": 5377,
+          "idMunicipio": 1907,
+          "idUF": 35,
+          "logradouro": "RUA LUIS CAMILO DE CAMARGO                        ",
+          "nome": "HORTOLANDIA LOTERIAS LTDA                                                                                          ",
+          "nomeFantasia": "ESTRELA DA SORTE LOTERIAS",
+          "nomeMunicipio": "HORTOLANDIA                        ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.005377-1",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 1,
+            "numero": 1907
+          },
+          "nome": "HORTOLANDIA",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "ESTRELA DA SORTE LOTERIAS",
+        "nomeRazaoSocial": "HORTOLANDIA LOTERIAS LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 41,
+        "qtdCotaDisponivel": 37,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 41,
+        "qtdCotaVendidas": 4,
+        "qtdNumeros": 10,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 9.87,
+        "vrCotaSemTarifa": 7.31,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 105,
+        "vrTarifaServicoCota": 2.56,
+        "vrTarifaServicoUltimaCota": 2.6,
+        "vrTotalBolaoComTarifa": 405,
+        "vrTotalBolaoSemTarifa": 300,
+        "vrUltimaCotaComTarifa": 10.2,
+        "vrUltimaCotaSemTarifa": 7.6
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240596937,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%86%5B%C2%AD%C3%81F%C2%BD%C3%93%C3%8B%C3%B7%C2%99%C3%AE%3C%C3%A4%C3%96%C3%84%5C%C3%BD%C3%9B%C3%A26%C2%95%C3%8Al%C2%A0*%C3%82_%C2%B4%C2%9A%5E%C2%BDw!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:36:37.738",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              3,
+              6,
+              11,
+              14,
+              19,
+              23,
+              25,
+              27,
+              31
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "MAI",
+              "nome": "Maio",
+              "numero": 5
+            }
+          },
+          {
+            "dezenas": [
+              8,
+              9,
+              10,
+              14,
+              17,
+              18,
+              21,
+              25,
+              29
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "NOV",
+              "nome": "Novembro",
+              "numero": 11
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": true,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 2137,
+        "lotericaFormatada": {
+          "bairro": "Vl Santa Catarina                       ",
+          "codigo": "21.002137-3",
+          "dv": 3,
+          "dvMunicipio": 8,
+          "id": 2137,
+          "idMunicipio": 5030,
+          "idUF": 35,
+          "logradouro": "Av Santa Catarina                                 ",
+          "nome": "LOTERICA VIDA NOVA LTDA                                                                                            ",
+          "nomeFantasia": "LOTCA VIDA NOVA LTDA",
+          "nomeMunicipio": "SAO PAULO                          ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.002137-3",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 8,
+            "numero": 5030
+          },
+          "nome": "SAO PAULO",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "LOTCA VIDA NOVA LTDA",
+        "nomeRazaoSocial": "LOTERICA VIDA NOVA LTDA",
+        "qtdApostas": 2,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 12,
+        "qtdCotaDisponivel": 12,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 12,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 9,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 20.24,
+        "vrCotaSemTarifa": 15,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 62.99,
+        "vrTarifaServicoCota": 5.24,
+        "vrTarifaServicoUltimaCota": 5.35,
+        "vrTotalBolaoComTarifa": 242.99,
+        "vrTotalBolaoSemTarifa": 180,
+        "vrUltimaCotaComTarifa": 20.35,
+        "vrUltimaCotaSemTarifa": 15
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240596970,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%AD%C3%99KO%C3%BF%C3%B22A%C2%8D%C3%B4%0E%C2%83%16%C2%9D%C3%95'@Gr%C2%99%3Ffy%1DT%10mz%C3%94%07%C3%B5%C3%82!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:36:37.738",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              2,
+              4,
+              6,
+              14,
+              15,
+              20,
+              24,
+              26
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "DEZ",
+              "nome": "Dezembro",
+              "numero": 12
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              2,
+              3,
+              4,
+              11,
+              15,
+              17,
+              21
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "SET",
+              "nome": "Setembro",
+              "numero": 9
+            }
+          },
+          {
+            "dezenas": [
+              2,
+              3,
+              7,
+              8,
+              16,
+              17,
+              27,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "FEV",
+              "nome": "Fevereiro",
+              "numero": 2
+            }
+          },
+          {
+            "dezenas": [
+              3,
+              5,
+              7,
+              9,
+              11,
+              21,
+              23,
+              28
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "OUT",
+              "nome": "Outubro",
+              "numero": 10
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              6,
+              7,
+              8,
+              10,
+              20,
+              22,
+              25
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAR",
+              "nome": "Março",
+              "numero": 3
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": true,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 1263,
+        "lotericaFormatada": {
+          "bairro": "V PIRES                                 ",
+          "codigo": "21.001263-3",
+          "dv": 3,
+          "dvMunicipio": 9,
+          "id": 1263,
+          "idMunicipio": 4780,
+          "idUF": 35,
+          "logradouro": "AV DOM PEDRO I                                    ",
+          "nome": "M.G. LOTERIAS LTDA.                                                                                                ",
+          "nomeFantasia": "M.G. LOTERIAS LTDA.",
+          "nomeMunicipio": "SANTO ANDRE                        ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.001263-3",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 9,
+            "numero": 4780
+          },
+          "nome": "SANTO ANDRE",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "M.G. LOTERIAS LTDA.",
+        "nomeRazaoSocial": "M.G. LOTERIAS LTDA.",
+        "qtdApostas": 5,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 13,
+        "qtdCotaDisponivel": 13,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 13,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 10.38,
+        "vrCotaSemTarifa": 7.69,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 35,
+        "vrTarifaServicoCota": 2.69,
+        "vrTarifaServicoUltimaCota": 2.72,
+        "vrTotalBolaoComTarifa": 135,
+        "vrTotalBolaoSemTarifa": 100,
+        "vrUltimaCotaComTarifa": 10.44,
+        "vrUltimaCotaSemTarifa": 7.72
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240597011,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%8C%C2%90P%0Df,Q%C3%BE%C3%9F%C2%8At%C3%9F%C2%AEIE%10%C2%95%C3%A1!%3D%1A%C3%A4%C2%82%C3%AAj$%2F%16F%C3%8F%5B%1C!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:36:37.745",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              1,
+              7,
+              9,
+              13,
+              15,
+              18,
+              22,
+              24,
+              29,
+              30
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "DEZ",
+              "nome": "Dezembro",
+              "numero": 12
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": false,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 21505,
+        "lotericaFormatada": {
+          "bairro": "JARDIM BOM PASTOR                       ",
+          "codigo": "21.021505-4",
+          "dv": 4,
+          "dvMunicipio": 9,
+          "id": 21505,
+          "idMunicipio": 4780,
+          "idUF": 35,
+          "logradouro": "RUA JOSE DANGELO                                  ",
+          "nome": "LOTERICA PASTOR DA SORTE LTDA                                                                                      ",
+          "nomeFantasia": "LOTERICA PASTOR DA SORTE",
+          "nomeMunicipio": "SANTO ANDRE                        ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.021505-4",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 9,
+            "numero": 4780
+          },
+          "nome": "SANTO ANDRE",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "LOTERICA PASTOR DA SORTE",
+        "nomeRazaoSocial": "LOTERICA PASTOR DA SORTE LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 30,
+        "qtdCotaDisponivel": 27,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 30,
+        "qtdCotaVendidas": 3,
+        "qtdNumeros": 10,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 13.5,
+        "vrCotaSemTarifa": 10,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 105,
+        "vrTarifaServicoCota": 3.5,
+        "vrTarifaServicoUltimaCota": 3.5,
+        "vrTotalBolaoComTarifa": 405,
+        "vrTotalBolaoSemTarifa": 300,
+        "vrUltimaCotaComTarifa": 13.5,
+        "vrUltimaCotaSemTarifa": 10
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240597075,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%9C%C3%93Pgqh%C3%A4%C2%9D%15%10C%1F%C3%A9(3f~%C2%A7%5CI%C2%B9a%19%16n%C3%86%C3%91%C3%B6%0Fj%C2%BAa!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:36:45.332",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              4,
+              5,
+              8,
+              13,
+              14,
+              15,
+              16,
+              19,
+              23,
+              25,
+              27,
+              28
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "NOV",
+              "nome": "Novembro",
+              "numero": 11
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": false,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 12593,
+        "lotericaFormatada": {
+          "bairro": "Cerqueira Cesar                         ",
+          "codigo": "21.012593-4",
+          "dv": 4,
+          "dvMunicipio": 8,
+          "id": 12593,
+          "idMunicipio": 5030,
+          "idUF": 35,
+          "logradouro": "Rua Frei Caneca                                   ",
+          "nome": "OUROCENTER LOTERIAS LTDA                                                                                           ",
+          "nomeFantasia": "ESTRELA DA SORTE",
+          "nomeMunicipio": "SAO PAULO                          ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.012593-4",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 8,
+            "numero": 5030
+          },
+          "nome": "SAO PAULO",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "ESTRELA DA SORTE",
+        "nomeRazaoSocial": "OUROCENTER LOTERIAS LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 60,
+        "qtdCotaDisponivel": 56,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 60,
+        "qtdCotaVendidas": 4,
+        "qtdNumeros": 12,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 44.55,
+        "vrCotaSemTarifa": 33,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 693,
+        "vrTarifaServicoCota": 11.55,
+        "vrTarifaServicoUltimaCota": 11.55,
+        "vrTotalBolaoComTarifa": 2673,
+        "vrTotalBolaoSemTarifa": 1980,
+        "vrUltimaCotaComTarifa": 44.55,
+        "vrUltimaCotaSemTarifa": 33
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240603981,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%A1%C3%B1Cz%C2%B5%1C%C2%9B%C2%9C%0F%C3%AD%C2%87%C2%ACF*%C2%87%18%C2%A4I%C3%A3%C2%BA%087Ov%C3%A5%03lI%C3%9Fj%11%C2%8B!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:36:54.250",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              3,
+              4,
+              13,
+              14,
+              15,
+              23,
+              24,
+              25
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "SET",
+              "nome": "Setembro",
+              "numero": 9
+            }
+          },
+          {
+            "dezenas": [
+              5,
+              7,
+              14,
+              16,
+              18,
+              23,
+              25,
+              27
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "SET",
+              "nome": "Setembro",
+              "numero": 9
+            }
+          },
+          {
+            "dezenas": [
+              4,
+              6,
+              13,
+              14,
+              15,
+              16,
+              23,
+              26
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "AGO",
+              "nome": "Agosto",
+              "numero": 8
+            }
+          },
+          {
+            "dezenas": [
+              8,
+              13,
+              14,
+              19,
+              25,
+              27,
+              29,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAI",
+              "nome": "Maio",
+              "numero": 5
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              3,
+              4,
+              6,
+              10,
+              13,
+              15,
+              19
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "SET",
+              "nome": "Setembro",
+              "numero": 9
+            }
+          },
+          {
+            "dezenas": [
+              3,
+              10,
+              16,
+              19,
+              21,
+              23,
+              25,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "OUT",
+              "nome": "Outubro",
+              "numero": 10
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              6,
+              10,
+              14,
+              18,
+              20,
+              23,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "DEZ",
+              "nome": "Dezembro",
+              "numero": 12
+            }
+          },
+          {
+            "dezenas": [
+              8,
+              10,
+              12,
+              19,
+              22,
+              23,
+              26,
+              29
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAR",
+              "nome": "Março",
+              "numero": 3
+            }
+          },
+          {
+            "dezenas": [
+              2,
+              6,
+              9,
+              10,
+              14,
+              16,
+              21,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "AGO",
+              "nome": "Agosto",
+              "numero": 8
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              11,
+              13,
+              19,
+              23,
+              25,
+              27,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JUN",
+              "nome": "Junho",
+              "numero": 6
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": false,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 19037,
+        "lotericaFormatada": {
+          "bairro": "JARAGUAZINHO                            ",
+          "codigo": "21.019037-0",
+          "dv": 0,
+          "dvMunicipio": 0,
+          "id": 19037,
+          "idMunicipio": 1050,
+          "idUF": 35,
+          "logradouro": "AV PRESIDENTE CAMPOS SALES                        ",
+          "nome": "LARA LOTERIAS LTDA                                                                                                 ",
+          "nomeFantasia": "LARA LOTERIAS LTDA",
+          "nomeMunicipio": "CARAGUATATUBA                      ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.019037-0",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 0,
+            "numero": 1050
+          },
+          "nome": "CARAGUATATUBA",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "LARA LOTERIAS LTDA",
+        "nomeRazaoSocial": "LARA LOTERIAS LTDA",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 20,
+        "qtdCotaDisponivel": 19,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 20,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 13.5,
+        "vrCotaSemTarifa": 10,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 70,
+        "vrTarifaServicoCota": 3.5,
+        "vrTarifaServicoUltimaCota": 3.5,
+        "vrTotalBolaoComTarifa": 270,
+        "vrTotalBolaoSemTarifa": 200,
+        "vrUltimaCotaComTarifa": 13.5,
+        "vrUltimaCotaSemTarifa": 10
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240615614,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%7CY7tp%60M%C2%B0%5Ea%C3%93%C2%AE%C3%BDR%26%0EhY0%11uw%3CD%C2%BE%C2%A9X%22PJ%031!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:37:01.768",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              3,
+              5,
+              7,
+              9,
+              12,
+              16,
+              18,
+              25,
+              29,
+              30
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "ABR",
+              "nome": "Abril",
+              "numero": 4
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": true,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 14658,
+        "lotericaFormatada": {
+          "bairro": "POMPEIA                                 ",
+          "codigo": "21.014658-3",
+          "dv": 3,
+          "dvMunicipio": 8,
+          "id": 14658,
+          "idMunicipio": 5030,
+          "idUF": 35,
+          "logradouro": "R CARAIBAS                                        ",
+          "nome": "SORTE NOSTRA LOTERICA LTDA                                                                                         ",
+          "nomeFantasia": "SORTE NOSTRA",
+          "nomeMunicipio": "SAO PAULO                          ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.014658-3",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 8,
+            "numero": 5030
+          },
+          "nome": "SAO PAULO",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "SORTE NOSTRA",
+        "nomeRazaoSocial": "SORTE NOSTRA LOTERICA LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 42,
+        "qtdCotaDisponivel": 41,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 42,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 10,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 9.64,
+        "vrCotaSemTarifa": 7.14,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 105,
+        "vrTarifaServicoCota": 2.5,
+        "vrTarifaServicoUltimaCota": 2.5,
+        "vrTotalBolaoComTarifa": 405,
+        "vrTotalBolaoSemTarifa": 300,
+        "vrUltimaCotaComTarifa": 9.76,
+        "vrUltimaCotaSemTarifa": 7.26
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240620500,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%5C%C3%85F%C2%9AZ%1D%1D%5E%03%23%3C2:%C2%B0%C3%8D+%C2%B1$%0FV%C2%A8%1FN%1FP%C3%9Asl~%C2%B1%C2%A0%7B!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:37:09.066",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              4,
+              5,
+              6,
+              7,
+              9,
+              12,
+              16,
+              17,
+              24,
+              27,
+              28
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAI",
+              "nome": "Maio",
+              "numero": 5
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              2,
+              9,
+              10,
+              11,
+              13,
+              16,
+              20,
+              25,
+              30,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JUL",
+              "nome": "Julho",
+              "numero": 7
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": true,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 6251,
+        "lotericaFormatada": {
+          "bairro": "JARDIM  NORDESTE                        ",
+          "codigo": "21.006251-7",
+          "dv": 7,
+          "dvMunicipio": 8,
+          "id": 6251,
+          "idMunicipio": 5030,
+          "idUF": 35,
+          "logradouro": "PRACA ARAMA                                       ",
+          "nome": "LOTERIA SAO SEBASTIAO LTDA ME                                                                                      ",
+          "nomeFantasia": "LOTERIA SAO SEBASTIAO",
+          "nomeMunicipio": "SAO PAULO                          ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.006251-7",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 8,
+            "numero": 5030
+          },
+          "nome": "SAO PAULO",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "LOTERIA SAO SEBASTIAO",
+        "nomeRazaoSocial": "LOTERIA SAO SEBASTIAO LTDA ME",
+        "qtdApostas": 2,
+        "qtdCotaBaixadas": 10,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 60,
+        "qtdCotaDisponivel": 49,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 60,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 11,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 37.12,
+        "vrCotaSemTarifa": 27.5,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 577.5,
+        "vrTarifaServicoCota": 9.62,
+        "vrTarifaServicoUltimaCota": 9.92,
+        "vrTotalBolaoComTarifa": 2227.5,
+        "vrTotalBolaoSemTarifa": 1650,
+        "vrUltimaCotaComTarifa": 37.42,
+        "vrUltimaCotaSemTarifa": 27.5
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240627783,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1AF%C2%A0%C2%BE%C2%9A)%C3%8D%C3%80%0C%C2%B0%10gI%C3%96%1A*:%C3%AE%3FM%C2%89%C3%AB%19%02%C3%9F%C2%99W:%03%3C%C3%A8%C2%A1~!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:37:17.671",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              2,
+              6,
+              10,
+              14,
+              17,
+              18,
+              22,
+              25,
+              29,
+              31
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "OUT",
+              "nome": "Outubro",
+              "numero": 10
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              5,
+              9,
+              12,
+              16,
+              19,
+              21,
+              24,
+              27,
+              30
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "FEV",
+              "nome": "Fevereiro",
+              "numero": 2
+            }
+          },
+          {
+            "dezenas": [
+              2,
+              4,
+              7,
+              11,
+              13,
+              15,
+              20,
+              23,
+              26,
+              28
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "NOV",
+              "nome": "Novembro",
+              "numero": 11
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              4,
+              6,
+              18,
+              20,
+              21,
+              24,
+              26,
+              28,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "SET",
+              "nome": "Setembro",
+              "numero": 9
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              3,
+              10,
+              12,
+              13,
+              16,
+              18,
+              20,
+              22,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JUL",
+              "nome": "Julho",
+              "numero": 7
+            }
+          },
+          {
+            "dezenas": [
+              8,
+              9,
+              12,
+              16,
+              18,
+              21,
+              23,
+              26,
+              28,
+              29
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAR",
+              "nome": "Março",
+              "numero": 3
+            }
+          },
+          {
+            "dezenas": [
+              2,
+              12,
+              13,
+              15,
+              16,
+              19,
+              22,
+              29,
+              30,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JAN",
+              "nome": "Janeiro",
+              "numero": 1
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              2,
+              5,
+              11,
+              12,
+              14,
+              21,
+              22,
+              27,
+              28
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "NOV",
+              "nome": "Novembro",
+              "numero": 11
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              5,
+              9,
+              14,
+              16,
+              21,
+              22,
+              26,
+              28,
+              29
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "OUT",
+              "nome": "Outubro",
+              "numero": 10
+            }
+          },
+          {
+            "dezenas": [
+              2,
+              3,
+              5,
+              11,
+              13,
+              14,
+              20,
+              27,
+              28,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "JUN",
+              "nome": "Junho",
+              "numero": 6
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": false,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 12774,
+        "lotericaFormatada": {
+          "bairro": "MOOCA                                   ",
+          "codigo": "21.012774-0",
+          "dv": 0,
+          "dvMunicipio": 8,
+          "id": 12774,
+          "idMunicipio": 5030,
+          "idUF": 35,
+          "logradouro": "R JAVARI                                          ",
+          "nome": "MOOCA LOTERIA ESPORTIVA LTDA ME                                                                                    ",
+          "nomeFantasia": "MOOCA LOTERIA ESPORTIVA LTDA ME",
+          "nomeMunicipio": "SAO PAULO                          ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.012774-0",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 8,
+            "numero": 5030
+          },
+          "nome": "SAO PAULO",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "MOOCA LOTERIA ESPORTIVA LTDA ME",
+        "nomeRazaoSocial": "MOOCA LOTERIA ESPORTIVA LTDA ME",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 50,
+        "qtdCotaDisponivel": 46,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 50,
+        "qtdCotaVendidas": 4,
+        "qtdNumeros": 10,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 81,
+        "vrCotaSemTarifa": 60,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 1050,
+        "vrTarifaServicoCota": 21,
+        "vrTarifaServicoUltimaCota": 21,
+        "vrTotalBolaoComTarifa": 4050,
+        "vrTotalBolaoSemTarifa": 3000,
+        "vrUltimaCotaComTarifa": 81,
+        "vrUltimaCotaSemTarifa": 60
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240636391,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%22%C2%86m%06%17%7F%1DB%23%1B%5C;%C2%95G8%C3%85B%C3%99%C3%BF%C3%BAA%C2%80%C3%B7%3C%C3%99%C2%AD%C2%8C%C2%B2%C2%A7%C3%93%23%3E!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:37:25.997",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              2,
+              5,
+              9,
+              12,
+              14,
+              20,
+              21,
+              25,
+              27,
+              29
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "MAI",
+              "nome": "Maio",
+              "numero": 5
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              22,
+              26,
+              28,
+              30,
+              31
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "NOV",
+              "nome": "Novembro",
+              "numero": 11
+            }
+          },
+          {
+            "dezenas": [
+              6,
+              8,
+              10,
+              11,
+              15,
+              17,
+              18,
+              23,
+              26,
+              29
+            ],
+            "indicadorSurpresinha": false,
+            "mesDeSorte": {
+              "abreviacao": "SET",
+              "nome": "Setembro",
+              "numero": 9
+            }
+          },
+          {
+            "dezenas": [
+              4,
+              8,
+              10,
+              11,
+              16,
+              19,
+              24,
+              27,
+              29,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "DEZ",
+              "nome": "Dezembro",
+              "numero": 12
+            }
+          },
+          {
+            "dezenas": [
+              3,
+              4,
+              6,
+              9,
+              20,
+              21,
+              23,
+              25,
+              26,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAR",
+              "nome": "Março",
+              "numero": 3
+            }
+          },
+          {
+            "dezenas": [
+              6,
+              7,
+              13,
+              15,
+              17,
+              19,
+              24,
+              27,
+              30,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "OUT",
+              "nome": "Outubro",
+              "numero": 10
+            }
+          },
+          {
+            "dezenas": [
+              2,
+              7,
+              12,
+              13,
+              15,
+              18,
+              26,
+              27,
+              28,
+              30
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAI",
+              "nome": "Maio",
+              "numero": 5
+            }
+          },
+          {
+            "dezenas": [
+              2,
+              3,
+              5,
+              6,
+              11,
+              18,
+              21,
+              23,
+              27,
+              28
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "AGO",
+              "nome": "Agosto",
+              "numero": 8
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              9,
+              10,
+              11,
+              12,
+              17,
+              18,
+              25,
+              27,
+              29
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "FEV",
+              "nome": "Fevereiro",
+              "numero": 2
+            }
+          },
+          {
+            "dezenas": [
+              1,
+              3,
+              5,
+              7,
+              8,
+              16,
+              19,
+              22,
+              23,
+              25
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "NOV",
+              "nome": "Novembro",
+              "numero": 11
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": false,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 14080,
+        "lotericaFormatada": {
+          "bairro": "VILA PRUDENTE                           ",
+          "codigo": "21.014080-1",
+          "dv": 1,
+          "dvMunicipio": 8,
+          "id": 14080,
+          "idMunicipio": 5030,
+          "idUF": 35,
+          "logradouro": "R JOAO PADILHA                                    ",
+          "nome": "MARCO ZERO LOTERIAS LTDA ME                                                                                        ",
+          "nomeFantasia": "LEGAL LOTERIAS",
+          "nomeMunicipio": "SAO PAULO                          ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.014080-1",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 8,
+            "numero": 5030
+          },
+          "nome": "SAO PAULO",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "LEGAL LOTERIAS",
+        "nomeRazaoSocial": "MARCO ZERO LOTERIAS LTDA ME",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 28,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 50,
+        "qtdCotaDisponivel": 20,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 50,
+        "qtdCotaVendidas": 2,
+        "qtdNumeros": 10,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 81,
+        "vrCotaSemTarifa": 60,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 1050,
+        "vrTarifaServicoCota": 21,
+        "vrTarifaServicoUltimaCota": 21,
+        "vrTotalBolaoComTarifa": 4050,
+        "vrTotalBolaoSemTarifa": 3000,
+        "vrUltimaCotaComTarifa": 81,
+        "vrUltimaCotaSemTarifa": 60
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240644747,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%26g%C2%B5%C2%9BF%14%C3%94%C2%8FW%C2%83%C3%80%00%C2%96(b%C3%91%C3%97%C2%9D'h@%7D%C3%85%C2%A5%C3%80%17%C2%86Z%C2%9F%C3%94v%C2%BF!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-05T05:37:46.674",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              3,
+              11,
+              12,
+              16,
+              17,
+              18,
+              20,
+              23,
+              28,
+              31
+            ],
+            "indicadorSurpresinha": true,
+            "mesDeSorte": {
+              "abreviacao": "MAR",
+              "nome": "Março",
+              "numero": 3
+            }
+          }
+        ],
+        "concurso": 1238,
+        "contemResiduo": false,
+        "dataSorteio": "06/07/2026",
+        "diaSorteio": "Segunda-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 26010,
+        "lotericaFormatada": {
+          "bairro": "JARDIM ELDORADO                         ",
+          "codigo": "21.026010-6",
+          "dv": 6,
+          "dvMunicipio": 6,
+          "id": 26010,
+          "idMunicipio": 4140,
+          "idUF": 35,
+          "logradouro": "AV PAULO MARCONDES 345 LETRA B                    ",
+          "nome": "LOTERICA JARDIM ELDORADO LTDA                                                                                      ",
+          "nomeFantasia": "JARDIM ELDORADO",
+          "nomeMunicipio": "PRESIDENTE PRUDENTE                ",
+          "nomeUF": "SAO PAULO           ",
+          "numeroFormatado": "21.026010-6",
+          "polo": 21,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "DIA_DE_SORTE",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 35,
+            "digitoVerificador": 6,
+            "numero": 4140
+          },
+          "nome": "PRESIDENTE PRUDENTE",
+          "uf": {
+            "id": 35,
+            "nome": "SAO PAULO           ",
+            "sigla": "SP"
+          }
+        },
+        "nomeFantasia": "JARDIM ELDORADO",
+        "nomeRazaoSocial": "LOTERICA JARDIM ELDORADO LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 50,
+        "qtdCotaDisponivel": 49,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 50,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 10,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 35,
+          "nome": "SAO PAULO           ",
+          "sigla": "SP"
+        },
+        "vrCotaComTarifa": 8.1,
+        "vrCotaSemTarifa": 6,
+        "vrPremioEstimado": 1300000,
+        "vrTarifaBolao": 105,
+        "vrTarifaServicoCota": 2.1,
+        "vrTarifaServicoUltimaCota": 2.1,
+        "vrTotalBolaoComTarifa": 405,
+        "vrTotalBolaoSemTarifa": 300,
+        "vrUltimaCotaComTarifa": 8.1,
+        "vrUltimaCotaSemTarifa": 6
+      },
+      "versao": "2.99.0.11"
+    },
+    "ts": 1783240672304,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%B8b%C2%B1$%C2%9F5%C3%96%2BJ%C3%A9d%C3%BBT2f%C3%A8%C3%AC%26C'%C3%89yU%C3%960%C3%94%C3%83U%C3%814%7D%C3%9C!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  }
+]

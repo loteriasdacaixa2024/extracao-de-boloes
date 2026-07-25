@@ -775,7 +775,7 @@ def sessao_caixa_ativa(driver) -> bool:
             for el in driver.find_elements(By.CSS_SELECTOR, sel):
                 if el.is_displayed():
                     return False
-        return True
+        return False
     except Exception:
         return False
 
@@ -2274,6 +2274,47 @@ def ir_para_pagina_lista(driver, destino: int, log_fn: LogFn = None) -> bool:
         _aguardar_lista_apos_aplicar(driver, timeout=10)
         return (_ler_pagina_atual_ui(driver) or 0) >= destino
     return _clicar_pagina_numero(driver, destino, log_fn)
+
+
+def ir_direto_para_pagina_lista(driver, destino: int, log_fn: LogFn = None) -> bool:
+    """
+    Salto DIRETO para a página destino (retomada/checkpoint).
+    Prioridade: Angular → clique no número.
+    NÃO usa Seguinte passo a passo (isso demora demais e confunde a retomada).
+    Só retorna True se a UI confirmar a página destino.
+    """
+    if destino <= 1:
+        return True
+    atual = _ler_pagina_atual_ui(driver) or 1
+    if atual == destino:
+        _log(f'  [PAGINA] Já na página {destino}.', log_fn)
+        return True
+
+    _log(f'  [PAGINA] Salto direto {atual} → {destino}...', log_fn)
+
+    for tentativa in range(1, 4):
+        if tentativa > 1:
+            _log(f'  [PAGINA] Retentativa salto {tentativa}/3...', log_fn)
+        if _angular_ir_para_pagina(driver, destino, log_fn):
+            time.sleep(2.2)
+            _aguardar_lista_apos_aplicar(driver, timeout=14)
+        elif _clicar_pagina_numero(driver, destino, log_fn):
+            time.sleep(2.2)
+            _aguardar_lista_apos_aplicar(driver, timeout=14)
+        else:
+            # tenta Angular de novo mesmo se retornou False antes
+            _angular_ir_para_pagina(driver, destino, log_fn)
+            time.sleep(2.2)
+            _aguardar_lista_apos_aplicar(driver, timeout=14)
+
+        depois = _ler_pagina_atual_ui(driver)
+        if depois == destino:
+            _log(f'  [PAGINA] OK — confirmado na página {destino}.', log_fn)
+            return True
+        _log(f'  [PAGINA] Ainda em {depois or "?"} (queríamos {destino}).', log_fn)
+
+    _log(f'  [PAGINA] FALHA — não confirmou página {destino}.', log_fn)
+    return False
 
 
 def ir_proxima_pagina_lista(driver, log_fn: LogFn = None) -> bool:

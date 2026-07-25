@@ -1,0 +1,7 @@
+CHECKPOINT / RESUME — baixar_boloes-API.py
+==========================================
+- Novo: script/boloes_checkpoint.py
+- Arquivo: json-boloes/_checkpoint_extracao.json
+- Pausa: tecla P (sem Enter) ou criar json-boloes/_PAUSE.request
+- JSON canônico: boloes_{concurso}_{modalidade}.json
+- CONSOLIDADO: não grava mais a cada página (era cópia idêntica)

@@ -1,0 +1,5782 @@
+[
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:23.298",
+      "payload": {
+        "contemResiduo": false,
+        "cotas": [
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTAzODYyNDsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 510,
+            "index": 1,
+            "loterica": 15361,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 43,
+                "digitoVerificador": 8,
+                "numero": 510
+              },
+              "nome": "CAXIAS DO SUL",
+              "uf": {
+                "id": 43,
+                "nome": "RIO GRANDE DO SUL   ",
+                "sigla": "RS"
+              }
+            },
+            "nomeFantasia": "CAMATTI LOTERIAS",
+            "nomeRazaoSocial": "CAMATTI LOTERIAS LTDA",
+            "numeroUF": 43,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 1,
+            "qtdCotaDigital": 65,
+            "qtdCotaDisponivel": 62,
+            "qtdCotaTotal": 90,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 10,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 43,
+              "nome": "RIO GRANDE DO SUL   ",
+              "sigla": "RS"
+            },
+            "valorTarifaServico": 4.9,
+            "vrCotaComTarifa": 18.9,
+            "vrCotaSemTarifa": 14,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 4.9,
+            "vrUltimaCotaComTarifa": 18.9,
+            "vrUltimaCotaSemTarifa": 14
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTc1NTQwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 10,
+            "index": 1,
+            "loterica": 1548,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 53,
+                "digitoVerificador": 8,
+                "numero": 10
+              },
+              "nome": "BRASILIA",
+              "uf": {
+                "id": 53,
+                "nome": "DISTRITO FEDERAL    ",
+                "sigla": "DF"
+              }
+            },
+            "nomeFantasia": "LOTERICA SUPER SORTE",
+            "nomeRazaoSocial": "CASA LOTERICA SAO TOME LTDA",
+            "numeroUF": 53,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 1,
+            "qtdCotaDigital": 34,
+            "qtdCotaDisponivel": 32,
+            "qtdCotaTotal": 34,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 10,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 53,
+              "nome": "DISTRITO FEDERAL    ",
+              "sigla": "DF"
+            },
+            "valorTarifaServico": 12.97,
+            "vrCotaComTarifa": 50.02,
+            "vrCotaSemTarifa": 37.05,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 12.99,
+            "vrUltimaCotaComTarifa": 50.34,
+            "vrUltimaCotaSemTarifa": 37.35
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTY1ODgwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 10,
+            "index": 1,
+            "loterica": 22051,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 53,
+                "digitoVerificador": 8,
+                "numero": 10
+              },
+              "nome": "BRASILIA",
+              "uf": {
+                "id": 53,
+                "nome": "DISTRITO FEDERAL    ",
+                "sigla": "DF"
+              }
+            },
+            "nomeFantasia": "LOTERICA PONTO CERTO",
+            "nomeRazaoSocial": "AGENCIA LOTERICA 4M LTDA",
+            "numeroUF": 53,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 5,
+            "qtdCotaDigital": 12,
+            "qtdCotaDisponivel": 11,
+            "qtdCotaTotal": 12,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 8,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 53,
+              "nome": "DISTRITO FEDERAL    ",
+              "sigla": "DF"
+            },
+            "valorTarifaServico": 24.5,
+            "vrCotaComTarifa": 94.5,
+            "vrCotaSemTarifa": 70,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 24.5,
+            "vrUltimaCotaComTarifa": 94.5,
+            "vrUltimaCotaSemTarifa": 70
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTQ3NjAyMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 140,
+            "index": 1,
+            "loterica": 3106,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 52,
+                "digitoVerificador": 5,
+                "numero": 140
+              },
+              "nome": "APARECIDA DE GOIANIA",
+              "uf": {
+                "id": 52,
+                "nome": "GOIAS               ",
+                "sigla": "GO"
+              }
+            },
+            "nomeFantasia": "VOLANTE DE OURO",
+            "nomeRazaoSocial": "VOLANTE DE OURO LOTERIAS LTDA",
+            "numeroUF": 52,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 1,
+            "qtdCotaDigital": 11,
+            "qtdCotaDisponivel": 10,
+            "qtdCotaTotal": 11,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 8,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 52,
+              "nome": "GOIAS               ",
+              "sigla": "GO"
+            },
+            "valorTarifaServico": 5.34,
+            "vrCotaComTarifa": 20.61,
+            "vrCotaSemTarifa": 15.27,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 5.4,
+            "vrUltimaCotaComTarifa": 20.7,
+            "vrUltimaCotaSemTarifa": 15.3
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTc1NDkwNDsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 730,
+            "index": 1,
+            "loterica": 6191,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 29,
+                "digitoVerificador": 1,
+                "numero": 730
+              },
+              "nome": "CASTRO ALVES",
+              "uf": {
+                "id": 29,
+                "nome": "BAHIA               ",
+                "sigla": "BA"
+              }
+            },
+            "nomeFantasia": "LOTERIA CASTRO ALVES",
+            "nomeRazaoSocial": "G A MOREIRA CIA LTDA",
+            "numeroUF": 29,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 3,
+            "qtdCotaDigital": 25,
+            "qtdCotaDisponivel": 16,
+            "qtdCotaTotal": 25,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 8,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 29,
+              "nome": "BAHIA               ",
+              "sigla": "BA"
+            },
+            "valorTarifaServico": 7.05,
+            "vrCotaComTarifa": 27.21,
+            "vrCotaSemTarifa": 20.16,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 7.19,
+            "vrUltimaCotaComTarifa": 27.35,
+            "vrUltimaCotaSemTarifa": 20.16
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTYwODgwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 455,
+            "index": 1,
+            "loterica": 6374,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 33,
+                "digitoVerificador": 7,
+                "numero": 455
+              },
+              "nome": "RIO DE JANEIRO",
+              "uf": {
+                "id": 33,
+                "nome": "RIO DE JANEIRO      ",
+                "sigla": "RJ"
+              }
+            },
+            "nomeFantasia": "PRACA SAENZ PENA LOTERIAS LTDA",
+            "nomeRazaoSocial": "PRACA SAENZ PENA LOTERIAS LTDA",
+            "numeroUF": 33,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 1,
+            "qtdCotaDigital": 23,
+            "qtdCotaDisponivel": 23,
+            "qtdCotaTotal": 24,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 9,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 33,
+              "nome": "RIO DE JANEIRO      ",
+              "sigla": "RJ"
+            },
+            "valorTarifaServico": 7.34,
+            "vrCotaComTarifa": 28.34,
+            "vrCotaSemTarifa": 21,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 7.57,
+            "vrUltimaCotaComTarifa": 28.57,
+            "vrUltimaCotaSemTarifa": 21
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTI2NzEwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 530,
+            "index": 1,
+            "loterica": 11422,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 31,
+                "digitoVerificador": 1,
+                "numero": 530
+              },
+              "nome": "BANDEIRA DO SUL",
+              "uf": {
+                "id": 31,
+                "nome": "MINAS GERAIS        ",
+                "sigla": "MG"
+              }
+            },
+            "nomeFantasia": "LOTERICA LOTO MANIA",
+            "nomeRazaoSocial": "LOTERICA LOTO MANIA LTDA",
+            "numeroUF": 31,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 1,
+            "qtdCotaDigital": 54,
+            "qtdCotaDisponivel": 53,
+            "qtdCotaTotal": 57,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 9,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 31,
+              "nome": "MINAS GERAIS        ",
+              "sigla": "MG"
+            },
+            "valorTarifaServico": 3.09,
+            "vrCotaComTarifa": 11.93,
+            "vrCotaSemTarifa": 8.84,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 3.35,
+            "vrUltimaCotaComTarifa": 12.31,
+            "vrUltimaCotaSemTarifa": 8.96
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5ODg0MTAyNTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 870,
+            "index": 1,
+            "loterica": 1528,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 52,
+                "digitoVerificador": 7,
+                "numero": 870
+              },
+              "nome": "GOIANIA",
+              "uf": {
+                "id": 52,
+                "nome": "GOIAS               ",
+                "sigla": "GO"
+              }
+            },
+            "nomeFantasia": "CRISTAL LOTERIAS",
+            "nomeRazaoSocial": "AGENCIA LOTERICA CRISTAL LTDA",
+            "numeroUF": 52,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 2,
+            "qtdCotaDigital": 10,
+            "qtdCotaDisponivel": 10,
+            "qtdCotaTotal": 10,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 8,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 52,
+              "nome": "GOIAS               ",
+              "sigla": "GO"
+            },
+            "valorTarifaServico": 11.76,
+            "vrCotaComTarifa": 45.36,
+            "vrCotaSemTarifa": 33.6,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 11.76,
+            "vrUltimaCotaComTarifa": 45.36,
+            "vrUltimaCotaSemTarifa": 33.6
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzQwMDIzMDIwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 830,
+            "index": 1,
+            "loterica": 20469,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 41,
+                "digitoVerificador": 4,
+                "numero": 830
+              },
+              "nome": "FOZ DO IGUACU",
+              "uf": {
+                "id": 41,
+                "nome": "PARANA              ",
+                "sigla": "PR"
+              }
+            },
+            "nomeFantasia": "CASA DE OURO LOTERIAS",
+            "nomeRazaoSocial": "CASA DE OURO LOTERIAS LTDA ME",
+            "numeroUF": 41,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 1,
+            "qtdCotaDigital": 3,
+            "qtdCotaDisponivel": 3,
+            "qtdCotaTotal": 9,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 8,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 41,
+              "nome": "PARANA              ",
+              "sigla": "PR"
+            },
+            "valorTarifaServico": 6.53,
+            "vrCotaComTarifa": 25.19,
+            "vrCotaSemTarifa": 18.66,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 6.56,
+            "vrUltimaCotaComTarifa": 25.28,
+            "vrUltimaCotaSemTarifa": 18.72
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5Nzc5OTAwMjsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 205,
+            "index": 1,
+            "loterica": 22966,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 25,
+                "digitoVerificador": 2,
+                "numero": 205
+              },
+              "nome": "BERNARDINO BATISTA",
+              "uf": {
+                "id": 25,
+                "nome": "PARAIBA             ",
+                "sigla": "PB"
+              }
+            },
+            "nomeFantasia": "ESTRELA DA SORTE",
+            "nomeRazaoSocial": "CASA LOTERICA BERNARDINO BATISTA LTDA",
+            "numeroUF": 25,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 10,
+            "qtdCotaDigital": 50,
+            "qtdCotaDisponivel": 45,
+            "qtdCotaTotal": 50,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 25,
+              "nome": "PARAIBA             ",
+              "sigla": "PB"
+            },
+            "valorTarifaServico": 2.94,
+            "vrCotaComTarifa": 11.34,
+            "vrCotaSemTarifa": 8.4,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 2.94,
+            "vrUltimaCotaComTarifa": 11.34,
+            "vrUltimaCotaSemTarifa": 8.4
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5NDE2MzcyMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 310,
+            "index": 1,
+            "loterica": 15414,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 51,
+                "digitoVerificador": 6,
+                "numero": 310
+              },
+              "nome": "COCALINHO",
+              "uf": {
+                "id": 51,
+                "nome": "MATO GROSSO         ",
+                "sigla": "MT"
+              }
+            },
+            "nomeFantasia": "LOJA TROPICAL",
+            "nomeRazaoSocial": "SILVANE LUIZ DA FONSECA & CIA LTDA",
+            "numeroUF": 51,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 10,
+            "qtdCotaDigital": 7,
+            "qtdCotaDisponivel": 2,
+            "qtdCotaTotal": 8,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 6,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 51,
+              "nome": "MATO GROSSO         ",
+              "sigla": "MT"
+            },
+            "valorTarifaServico": 2.62,
+            "vrCotaComTarifa": 10.12,
+            "vrCotaSemTarifa": 7.5,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 2.66,
+            "vrUltimaCotaComTarifa": 10.16,
+            "vrUltimaCotaSemTarifa": 7.5
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTk4MzEwNzsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 515,
+            "index": 1,
+            "loterica": 20408,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 29,
+                "digitoVerificador": 6,
+                "numero": 515
+              },
+              "nome": "CAETANOS",
+              "uf": {
+                "id": 29,
+                "nome": "BAHIA               ",
+                "sigla": "BA"
+              }
+            },
+            "nomeFantasia": "CASA LOTERICA CAETANOS",
+            "nomeRazaoSocial": "CASA LOTERICA CAETANOS LTDA",
+            "numeroUF": 29,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 4,
+            "qtdCotaDigital": 21,
+            "qtdCotaDisponivel": 18,
+            "qtdCotaTotal": 21,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 29,
+              "nome": "BAHIA               ",
+              "sigla": "BA"
+            },
+            "valorTarifaServico": 2.8,
+            "vrCotaComTarifa": 10.8,
+            "vrCotaSemTarifa": 8,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 2.8,
+            "vrUltimaCotaComTarifa": 10.8,
+            "vrUltimaCotaSemTarifa": 8
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzQwMDE3MjAwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 530,
+            "index": 1,
+            "loterica": 7253,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 32,
+                "digitoVerificador": 9,
+                "numero": 530
+              },
+              "nome": "VITORIA",
+              "uf": {
+                "id": 32,
+                "nome": "ESPIRITO SANTO      ",
+                "sigla": "ES"
+              }
+            },
+            "nomeFantasia": "LOTERIA SANTO ANTONIO",
+            "nomeRazaoSocial": "C. R. LOTERIAS LTDA - ME",
+            "numeroUF": 32,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 2,
+            "qtdCotaDigital": 30,
+            "qtdCotaDisponivel": 29,
+            "qtdCotaTotal": 34,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 9,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 32,
+              "nome": "ESPIRITO SANTO      ",
+              "sigla": "ES"
+            },
+            "valorTarifaServico": 10.37,
+            "vrCotaComTarifa": 40.01,
+            "vrCotaSemTarifa": 29.64,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 10.58,
+            "vrUltimaCotaComTarifa": 40.46,
+            "vrUltimaCotaSemTarifa": 29.88
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTUzMTkwNDsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 870,
+            "index": 1,
+            "loterica": 25675,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 52,
+                "digitoVerificador": 7,
+                "numero": 870
+              },
+              "nome": "GOIANIA",
+              "uf": {
+                "id": 52,
+                "nome": "GOIAS               ",
+                "sigla": "GO"
+              }
+            },
+            "nomeFantasia": "GOIA DA SORTE",
+            "nomeRazaoSocial": "CASA LOTERICA GOIA DA SORTE LTDA",
+            "numeroUF": 52,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 10,
+            "qtdCotaDigital": 34,
+            "qtdCotaDisponivel": 32,
+            "qtdCotaTotal": 34,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 8,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 52,
+              "nome": "GOIAS               ",
+              "sigla": "GO"
+            },
+            "valorTarifaServico": 17.29,
+            "vrCotaComTarifa": 66.7,
+            "vrCotaSemTarifa": 49.41,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 17.43,
+            "vrUltimaCotaComTarifa": 66.9,
+            "vrUltimaCotaSemTarifa": 49.47
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5NDA3NTg0OTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 1990,
+            "index": 1,
+            "loterica": 6863,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 41,
+                "digitoVerificador": 5,
+                "numero": 1990
+              },
+              "nome": "PONTA GROSSA",
+              "uf": {
+                "id": 41,
+                "nome": "PARANA              ",
+                "sigla": "PR"
+              }
+            },
+            "nomeFantasia": "LOTERICA LOPES",
+            "nomeRazaoSocial": "R A BERTI DE LIMA & CIA LTDA",
+            "numeroUF": 41,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 4,
+            "qtdCotaDigital": 6,
+            "qtdCotaDisponivel": 4,
+            "qtdCotaTotal": 15,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 41,
+              "nome": "PARANA              ",
+              "sigla": "PR"
+            },
+            "valorTarifaServico": 3.92,
+            "vrCotaComTarifa": 15.12,
+            "vrCotaSemTarifa": 11.2,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 3.92,
+            "vrUltimaCotaComTarifa": 15.12,
+            "vrUltimaCotaSemTarifa": 11.2
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5ODM0OTIzODsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 130,
+            "index": 1,
+            "loterica": 6907,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 32,
+                "digitoVerificador": 8,
+                "numero": 130
+              },
+              "nome": "CARIACICA",
+              "uf": {
+                "id": 32,
+                "nome": "ESPIRITO SANTO      ",
+                "sigla": "ES"
+              }
+            },
+            "nomeFantasia": "LOTERIA BELA AURORA",
+            "nomeRazaoSocial": "CASA LOTERICA BELA AURORA LTDA",
+            "numeroUF": 32,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 2,
+            "qtdCotaDigital": 12,
+            "qtdCotaDisponivel": 10,
+            "qtdCotaTotal": 27,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 9,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 32,
+              "nome": "ESPIRITO SANTO      ",
+              "sigla": "ES"
+            },
+            "valorTarifaServico": 13.06,
+            "vrCotaComTarifa": 50.39,
+            "vrCotaSemTarifa": 37.33,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 13.23,
+            "vrUltimaCotaComTarifa": 50.65,
+            "vrUltimaCotaSemTarifa": 37.42
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTk0NDIwNzsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 1160,
+            "index": 1,
+            "loterica": 15652,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 26,
+                "digitoVerificador": 6,
+                "numero": 1160
+              },
+              "nome": "RECIFE",
+              "uf": {
+                "id": 26,
+                "nome": "PERNAMBUCO          ",
+                "sigla": "PE"
+              }
+            },
+            "nomeFantasia": "LOTERIA RECIFE",
+            "nomeRazaoSocial": "S & S LOTERICA LTDA",
+            "numeroUF": 26,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 10,
+            "qtdCotaDigital": 25,
+            "qtdCotaDisponivel": 18,
+            "qtdCotaTotal": 30,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 26,
+              "nome": "PERNAMBUCO          ",
+              "sigla": "PE"
+            },
+            "valorTarifaServico": 4.9,
+            "vrCotaComTarifa": 18.9,
+            "vrCotaSemTarifa": 14,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 4.9,
+            "vrUltimaCotaComTarifa": 18.9,
+            "vrUltimaCotaSemTarifa": 14
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5Nzk4OTQwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 660,
+            "index": 1,
+            "loterica": 17745,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 42,
+                "digitoVerificador": 3,
+                "numero": 660
+              },
+              "nome": "GUARUJA DO SUL",
+              "uf": {
+                "id": 42,
+                "nome": "SANTA CATARINA      ",
+                "sigla": "SC"
+              }
+            },
+            "nomeFantasia": "LOTERICA GUARUJA DO SUL",
+            "nomeRazaoSocial": "COMERCIAL KREWER & ALBRECHT LTDA",
+            "numeroUF": 42,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 1,
+            "qtdCotaDigital": 16,
+            "qtdCotaDisponivel": 14,
+            "qtdCotaTotal": 18,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 9,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 42,
+              "nome": "SANTA CATARINA      ",
+              "sigla": "SC"
+            },
+            "valorTarifaServico": 9.79,
+            "vrCotaComTarifa": 37.79,
+            "vrCotaSemTarifa": 28,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 9.96,
+            "vrUltimaCotaComTarifa": 37.96,
+            "vrUltimaCotaSemTarifa": 28
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzQwMDAzMzUwMjsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 150,
+            "index": 1,
+            "loterica": 3732,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 32,
+                "digitoVerificador": 6,
+                "numero": 150
+              },
+              "nome": "COLATINA",
+              "uf": {
+                "id": 32,
+                "nome": "ESPIRITO SANTO      ",
+                "sigla": "ES"
+              }
+            },
+            "nomeFantasia": "LOTERICA INDEPENDENCIA",
+            "nomeRazaoSocial": "CASA LOTERICA COLATINA LTDA",
+            "numeroUF": 32,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 2,
+            "qtdCotaDigital": 18,
+            "qtdCotaDisponivel": 16,
+            "qtdCotaTotal": 18,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 8,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 32,
+              "nome": "ESPIRITO SANTO      ",
+              "sigla": "ES"
+            },
+            "valorTarifaServico": 6.53,
+            "vrCotaComTarifa": 25.19,
+            "vrCotaSemTarifa": 18.66,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 6.59,
+            "vrUltimaCotaComTarifa": 25.37,
+            "vrUltimaCotaSemTarifa": 18.78
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5ODAyODYwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 1440,
+            "index": 1,
+            "loterica": 25052,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 41,
+                "digitoVerificador": 1,
+                "numero": 1440
+              },
+              "nome": "MANGUEIRINHA",
+              "uf": {
+                "id": 41,
+                "nome": "PARANA              ",
+                "sigla": "PR"
+              }
+            },
+            "nomeFantasia": "LOTERICA MANGUEIRINHA",
+            "nomeRazaoSocial": "C. M. DE CASTRO - LOTERICA - EIRELI",
+            "numeroUF": 41,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 10,
+            "qtdCotaDigital": 28,
+            "qtdCotaDisponivel": 26,
+            "qtdCotaTotal": 28,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 41,
+              "nome": "PARANA              ",
+              "sigla": "PR"
+            },
+            "valorTarifaServico": 5.25,
+            "vrCotaComTarifa": 20.25,
+            "vrCotaSemTarifa": 15,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 5.25,
+            "vrUltimaCotaComTarifa": 20.25,
+            "vrUltimaCotaSemTarifa": 15
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5NDc0NDIwMzsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 1170,
+            "index": 1,
+            "loterica": 9857,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 23,
+                "digitoVerificador": 2,
+                "numero": 1170
+              },
+              "nome": "RERIUTABA",
+              "uf": {
+                "id": 23,
+                "nome": "CEARA               ",
+                "sigla": "CE"
+              }
+            },
+            "nomeFantasia": "LOTERIA PONTES",
+            "nomeRazaoSocial": "LOTERIA PONTES LTDA",
+            "numeroUF": 23,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 10,
+            "qtdCotaDigital": 48,
+            "qtdCotaDisponivel": 42,
+            "qtdCotaTotal": 50,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 23,
+              "nome": "CEARA               ",
+              "sigla": "CE"
+            },
+            "valorTarifaServico": 2.94,
+            "vrCotaComTarifa": 11.34,
+            "vrCotaSemTarifa": 8.4,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 2.94,
+            "vrUltimaCotaComTarifa": 11.34,
+            "vrUltimaCotaSemTarifa": 8.4
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzQwMDI1MDEwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 690,
+            "index": 1,
+            "loterica": 8203,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 41,
+                "digitoVerificador": 2,
+                "numero": 690
+              },
+              "nome": "CURITIBA",
+              "uf": {
+                "id": 41,
+                "nome": "PARANA              ",
+                "sigla": "PR"
+              }
+            },
+            "nomeFantasia": "BRASILIA LOTERIAS",
+            "nomeRazaoSocial": "BARBOSA LOTERIAS LTDA",
+            "numeroUF": 41,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 1,
+            "qtdCotaDigital": 6,
+            "qtdCotaDisponivel": 2,
+            "qtdCotaTotal": 11,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 8,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 41,
+              "nome": "PARANA              ",
+              "sigla": "PR"
+            },
+            "valorTarifaServico": 5.34,
+            "vrCotaComTarifa": 20.61,
+            "vrCotaSemTarifa": 15.27,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 5.4,
+            "vrUltimaCotaComTarifa": 20.7,
+            "vrUltimaCotaSemTarifa": 15.3
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzQwMDE3MTIxNzsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 870,
+            "index": 1,
+            "loterica": 3173,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 52,
+                "digitoVerificador": 7,
+                "numero": 870
+              },
+              "nome": "GOIANIA",
+              "uf": {
+                "id": 52,
+                "nome": "GOIAS               ",
+                "sigla": "GO"
+              }
+            },
+            "nomeFantasia": "LOTERIA AMAZONAS LT",
+            "nomeRazaoSocial": "LOTERIA AMAZONAS LT",
+            "numeroUF": 52,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 10,
+            "qtdCotaDigital": 7,
+            "qtdCotaDisponivel": 4,
+            "qtdCotaTotal": 22,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 52,
+              "nome": "GOIAS               ",
+              "sigla": "GO"
+            },
+            "valorTarifaServico": 6.68,
+            "vrCotaComTarifa": 25.77,
+            "vrCotaSemTarifa": 19.09,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 6.72,
+            "vrUltimaCotaComTarifa": 25.83,
+            "vrUltimaCotaSemTarifa": 19.11
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM0NDE0MDI1MzsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 270,
+            "index": 1,
+            "loterica": 19480,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 50,
+                "digitoVerificador": 4,
+                "numero": 270
+              },
+              "nome": "CAMPO GRANDE",
+              "uf": {
+                "id": 50,
+                "nome": "MATO GROSSO DO SUL  ",
+                "sigla": "MS"
+              }
+            },
+            "nomeFantasia": "LOTERICA CARANDA",
+            "nomeRazaoSocial": "LOTERICA CARANDA LTDA",
+            "numeroUF": 50,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 2,
+            "qtdCotaDigital": 9,
+            "qtdCotaDisponivel": 6,
+            "qtdCotaTotal": 13,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 9,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 50,
+              "nome": "MATO GROSSO DO SUL  ",
+              "sigla": "MS"
+            },
+            "valorTarifaServico": 27.13,
+            "vrCotaComTarifa": 104.66,
+            "vrCotaSemTarifa": 77.53,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 27.23,
+            "vrUltimaCotaComTarifa": 104.87,
+            "vrUltimaCotaSemTarifa": 77.64
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTYzNjQwODsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 30,
+            "index": 1,
+            "loterica": 22110,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 28,
+                "digitoVerificador": 8,
+                "numero": 30
+              },
+              "nome": "ARACAJU",
+              "uf": {
+                "id": 28,
+                "nome": "SERGIPE             ",
+                "sigla": "SE"
+              }
+            },
+            "nomeFantasia": "LOTERICA PREMIUM",
+            "nomeRazaoSocial": "LOTERICA PREMIUM LTDA ME",
+            "numeroUF": 28,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 10,
+            "qtdCotaDigital": 6,
+            "qtdCotaDisponivel": 4,
+            "qtdCotaTotal": 6,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 6,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 28,
+              "nome": "SERGIPE             ",
+              "sigla": "SE"
+            },
+            "valorTarifaServico": 3.5,
+            "vrCotaComTarifa": 13.5,
+            "vrCotaSemTarifa": 10,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 3.5,
+            "vrUltimaCotaComTarifa": 13.5,
+            "vrUltimaCotaSemTarifa": 10
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTQzODIwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 10,
+            "index": 1,
+            "loterica": 19676,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 53,
+                "digitoVerificador": 8,
+                "numero": 10
+              },
+              "nome": "BRASILIA",
+              "uf": {
+                "id": 53,
+                "nome": "DISTRITO FEDERAL    ",
+                "sigla": "DF"
+              }
+            },
+            "nomeFantasia": "LOTERICA LIGA DA SORTE",
+            "nomeRazaoSocial": "LOTERICA LIGA DA SORTE LTDA",
+            "numeroUF": 53,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 1,
+            "qtdCotaDigital": 90,
+            "qtdCotaDisponivel": 81,
+            "qtdCotaTotal": 100,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 11,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 53,
+              "nome": "DISTRITO FEDERAL    ",
+              "sigla": "DF"
+            },
+            "valorTarifaServico": 9.7,
+            "vrCotaComTarifa": 37.42,
+            "vrCotaSemTarifa": 27.72,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 9.89,
+            "vrUltimaCotaComTarifa": 37.61,
+            "vrUltimaCotaSemTarifa": 27.72
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTg5NDcwMjsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": true,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 990,
+            "index": 1,
+            "loterica": 11103,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 43,
+                "digitoVerificador": 2,
+                "numero": 990
+              },
+              "nome": "IBIRAIARAS",
+              "uf": {
+                "id": 43,
+                "nome": "RIO GRANDE DO SUL   ",
+                "sigla": "RS"
+              }
+            },
+            "nomeFantasia": "LOTERICA MEGA SORTE",
+            "nomeRazaoSocial": "LOTERICA IBIRAIARAS LTDA",
+            "numeroUF": 43,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 6,
+            "qtdCotaDigital": 25,
+            "qtdCotaDisponivel": 18,
+            "qtdCotaTotal": 25,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 43,
+              "nome": "RIO GRANDE DO SUL   ",
+              "sigla": "RS"
+            },
+            "valorTarifaServico": 3.52,
+            "vrCotaComTarifa": 13.6,
+            "vrCotaSemTarifa": 10.08,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 3.71,
+            "vrUltimaCotaComTarifa": 13.79,
+            "vrUltimaCotaSemTarifa": 10.08
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzQwMDAxMTgwMTsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 860,
+            "index": 1,
+            "loterica": 5560,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 52,
+                "digitoVerificador": 8,
+                "numero": 860
+              },
+              "nome": "GOIANESIA",
+              "uf": {
+                "id": 52,
+                "nome": "GOIAS               ",
+                "sigla": "GO"
+              }
+            },
+            "nomeFantasia": "LOTERIA DO JOAQUIM",
+            "nomeRazaoSocial": "MOREIRA & ANTUNES LTDA",
+            "numeroUF": 52,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 4,
+            "qtdCotaDigital": 15,
+            "qtdCotaDisponivel": 2,
+            "qtdCotaTotal": 15,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 52,
+              "nome": "GOIAS               ",
+              "sigla": "GO"
+            },
+            "valorTarifaServico": 3.92,
+            "vrCotaComTarifa": 15.12,
+            "vrCotaSemTarifa": 11.2,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 3.92,
+            "vrUltimaCotaComTarifa": 15.12,
+            "vrUltimaCotaSemTarifa": 11.2
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzM5OTc2NDIwNzsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 1160,
+            "index": 1,
+            "loterica": 13946,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 26,
+                "digitoVerificador": 6,
+                "numero": 1160
+              },
+              "nome": "RECIFE",
+              "uf": {
+                "id": 26,
+                "nome": "PERNAMBUCO          ",
+                "sigla": "PE"
+              }
+            },
+            "nomeFantasia": "LUCK LOTERIAS",
+            "nomeRazaoSocial": "IMPRIM@ TECNOLOGIA COM SERV LTDA",
+            "numeroUF": 26,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 10,
+            "qtdCotaDigital": 25,
+            "qtdCotaDisponivel": 19,
+            "qtdCotaTotal": 30,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 26,
+              "nome": "PERNAMBUCO          ",
+              "sigla": "PE"
+            },
+            "valorTarifaServico": 4.9,
+            "vrCotaComTarifa": 18.9,
+            "vrCotaSemTarifa": 14,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 4.9,
+            "vrUltimaCotaComTarifa": 18.9,
+            "vrUltimaCotaSemTarifa": 14
+          },
+          {
+            "codigoBolao": "MjAyNjs3OzQwMDIwMDU0NjsxMDY3NDs=",
+            "concurso": 3035,
+            "contemResiduo": false,
+            "dataSorteio": "23/07/2026",
+            "diaSorteio": "Quinta-feira",
+            "horaSorteio": "21:00:00",
+            "idModalidade": 2,
+            "idMunicipio": 10,
+            "index": 1,
+            "loterica": 8097,
+            "lotericaFavorita": false,
+            "modalidade": "MEGA_SENA",
+            "municipio": {
+              "id": {
+                "codigoUF": 53,
+                "digitoVerificador": 8,
+                "numero": 10
+              },
+              "nome": "BRASILIA",
+              "uf": {
+                "id": 53,
+                "nome": "DISTRITO FEDERAL    ",
+                "sigla": "DF"
+              }
+            },
+            "nomeFantasia": "LOTERIA M NORTE",
+            "nomeRazaoSocial": "OLIVEIRA E VILELA LTDA",
+            "numeroUF": 53,
+            "operacaoExecutadaComSucesso": false,
+            "qtdApostas": 10,
+            "qtdCotaDigital": 41,
+            "qtdCotaDisponivel": 31,
+            "qtdCotaTotal": 50,
+            "qtdDuplosLoteca": 0,
+            "qtdNumeros": 7,
+            "qtdSimplesLoteca": 0,
+            "qtdTrevos": 0,
+            "qtdTriplosLoteca": 0,
+            "tipoConcurso": 1,
+            "uf": {
+              "id": 53,
+              "nome": "DISTRITO FEDERAL    ",
+              "sigla": "DF"
+            },
+            "valorTarifaServico": 2.94,
+            "vrCotaComTarifa": 11.34,
+            "vrCotaSemTarifa": 8.4,
+            "vrPremioEstimado": 62000000,
+            "vrTarifaServicoUltimaCota": 2.94,
+            "vrUltimaCotaComTarifa": 11.34,
+            "vrUltimaCotaSemTarifa": 8.4
+          }
+        ],
+        "paginaAtual": 13,
+        "totalRegistros": 11313,
+        "ultimaPagina": 378,
+        "valorMenorCota": 3
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723123072,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL3JlY3VwZXJhci1ib2xvZXMtZGlzcG9uaXZlaXM=/?q=%5E%04%C2%B4%C3%AB%C2%82%C2%84%3D%C2%A3%0A%7D%C2%8D%C3%81e%C3%93%C3%A9%C2%BC~o%C3%A8t%C2%B8%C2%B6%2B%1F%C2%BD%18%C3%94%C2%A1N%C3%B3%C2%AD%C2%9A%C3%99%02%C3%A0%C2%93;9'%00%C3%90%C2%AF%C2%82q%19%C2%91(%C3%AF%C3%92'%1B%C2%B0%C3%98d%C2%8CB%C2%8A%C3%B1%C2%93n%C2%89%C3%9F%C2%8B%C3%B3%1Egn%C3%A74%C2%AC%C2%9E%C3%8D%C2%A8bLX%16%23%C2%88%C2%BEI%C3%B5%C3%BB%C3%8E%C2%93V%C3%A6%17%C3%BD2%C2%82%C2%AAX%C2%87%C2%AF%C2%A7%C2%B6%C2%97%C2%91N%C3%AF%C3%8B%C3%995%C2%A2%C2%B0m%C3%AD%C3%A9%C2%8BC%11!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:36.581",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              1,
+              5,
+              13,
+              17,
+              21,
+              32,
+              38,
+              47,
+              58,
+              60
+            ],
+            "indicadorSurpresinha": false
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 15361,
+        "lotericaFormatada": {
+          "bairro": "SAO PELEGRINO                           ",
+          "codigo": "18.015361-7",
+          "dv": 7,
+          "dvMunicipio": 8,
+          "id": 15361,
+          "idMunicipio": 510,
+          "idUF": 43,
+          "logradouro": "AV JULIO DE CASTILHOS                             ",
+          "nome": "CAMATTI LOTERIAS LTDA                                                                                              ",
+          "nomeFantasia": "CAMATTI LOTERIAS",
+          "nomeMunicipio": "CAXIAS DO SUL                      ",
+          "nomeUF": "RIO GRANDE DO SUL   ",
+          "numeroFormatado": "18.015361-7",
+          "polo": 18,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 43,
+            "digitoVerificador": 8,
+            "numero": 510
+          },
+          "nome": "CAXIAS DO SUL",
+          "uf": {
+            "id": 43,
+            "nome": "RIO GRANDE DO SUL   ",
+            "sigla": "RS"
+          }
+        },
+        "nomeFantasia": "CAMATTI LOTERIAS",
+        "nomeRazaoSocial": "CAMATTI LOTERIAS LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 65,
+        "qtdCotaDisponivel": 62,
+        "qtdCotaFisica": 25,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 90,
+        "qtdCotaVendidas": 3,
+        "qtdNumeros": 10,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 43,
+          "nome": "RIO GRANDE DO SUL   ",
+          "sigla": "RS"
+        },
+        "vrCotaComTarifa": 18.9,
+        "vrCotaSemTarifa": 14,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 441,
+        "vrTarifaServicoCota": 4.9,
+        "vrTarifaServicoUltimaCota": 4.9,
+        "vrTotalBolaoComTarifa": 1701,
+        "vrTotalBolaoSemTarifa": 1260,
+        "vrUltimaCotaComTarifa": 18.9,
+        "vrUltimaCotaSemTarifa": 14
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723135666,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%90GD%C2%83%C2%9BH%C2%95W%C3%8F%3D%1D%C3%84%C3%AF%C3%BC%08J%C2%8A%05:%C3%AD%C2%ACG0E%C2%9E%C2%B3%C3%9C%C3%8B%5C%C2%95%08%C2%B3!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:38.943",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              4,
+              8,
+              9,
+              13,
+              23,
+              25,
+              30,
+              31,
+              38,
+              46
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 1548,
+        "lotericaFormatada": {
+          "bairro": "GAMA                                    ",
+          "codigo": "04.001548-3",
+          "dv": 3,
+          "dvMunicipio": 8,
+          "id": 1548,
+          "idMunicipio": 10,
+          "idUF": 53,
+          "logradouro": "MERCADO 2 LOJA                                    ",
+          "nome": "CASA LOTERICA SAO TOME LTDA                                                                                        ",
+          "nomeFantasia": "LOTERICA SUPER SORTE",
+          "nomeMunicipio": "BRASILIA                           ",
+          "nomeUF": "DISTRITO FEDERAL    ",
+          "numeroFormatado": "04.001548-3",
+          "polo": 4,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 53,
+            "digitoVerificador": 8,
+            "numero": 10
+          },
+          "nome": "BRASILIA",
+          "uf": {
+            "id": 53,
+            "nome": "DISTRITO FEDERAL    ",
+            "sigla": "DF"
+          }
+        },
+        "nomeFantasia": "LOTERICA SUPER SORTE",
+        "nomeRazaoSocial": "CASA LOTERICA SAO TOME LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 2,
+        "qtdCotaDigital": 34,
+        "qtdCotaDisponivel": 32,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 34,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 10,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 53,
+          "nome": "DISTRITO FEDERAL    ",
+          "sigla": "DF"
+        },
+        "vrCotaComTarifa": 50.02,
+        "vrCotaSemTarifa": 37.05,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 441,
+        "vrTarifaServicoCota": 12.97,
+        "vrTarifaServicoUltimaCota": 12.99,
+        "vrTotalBolaoComTarifa": 1701,
+        "vrTotalBolaoSemTarifa": 1260,
+        "vrUltimaCotaComTarifa": 50.34,
+        "vrUltimaCotaSemTarifa": 37.35
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723138443,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%8F4%C2%84r%1Eb%C2%9B%C2%A2%053%C3%81%C2%ABu%C2%AD%06%1D%C3%84%C2%B5I%C2%84%011%5E%C3%9E%C3%83%3E%C2%9F%C2%83%C3%97%C3%BB3%1F!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:41.326",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              5,
+              10,
+              15,
+              16,
+              35,
+              50,
+              52,
+              58
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              5,
+              15,
+              17,
+              32,
+              35,
+              48,
+              51,
+              58
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              5,
+              10,
+              15,
+              32,
+              35,
+              50,
+              52,
+              58
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              5,
+              8,
+              10,
+              27,
+              38,
+              42,
+              48,
+              57
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              3,
+              16,
+              23,
+              28,
+              49,
+              50,
+              51,
+              54
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 22051,
+        "lotericaFormatada": {
+          "bairro": "CEILANDIA                               ",
+          "codigo": "04.022051-6",
+          "dv": 6,
+          "dvMunicipio": 8,
+          "id": 22051,
+          "idMunicipio": 10,
+          "idUF": 53,
+          "logradouro": "QNO 17  CONJUNTO I  LOTE 6 LOJA                   ",
+          "nome": "AGENCIA LOTERICA 4M LTDA                                                                                           ",
+          "nomeFantasia": "LOTERICA PONTO CERTO",
+          "nomeMunicipio": "BRASILIA                           ",
+          "nomeUF": "DISTRITO FEDERAL    ",
+          "numeroFormatado": "04.022051-6",
+          "polo": 4,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 53,
+            "digitoVerificador": 8,
+            "numero": 10
+          },
+          "nome": "BRASILIA",
+          "uf": {
+            "id": 53,
+            "nome": "DISTRITO FEDERAL    ",
+            "sigla": "DF"
+          }
+        },
+        "nomeFantasia": "LOTERICA PONTO CERTO",
+        "nomeRazaoSocial": "AGENCIA LOTERICA 4M LTDA",
+        "qtdApostas": 5,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 1,
+        "qtdCotaDigital": 12,
+        "qtdCotaDisponivel": 11,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 12,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 53,
+          "nome": "DISTRITO FEDERAL    ",
+          "sigla": "DF"
+        },
+        "vrCotaComTarifa": 94.5,
+        "vrCotaSemTarifa": 70,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 294,
+        "vrTarifaServicoCota": 24.5,
+        "vrTarifaServicoUltimaCota": 24.5,
+        "vrTotalBolaoComTarifa": 1134,
+        "vrTotalBolaoSemTarifa": 840,
+        "vrUltimaCotaComTarifa": 94.5,
+        "vrUltimaCotaSemTarifa": 70
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723140536,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%89%5D1%3E%C2%8Agt%C2%A1%C3%8A%C2%AA%C2%BD%1A%C2%87%C3%9F%C2%89%C3%B3%C3%B1XFH%C2%A2%C2%B5%C2%BB%C3%8A3%C3%BD%0Fge%C2%A6%C2%B4%C3%91!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:44.016",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              9,
+              10,
+              20,
+              29,
+              37,
+              41,
+              49,
+              53
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 3106,
+        "lotericaFormatada": {
+          "bairro": "VILA BRASILIA                           ",
+          "codigo": "08.003106-4",
+          "dv": 4,
+          "dvMunicipio": 5,
+          "id": 3106,
+          "idMunicipio": 140,
+          "idUF": 52,
+          "logradouro": "AV RUDA                                           ",
+          "nome": "VOLANTE DE OURO LOTERIAS LTDA                                                                                      ",
+          "nomeFantasia": "VOLANTE DE OURO",
+          "nomeMunicipio": "APARECIDA DE GOIANIA               ",
+          "nomeUF": "GOIAS               ",
+          "numeroFormatado": "08.003106-4",
+          "polo": 8,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 52,
+            "digitoVerificador": 5,
+            "numero": 140
+          },
+          "nome": "APARECIDA DE GOIANIA",
+          "uf": {
+            "id": 52,
+            "nome": "GOIAS               ",
+            "sigla": "GO"
+          }
+        },
+        "nomeFantasia": "VOLANTE DE OURO",
+        "nomeRazaoSocial": "VOLANTE DE OURO LOTERIAS LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 11,
+        "qtdCotaDisponivel": 10,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 11,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 52,
+          "nome": "GOIAS               ",
+          "sigla": "GO"
+        },
+        "vrCotaComTarifa": 20.61,
+        "vrCotaSemTarifa": 15.27,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 58.8,
+        "vrTarifaServicoCota": 5.34,
+        "vrTarifaServicoUltimaCota": 5.4,
+        "vrTotalBolaoComTarifa": 226.8,
+        "vrTotalBolaoSemTarifa": 168,
+        "vrUltimaCotaComTarifa": 20.7,
+        "vrUltimaCotaSemTarifa": 15.3
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723143065,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1Aw%04%C3%83%C3%ABA%C3%8B%C2%BD%C2%9C%C2%86%C2%BE%C2%AFar7%19L6%C2%BEv%60%C2%94%C2%BB%3F%C2%9E%5C%C3%80'%C3%BB%C3%B8B%C3%8B%C2%BF!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:46.061",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              14,
+              17,
+              22,
+              26,
+              31,
+              35,
+              40,
+              56
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              16,
+              17,
+              18,
+              22,
+              29,
+              35,
+              43,
+              52
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              20,
+              22,
+              23,
+              35,
+              43,
+              49,
+              52,
+              58
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 6191,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "03.006191-1",
+          "dv": 1,
+          "dvMunicipio": 1,
+          "id": 6191,
+          "idMunicipio": 730,
+          "idUF": 29,
+          "logradouro": "RUA  PEDRO BARROS                                 ",
+          "nome": "G A MOREIRA CIA LTDA                                                                                               ",
+          "nomeFantasia": "LOTERIA CASTRO ALVES",
+          "nomeMunicipio": "CASTRO ALVES                       ",
+          "nomeUF": "BAHIA               ",
+          "numeroFormatado": "03.006191-1",
+          "polo": 3,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 29,
+            "digitoVerificador": 1,
+            "numero": 730
+          },
+          "nome": "CASTRO ALVES",
+          "uf": {
+            "id": 29,
+            "nome": "BAHIA               ",
+            "sigla": "BA"
+          }
+        },
+        "nomeFantasia": "LOTERIA CASTRO ALVES",
+        "nomeRazaoSocial": "G A MOREIRA CIA LTDA",
+        "qtdApostas": 3,
+        "qtdCotaBaixadas": 3,
+        "qtdCotaBaixadasImpressas": 1,
+        "qtdCotaDigital": 25,
+        "qtdCotaDisponivel": 16,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 25,
+        "qtdCotaVendidas": 5,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 29,
+          "nome": "BAHIA               ",
+          "sigla": "BA"
+        },
+        "vrCotaComTarifa": 27.21,
+        "vrCotaSemTarifa": 20.16,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 176.39,
+        "vrTarifaServicoCota": 7.05,
+        "vrTarifaServicoUltimaCota": 7.19,
+        "vrTotalBolaoComTarifa": 680.39,
+        "vrTotalBolaoSemTarifa": 504,
+        "vrUltimaCotaComTarifa": 27.35,
+        "vrUltimaCotaSemTarifa": 20.16
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723145084,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%A8%0B%C2%96%C3%9Aa%C2%94m%C2%82%3F%0AN%C3%A1vt%C2%88H%C3%B9%C3%99%10%C2%A4%08%C2%AE%C2%9B%C3%A7%C2%84h%C2%93%C2%8F%C3%A7%C2%94y%08!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:48.423",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              4,
+              9,
+              11,
+              13,
+              26,
+              29,
+              35,
+              43,
+              57
+            ],
+            "indicadorSurpresinha": false
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 6374,
+        "lotericaFormatada": {
+          "bairro": "TIJUCA                                  ",
+          "codigo": "19.006374-2",
+          "dv": 2,
+          "dvMunicipio": 7,
+          "id": 6374,
+          "idMunicipio": 455,
+          "idUF": 33,
+          "logradouro": "RUA CONDE DE BONFIM                               ",
+          "nome": "PRACA SAENZ PENA LOTERIAS LTDA                                                                                     ",
+          "nomeFantasia": "PRACA SAENZ PENA LOTERIAS LTDA",
+          "nomeMunicipio": "RIO DE JANEIRO                     ",
+          "nomeUF": "RIO DE JANEIRO      ",
+          "numeroFormatado": "19.006374-2",
+          "polo": 19,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 33,
+            "digitoVerificador": 7,
+            "numero": 455
+          },
+          "nome": "RIO DE JANEIRO",
+          "uf": {
+            "id": 33,
+            "nome": "RIO DE JANEIRO      ",
+            "sigla": "RJ"
+          }
+        },
+        "nomeFantasia": "PRACA SAENZ PENA LOTERIAS LTDA",
+        "nomeRazaoSocial": "PRACA SAENZ PENA LOTERIAS LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 23,
+        "qtdCotaDisponivel": 23,
+        "qtdCotaFisica": 1,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 24,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 9,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 33,
+          "nome": "RIO DE JANEIRO      ",
+          "sigla": "RJ"
+        },
+        "vrCotaComTarifa": 28.34,
+        "vrCotaSemTarifa": 21,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 176.39,
+        "vrTarifaServicoCota": 7.34,
+        "vrTarifaServicoUltimaCota": 7.57,
+        "vrTotalBolaoComTarifa": 680.39,
+        "vrTotalBolaoSemTarifa": 504,
+        "vrUltimaCotaComTarifa": 28.57,
+        "vrUltimaCotaSemTarifa": 21
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723147421,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A~v%C2%A5%C3%89R%C3%BD%3E%C2%A9'b%C3%91C%03%C2%8F%C3%92%C2%A2%C2%AAs%C3%BC8%C3%B1%C2%85~%C2%94%02%1D%C3%80%C3%99%C2%BF%C2%B1(%C3%A8!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:50.793",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              14,
+              34,
+              36,
+              40,
+              42,
+              44,
+              46,
+              56,
+              57
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 11422,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "11.011422-1",
+          "dv": 1,
+          "dvMunicipio": 1,
+          "id": 11422,
+          "idMunicipio": 530,
+          "idUF": 31,
+          "logradouro": "R. JOAO BOTELHO MUNIZ                             ",
+          "nome": "LOTERICA LOTO MANIA LTDA                                                                                           ",
+          "nomeFantasia": "LOTERICA LOTO MANIA",
+          "nomeMunicipio": "BANDEIRA DO SUL                    ",
+          "nomeUF": "MINAS GERAIS        ",
+          "numeroFormatado": "11.011422-1",
+          "polo": 11,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 31,
+            "digitoVerificador": 1,
+            "numero": 530
+          },
+          "nome": "BANDEIRA DO SUL",
+          "uf": {
+            "id": 31,
+            "nome": "MINAS GERAIS        ",
+            "sigla": "MG"
+          }
+        },
+        "nomeFantasia": "LOTERICA LOTO MANIA",
+        "nomeRazaoSocial": "LOTERICA LOTO MANIA LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 54,
+        "qtdCotaDisponivel": 53,
+        "qtdCotaFisica": 3,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 57,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 9,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 31,
+          "nome": "MINAS GERAIS        ",
+          "sigla": "MG"
+        },
+        "vrCotaComTarifa": 11.93,
+        "vrCotaSemTarifa": 8.84,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 176.39,
+        "vrTarifaServicoCota": 3.09,
+        "vrTarifaServicoUltimaCota": 3.35,
+        "vrTotalBolaoComTarifa": 680.39,
+        "vrTotalBolaoSemTarifa": 504,
+        "vrUltimaCotaComTarifa": 12.31,
+        "vrUltimaCotaSemTarifa": 8.96
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723149791,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%B4%3FE%1D.%C3%A6S%5Dv%C2%A0%08%C2%A2u%06;P%C3%8C%C2%A6%C3%AA%C3%90z%C2%98%C3%8Bh%C3%9A%C2%92%C2%87k%C3%A6%14k%C2%8E!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:53.140",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              16,
+              30,
+              33,
+              40,
+              41,
+              49,
+              50,
+              52
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              7,
+              14,
+              16,
+              17,
+              19,
+              50,
+              54,
+              57
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 1528,
+        "lotericaFormatada": {
+          "bairro": "BAIRRO ANHANGUERA                       ",
+          "codigo": "08.001528-0",
+          "dv": 0,
+          "dvMunicipio": 7,
+          "id": 1528,
+          "idMunicipio": 870,
+          "idUF": 52,
+          "logradouro": "AVENIDA T63                                       ",
+          "nome": "AGENCIA LOTERICA CRISTAL LTDA                                                                                      ",
+          "nomeFantasia": "CRISTAL LOTERIAS",
+          "nomeMunicipio": "GOIANIA                            ",
+          "nomeUF": "GOIAS               ",
+          "numeroFormatado": "08.001528-0",
+          "polo": 8,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 52,
+            "digitoVerificador": 7,
+            "numero": 870
+          },
+          "nome": "GOIANIA",
+          "uf": {
+            "id": 52,
+            "nome": "GOIAS               ",
+            "sigla": "GO"
+          }
+        },
+        "nomeFantasia": "CRISTAL LOTERIAS",
+        "nomeRazaoSocial": "AGENCIA LOTERICA CRISTAL LTDA",
+        "qtdApostas": 2,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 10,
+        "qtdCotaDisponivel": 10,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 10,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 52,
+          "nome": "GOIAS               ",
+          "sigla": "GO"
+        },
+        "vrCotaComTarifa": 45.36,
+        "vrCotaSemTarifa": 33.6,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 117.6,
+        "vrTarifaServicoCota": 11.76,
+        "vrTarifaServicoUltimaCota": 11.76,
+        "vrTotalBolaoComTarifa": 453.6,
+        "vrTotalBolaoSemTarifa": 336,
+        "vrUltimaCotaComTarifa": 45.36,
+        "vrUltimaCotaSemTarifa": 33.6
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723152141,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A;%09X%C3%BD%C3%BC%C3%9E%C2%82x%12%C2%A8%19%C2%95%C3%8E%C2%B2%C2%B4%C3%BA%C3%91%C2%951k%C3%9Dq%C3%82Vl%10%C3%BCpWwk%13!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:55.499",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              11,
+              29,
+              31,
+              35,
+              37,
+              46,
+              48,
+              59
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 20469,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "14.020469-5",
+          "dv": 5,
+          "dvMunicipio": 4,
+          "id": 20469,
+          "idMunicipio": 830,
+          "idUF": 41,
+          "logradouro": "AV COSTA E SILVA                                  ",
+          "nome": "CASA DE OURO LOTERIAS LTDA ME                                                                                      ",
+          "nomeFantasia": "CASA DE OURO LOTERIAS",
+          "nomeMunicipio": "FOZ DO IGUACU                      ",
+          "nomeUF": "PARANA              ",
+          "numeroFormatado": "14.020469-5",
+          "polo": 14,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 41,
+            "digitoVerificador": 4,
+            "numero": 830
+          },
+          "nome": "FOZ DO IGUACU",
+          "uf": {
+            "id": 41,
+            "nome": "PARANA              ",
+            "sigla": "PR"
+          }
+        },
+        "nomeFantasia": "CASA DE OURO LOTERIAS",
+        "nomeRazaoSocial": "CASA DE OURO LOTERIAS LTDA ME",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 3,
+        "qtdCotaDisponivel": 3,
+        "qtdCotaFisica": 6,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 9,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 41,
+          "nome": "PARANA              ",
+          "sigla": "PR"
+        },
+        "vrCotaComTarifa": 25.19,
+        "vrCotaSemTarifa": 18.66,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 58.8,
+        "vrTarifaServicoCota": 6.53,
+        "vrTarifaServicoUltimaCota": 6.56,
+        "vrTotalBolaoComTarifa": 226.8,
+        "vrTotalBolaoSemTarifa": 168,
+        "vrUltimaCotaComTarifa": 25.28,
+        "vrUltimaCotaSemTarifa": 18.72
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723154498,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%14%C3%890%C2%AD%11%C2%B26%01%C3%88%C3%A3%C3%A4G_%3E%C3%BE%C2%8E%C3%A7%C2%ADm%25k%C3%AD%01u%C3%BD%C3%99u%5D%C2%AE%C3%9A%C3%9E%C3%9C!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:25:57.865",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              10,
+              15,
+              25,
+              27,
+              28,
+              48,
+              53
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              20,
+              22,
+              25,
+              40,
+              52,
+              55,
+              56
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              6,
+              28,
+              50,
+              53,
+              55,
+              57
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              13,
+              27,
+              40,
+              42,
+              46,
+              53,
+              58
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              4,
+              8,
+              11,
+              14,
+              41,
+              59,
+              60
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              5,
+              23,
+              24,
+              27,
+              42,
+              47,
+              56
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              17,
+              22,
+              28,
+              37,
+              38,
+              40,
+              60
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              2,
+              11,
+              24,
+              29,
+              31,
+              45,
+              53
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              6,
+              10,
+              22,
+              50,
+              55,
+              59
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              9,
+              16,
+              20,
+              22,
+              47,
+              52,
+              60
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 22966,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "13.022966-0",
+          "dv": 0,
+          "dvMunicipio": 2,
+          "id": 22966,
+          "idMunicipio": 205,
+          "idUF": 25,
+          "logradouro": "RUA FRANCISCO EGÍDIO DOS SANTOS                   ",
+          "nome": "CASA LOTERICA BERNARDINO BATISTA LTDA                                                                              ",
+          "nomeFantasia": "ESTRELA DA SORTE",
+          "nomeMunicipio": "BERNARDINO BATISTA                 ",
+          "nomeUF": "PARAIBA             ",
+          "numeroFormatado": "13.022966-0",
+          "polo": 13,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 25,
+            "digitoVerificador": 2,
+            "numero": 205
+          },
+          "nome": "BERNARDINO BATISTA",
+          "uf": {
+            "id": 25,
+            "nome": "PARAIBA             ",
+            "sigla": "PB"
+          }
+        },
+        "nomeFantasia": "ESTRELA DA SORTE",
+        "nomeRazaoSocial": "CASA LOTERICA BERNARDINO BATISTA LTDA",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 50,
+        "qtdCotaDisponivel": 45,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 50,
+        "qtdCotaVendidas": 5,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 25,
+          "nome": "PARAIBA             ",
+          "sigla": "PB"
+        },
+        "vrCotaComTarifa": 11.34,
+        "vrCotaSemTarifa": 8.4,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 147,
+        "vrTarifaServicoCota": 2.94,
+        "vrTarifaServicoUltimaCota": 2.94,
+        "vrTotalBolaoComTarifa": 567,
+        "vrTotalBolaoSemTarifa": 420,
+        "vrUltimaCotaComTarifa": 11.34,
+        "vrUltimaCotaSemTarifa": 8.4
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723156874,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%BADbY%C2%892%C3%B2%C3%9F%C2%8EED%C2%9D%C2%88%C2%82%7Fp%C3%9E%C3%A4%C3%AAw%C3%BF%C3%94%C3%B8%C3%B2%C3%BF%C2%9B%C3%8Ff%C2%AF5T;!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:00.228",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              11,
+              18,
+              28,
+              37,
+              40,
+              60
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              8,
+              26,
+              29,
+              49,
+              51,
+              54
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              12,
+              17,
+              20,
+              23,
+              30,
+              32
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              11,
+              12,
+              18,
+              19,
+              20,
+              24
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              9,
+              19,
+              25,
+              37,
+              45,
+              51
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              33,
+              35,
+              43,
+              44,
+              46,
+              50
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              4,
+              36,
+              40,
+              46,
+              47,
+              49
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              5,
+              13,
+              20,
+              29,
+              32,
+              41
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              2,
+              8,
+              22,
+              35,
+              48,
+              54
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              5,
+              6,
+              12,
+              21,
+              35,
+              37
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 15414,
+        "lotericaFormatada": {
+          "bairro": "ST TERRA FIRME                          ",
+          "codigo": "10.015414-0",
+          "dv": 0,
+          "dvMunicipio": 6,
+          "id": 15414,
+          "idMunicipio": 310,
+          "idUF": 51,
+          "logradouro": "AV  ARAGUAIA                                      ",
+          "nome": "SILVANE LUIZ DA FONSECA & CIA LTDA                                                                                 ",
+          "nomeFantasia": "LOJA TROPICAL",
+          "nomeMunicipio": "COCALINHO                          ",
+          "nomeUF": "MATO GROSSO         ",
+          "numeroFormatado": "10.015414-0",
+          "polo": 10,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 51,
+            "digitoVerificador": 6,
+            "numero": 310
+          },
+          "nome": "COCALINHO",
+          "uf": {
+            "id": 51,
+            "nome": "MATO GROSSO         ",
+            "sigla": "MT"
+          }
+        },
+        "nomeFantasia": "LOJA TROPICAL",
+        "nomeRazaoSocial": "SILVANE LUIZ DA FONSECA & CIA LTDA",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 1,
+        "qtdCotaDigital": 7,
+        "qtdCotaDisponivel": 2,
+        "qtdCotaFisica": 1,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 8,
+        "qtdCotaVendidas": 4,
+        "qtdNumeros": 6,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 51,
+          "nome": "MATO GROSSO         ",
+          "sigla": "MT"
+        },
+        "vrCotaComTarifa": 10.12,
+        "vrCotaSemTarifa": 7.5,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 21,
+        "vrTarifaServicoCota": 2.62,
+        "vrTarifaServicoUltimaCota": 2.66,
+        "vrTotalBolaoComTarifa": 81,
+        "vrTotalBolaoSemTarifa": 60,
+        "vrUltimaCotaComTarifa": 10.16,
+        "vrUltimaCotaSemTarifa": 7.5
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723159233,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%8F%C2%B0%12N%C3%87%3C%C3%BB%18%18%C2%BB%26%C3%90%C2%BB%C3%A29%C3%92%C2%BF%C2%81%C2%9D%C2%9C%2Bg,%C3%A37A%C2%96)%C3%A6%13u)!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:02.594",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              4,
+              5,
+              9,
+              14,
+              29,
+              45,
+              46
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              5,
+              7,
+              26,
+              32,
+              39,
+              40,
+              49
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              10,
+              18,
+              19,
+              22,
+              46,
+              58,
+              60
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              5,
+              17,
+              29,
+              36,
+              43,
+              47,
+              54
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 20408,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "03.020408-9",
+          "dv": 9,
+          "dvMunicipio": 6,
+          "id": 20408,
+          "idMunicipio": 515,
+          "idUF": 29,
+          "logradouro": "AVENIDA TANHACU                                   ",
+          "nome": "CASA LOTERICA CAETANOS LTDA                                                                                        ",
+          "nomeFantasia": "CASA LOTERICA CAETANOS",
+          "nomeMunicipio": "CAETANOS                           ",
+          "nomeUF": "BAHIA               ",
+          "numeroFormatado": "03.020408-9",
+          "polo": 3,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 29,
+            "digitoVerificador": 6,
+            "numero": 515
+          },
+          "nome": "CAETANOS",
+          "uf": {
+            "id": 29,
+            "nome": "BAHIA               ",
+            "sigla": "BA"
+          }
+        },
+        "nomeFantasia": "CASA LOTERICA CAETANOS",
+        "nomeRazaoSocial": "CASA LOTERICA CAETANOS LTDA",
+        "qtdApostas": 4,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 21,
+        "qtdCotaDisponivel": 18,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 21,
+        "qtdCotaVendidas": 3,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 29,
+          "nome": "BAHIA               ",
+          "sigla": "BA"
+        },
+        "vrCotaComTarifa": 10.8,
+        "vrCotaSemTarifa": 8,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 58.8,
+        "vrTarifaServicoCota": 2.8,
+        "vrTarifaServicoUltimaCota": 2.8,
+        "vrTotalBolaoComTarifa": 226.8,
+        "vrTotalBolaoSemTarifa": 168,
+        "vrUltimaCotaComTarifa": 10.8,
+        "vrUltimaCotaSemTarifa": 8
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723161600,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%91Y%C2%9DX1%C3%AC%5ER%08G%1F%C3%B0%C3%A2w%C2%B0%C2%8B%2B%C3%A8WB%C3%93%C3%A3%C3%A9%1BB%C3%AD%C2%B6%C2%AD%C3%B3%C3%8A%C3%AB%C2%82!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:04.929",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              11,
+              14,
+              16,
+              33,
+              34,
+              40,
+              44,
+              48,
+              53
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              7,
+              8,
+              11,
+              13,
+              18,
+              21,
+              23,
+              40,
+              57
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 7253,
+        "lotericaFormatada": {
+          "bairro": "Santo Antonio                           ",
+          "codigo": "06.007253-9",
+          "dv": 9,
+          "dvMunicipio": 9,
+          "id": 7253,
+          "idMunicipio": 530,
+          "idUF": 32,
+          "logradouro": "Rodovia Serafim Derenzi                           ",
+          "nome": "C. R. LOTERIAS LTDA - ME                                                                                           ",
+          "nomeFantasia": "LOTERIA SANTO ANTONIO",
+          "nomeMunicipio": "VITORIA                            ",
+          "nomeUF": "ESPIRITO SANTO      ",
+          "numeroFormatado": "06.007253-9",
+          "polo": 6,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 32,
+            "digitoVerificador": 9,
+            "numero": 530
+          },
+          "nome": "VITORIA",
+          "uf": {
+            "id": 32,
+            "nome": "ESPIRITO SANTO      ",
+            "sigla": "ES"
+          }
+        },
+        "nomeFantasia": "LOTERIA SANTO ANTONIO",
+        "nomeRazaoSocial": "C. R. LOTERIAS LTDA - ME",
+        "qtdApostas": 2,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 30,
+        "qtdCotaDisponivel": 29,
+        "qtdCotaFisica": 4,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 34,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 9,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 32,
+          "nome": "ESPIRITO SANTO      ",
+          "sigla": "ES"
+        },
+        "vrCotaComTarifa": 40.01,
+        "vrCotaSemTarifa": 29.64,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 352.79,
+        "vrTarifaServicoCota": 10.37,
+        "vrTarifaServicoUltimaCota": 10.58,
+        "vrTotalBolaoComTarifa": 1360.79,
+        "vrTotalBolaoSemTarifa": 1008,
+        "vrUltimaCotaComTarifa": 40.46,
+        "vrUltimaCotaSemTarifa": 29.88
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723163925,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%B6%C2%86%C2%9A%1A~%C3%9A%18%C3%B6%3C%C3%82%C2%A6MSX0S%2B$%7Cb%C3%A6%C3%82%C3%8E%C3%99M%C3%A6%C2%91%C2%82%C3%BD%18%C2%BC%5D!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:07.295",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              2,
+              18,
+              23,
+              26,
+              39,
+              42,
+              55,
+              58
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              3,
+              15,
+              21,
+              27,
+              35,
+              47,
+              55,
+              58
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              6,
+              17,
+              22,
+              30,
+              34,
+              38,
+              53,
+              58
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              3,
+              15,
+              21,
+              27,
+              35,
+              47,
+              55,
+              60
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              3,
+              7,
+              12,
+              23,
+              30,
+              34,
+              36,
+              53
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              10,
+              14,
+              27,
+              32,
+              37,
+              40,
+              55,
+              60
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              2,
+              5,
+              9,
+              11,
+              32,
+              51,
+              53,
+              55
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              1,
+              4,
+              15,
+              19,
+              25,
+              29,
+              31,
+              36
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              7,
+              9,
+              24,
+              30,
+              31,
+              39,
+              42,
+              55
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              2,
+              12,
+              19,
+              26,
+              33,
+              39,
+              47,
+              58
+            ],
+            "indicadorSurpresinha": false
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 25675,
+        "lotericaFormatada": {
+          "bairro": "BAIRRO GOIA                             ",
+          "codigo": "08.025675-9",
+          "dv": 9,
+          "dvMunicipio": 7,
+          "id": 25675,
+          "idMunicipio": 870,
+          "idUF": 52,
+          "logradouro": "RUA PADRE MONTE                                   ",
+          "nome": "CASA LOTERICA GOIA DA SORTE LTDA                                                                                   ",
+          "nomeFantasia": "GOIA DA SORTE",
+          "nomeMunicipio": "GOIANIA                            ",
+          "nomeUF": "GOIAS               ",
+          "numeroFormatado": "08.025675-9",
+          "polo": 8,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 52,
+            "digitoVerificador": 7,
+            "numero": 870
+          },
+          "nome": "GOIANIA",
+          "uf": {
+            "id": 52,
+            "nome": "GOIAS               ",
+            "sigla": "GO"
+          }
+        },
+        "nomeFantasia": "GOIA DA SORTE",
+        "nomeRazaoSocial": "CASA LOTERICA GOIA DA SORTE LTDA",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 1,
+        "qtdCotaDigital": 34,
+        "qtdCotaDisponivel": 32,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 34,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 52,
+          "nome": "GOIAS               ",
+          "sigla": "GO"
+        },
+        "vrCotaComTarifa": 66.7,
+        "vrCotaSemTarifa": 49.41,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 588,
+        "vrTarifaServicoCota": 17.29,
+        "vrTarifaServicoUltimaCota": 17.43,
+        "vrTotalBolaoComTarifa": 2268,
+        "vrTotalBolaoSemTarifa": 1680,
+        "vrUltimaCotaComTarifa": 66.9,
+        "vrUltimaCotaSemTarifa": 49.47
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723166305,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1AW%3D:%60%C2%95%2F%C2%9D%C2%A2%C2%B6I%C3%9C%60vI%C3%92%22%C3%94%C3%B0%C3%90%C3%92%C3%A0;%C2%8E~h%18@%C3%8E%C3%BANdS!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:09.648",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              4,
+              5,
+              16,
+              27,
+              46,
+              47,
+              48
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              27,
+              28,
+              42,
+              45,
+              53,
+              55,
+              58
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              3,
+              5,
+              6,
+              7,
+              24,
+              30,
+              38
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              4,
+              6,
+              7,
+              8,
+              18,
+              26,
+              40
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 6863,
+        "lotericaFormatada": {
+          "bairro": "Centro                                  ",
+          "codigo": "14.006863-5",
+          "dv": 5,
+          "dvMunicipio": 5,
+          "id": 6863,
+          "idMunicipio": 1990,
+          "idUF": 41,
+          "logradouro": "RUA XV DE NOVEMBRO 424                            ",
+          "nome": "R A BERTI DE LIMA & CIA LTDA                                                                                       ",
+          "nomeFantasia": "LOTERICA LOPES",
+          "nomeMunicipio": "PONTA GROSSA                       ",
+          "nomeUF": "PARANA              ",
+          "numeroFormatado": "14.006863-5",
+          "polo": 14,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 41,
+            "digitoVerificador": 5,
+            "numero": 1990
+          },
+          "nome": "PONTA GROSSA",
+          "uf": {
+            "id": 41,
+            "nome": "PARANA              ",
+            "sigla": "PR"
+          }
+        },
+        "nomeFantasia": "LOTERICA LOPES",
+        "nomeRazaoSocial": "R A BERTI DE LIMA & CIA LTDA",
+        "qtdApostas": 4,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 6,
+        "qtdCotaDisponivel": 4,
+        "qtdCotaFisica": 9,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 15,
+        "qtdCotaVendidas": 2,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 41,
+          "nome": "PARANA              ",
+          "sigla": "PR"
+        },
+        "vrCotaComTarifa": 15.12,
+        "vrCotaSemTarifa": 11.2,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 58.8,
+        "vrTarifaServicoCota": 3.92,
+        "vrTarifaServicoUltimaCota": 3.92,
+        "vrTotalBolaoComTarifa": 226.8,
+        "vrTotalBolaoSemTarifa": 168,
+        "vrUltimaCotaComTarifa": 15.12,
+        "vrUltimaCotaSemTarifa": 11.2
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723169679,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1AJ%2B%C3%9F%7F%C2%8B%5E3%1E%C2%A9%C2%B4%C3%94%C2%9A%C3%AF%C3%AB%1D%C2%AB%C2%94%C3%BB%C2%9E%C3%B7%C3%88t%7D%07y%C2%B0%C3%86XD%C2%99%C2%8B%C3%8F!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:14.030",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              3,
+              6,
+              7,
+              19,
+              23,
+              27,
+              29,
+              39,
+              47
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              1,
+              13,
+              17,
+              20,
+              25,
+              31,
+              32,
+              34,
+              49
+            ],
+            "indicadorSurpresinha": false
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 6907,
+        "lotericaFormatada": {
+          "bairro": "Bela Aurora                             ",
+          "codigo": "06.006907-4",
+          "dv": 4,
+          "dvMunicipio": 8,
+          "id": 6907,
+          "idMunicipio": 130,
+          "idUF": 32,
+          "logradouro": "AV ESPIRITO SANTO                                 ",
+          "nome": "CASA LOTERICA BELA AURORA LTDA                                                                                     ",
+          "nomeFantasia": "LOTERIA BELA AURORA",
+          "nomeMunicipio": "CARIACICA                          ",
+          "nomeUF": "ESPIRITO SANTO      ",
+          "numeroFormatado": "06.006907-4",
+          "polo": 6,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 32,
+            "digitoVerificador": 8,
+            "numero": 130
+          },
+          "nome": "CARIACICA",
+          "uf": {
+            "id": 32,
+            "nome": "ESPIRITO SANTO      ",
+            "sigla": "ES"
+          }
+        },
+        "nomeFantasia": "LOTERIA BELA AURORA",
+        "nomeRazaoSocial": "CASA LOTERICA BELA AURORA LTDA",
+        "qtdApostas": 2,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 2,
+        "qtdCotaDigital": 12,
+        "qtdCotaDisponivel": 10,
+        "qtdCotaFisica": 15,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 27,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 9,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 32,
+          "nome": "ESPIRITO SANTO      ",
+          "sigla": "ES"
+        },
+        "vrCotaComTarifa": 50.39,
+        "vrCotaSemTarifa": 37.33,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 352.79,
+        "vrTarifaServicoCota": 13.06,
+        "vrTarifaServicoUltimaCota": 13.23,
+        "vrTotalBolaoComTarifa": 1360.79,
+        "vrTotalBolaoSemTarifa": 1008,
+        "vrUltimaCotaComTarifa": 50.65,
+        "vrUltimaCotaSemTarifa": 37.42
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723173028,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%987e%10pCe%13%C3%82%C2%A09%2F%3Cx%C2%89%12%C3%BCJH%C2%9A%C2%B8%C3%87%C2%B5%1D%C2%9B%C2%8A%C2%88%C2%84%C3%83~%5D%C2%B5!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:16.174",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              14,
+              16,
+              23,
+              25,
+              32,
+              40,
+              46
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              21,
+              28,
+              29,
+              34,
+              39,
+              46,
+              47
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              5,
+              20,
+              30,
+              50,
+              53,
+              55
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              7,
+              8,
+              13,
+              24,
+              36,
+              38,
+              39
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              7,
+              22,
+              31,
+              32,
+              35,
+              48,
+              54
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              10,
+              31,
+              39,
+              47,
+              49,
+              54,
+              59
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              6,
+              8,
+              9,
+              39,
+              40,
+              44,
+              59
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              2,
+              7,
+              21,
+              24,
+              32,
+              45,
+              48
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              8,
+              14,
+              17,
+              37,
+              46,
+              48,
+              54
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              8,
+              16,
+              19,
+              27,
+              32,
+              57,
+              58
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 15652,
+        "lotericaFormatada": {
+          "bairro": "CACOTE                                  ",
+          "codigo": "15.015652-9",
+          "dv": 9,
+          "dvMunicipio": 6,
+          "id": 15652,
+          "idMunicipio": 1160,
+          "idUF": 26,
+          "logradouro": "RUA CAPITAO GREGORIO DE CALDAS                    ",
+          "nome": "S & S LOTERICA LTDA                                                                                                ",
+          "nomeFantasia": "LOTERIA RECIFE",
+          "nomeMunicipio": "RECIFE                             ",
+          "nomeUF": "PERNAMBUCO          ",
+          "numeroFormatado": "15.015652-9",
+          "polo": 15,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 26,
+            "digitoVerificador": 6,
+            "numero": 1160
+          },
+          "nome": "RECIFE",
+          "uf": {
+            "id": 26,
+            "nome": "PERNAMBUCO          ",
+            "sigla": "PE"
+          }
+        },
+        "nomeFantasia": "LOTERIA RECIFE",
+        "nomeRazaoSocial": "S & S LOTERICA LTDA",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 25,
+        "qtdCotaDisponivel": 18,
+        "qtdCotaFisica": 5,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 30,
+        "qtdCotaVendidas": 7,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 26,
+          "nome": "PERNAMBUCO          ",
+          "sigla": "PE"
+        },
+        "vrCotaComTarifa": 18.9,
+        "vrCotaSemTarifa": 14,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 147,
+        "vrTarifaServicoCota": 4.9,
+        "vrTarifaServicoUltimaCota": 4.9,
+        "vrTotalBolaoComTarifa": 567,
+        "vrTotalBolaoSemTarifa": 420,
+        "vrUltimaCotaComTarifa": 18.9,
+        "vrUltimaCotaSemTarifa": 14
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723175900,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%8A%C2%84%C3%91%C3%98%C2%82%1F%C2%B5%C3%8C%1CK$%C3%9D%19a%C3%B4%C2%99%12%C2%984%C2%89q%C3%83%C2%824%19%11i%C3%AD9%C3%BE%C2%B6%19!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:19.519",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              12,
+              20,
+              23,
+              29,
+              30,
+              49,
+              53,
+              55,
+              60
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 17745,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "20.017745-1",
+          "dv": 1,
+          "dvMunicipio": 3,
+          "id": 17745,
+          "idMunicipio": 660,
+          "idUF": 42,
+          "logradouro": "AVENIDA JOAO PESSOA                               ",
+          "nome": "COMERCIAL KREWER & ALBRECHT LTDA                                                                                   ",
+          "nomeFantasia": "LOTERICA GUARUJA DO SUL",
+          "nomeMunicipio": "GUARUJA DO SUL                     ",
+          "nomeUF": "SANTA CATARINA      ",
+          "numeroFormatado": "20.017745-1",
+          "polo": 20,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 42,
+            "digitoVerificador": 3,
+            "numero": 660
+          },
+          "nome": "GUARUJA DO SUL",
+          "uf": {
+            "id": 42,
+            "nome": "SANTA CATARINA      ",
+            "sigla": "SC"
+          }
+        },
+        "nomeFantasia": "LOTERICA GUARUJA DO SUL",
+        "nomeRazaoSocial": "COMERCIAL KREWER & ALBRECHT LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 16,
+        "qtdCotaDisponivel": 14,
+        "qtdCotaFisica": 2,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 18,
+        "qtdCotaVendidas": 2,
+        "qtdNumeros": 9,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 42,
+          "nome": "SANTA CATARINA      ",
+          "sigla": "SC"
+        },
+        "vrCotaComTarifa": 37.79,
+        "vrCotaSemTarifa": 28,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 176.39,
+        "vrTarifaServicoCota": 9.79,
+        "vrTarifaServicoUltimaCota": 9.96,
+        "vrTotalBolaoComTarifa": 680.39,
+        "vrTotalBolaoSemTarifa": 504,
+        "vrUltimaCotaComTarifa": 37.96,
+        "vrUltimaCotaSemTarifa": 28
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723179578,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%60%C3%A3%C2%89%C2%B3cn%1A%3E%19%0C%C2%83%C3%8A%1C%07%C3%B8%C2%8A%60E%5B%C3%B9%7D%08%07%7D.%C2%83%C3%95~M%22%C2%B0%5B!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:22.951",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              2,
+              9,
+              30,
+              31,
+              33,
+              39,
+              55,
+              58
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              18,
+              32,
+              33,
+              34,
+              36,
+              50,
+              60
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 3732,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "06.003732-6",
+          "dv": 6,
+          "dvMunicipio": 6,
+          "id": 3732,
+          "idMunicipio": 150,
+          "idUF": 32,
+          "logradouro": "RUA CASSINAO CASTELO                              ",
+          "nome": "CASA LOTERICA COLATINA LTDA                                                                                        ",
+          "nomeFantasia": "LOTERICA INDEPENDENCIA",
+          "nomeMunicipio": "COLATINA                           ",
+          "nomeUF": "ESPIRITO SANTO      ",
+          "numeroFormatado": "06.003732-6",
+          "polo": 6,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 32,
+            "digitoVerificador": 6,
+            "numero": 150
+          },
+          "nome": "COLATINA",
+          "uf": {
+            "id": 32,
+            "nome": "ESPIRITO SANTO      ",
+            "sigla": "ES"
+          }
+        },
+        "nomeFantasia": "LOTERICA INDEPENDENCIA",
+        "nomeRazaoSocial": "CASA LOTERICA COLATINA LTDA",
+        "qtdApostas": 2,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 1,
+        "qtdCotaDigital": 18,
+        "qtdCotaDisponivel": 16,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 18,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 32,
+          "nome": "ESPIRITO SANTO      ",
+          "sigla": "ES"
+        },
+        "vrCotaComTarifa": 25.19,
+        "vrCotaSemTarifa": 18.66,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 117.6,
+        "vrTarifaServicoCota": 6.53,
+        "vrTarifaServicoUltimaCota": 6.59,
+        "vrTotalBolaoComTarifa": 453.6,
+        "vrTotalBolaoSemTarifa": 336,
+        "vrUltimaCotaComTarifa": 25.37,
+        "vrUltimaCotaSemTarifa": 18.78
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723181948,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%89f%C3%9B%C3%A5%15s%C3%B8a%0A%C2%B8%5D%C3%A4%C2%9F%C3%B9%C2%B2%C2%AB%C3%AF%C2%B6%C3%AA%17%C2%A0%C2%A8V%C2%8C%C2%82%5B%C2%91s:%06%C3%BD%18!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:26.303",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              3,
+              14,
+              15,
+              29,
+              30,
+              45,
+              57
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              6,
+              17,
+              21,
+              31,
+              45,
+              57,
+              60
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              10,
+              25,
+              31,
+              34,
+              49,
+              50,
+              52
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              16,
+              22,
+              27,
+              29,
+              45,
+              47,
+              49
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              3,
+              21,
+              22,
+              32,
+              37,
+              42,
+              54
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              4,
+              8,
+              9,
+              25,
+              43,
+              46,
+              49
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              10,
+              15,
+              31,
+              36,
+              37,
+              39,
+              51
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              4,
+              6,
+              18,
+              19,
+              21,
+              36,
+              54
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              4,
+              9,
+              15,
+              30,
+              36,
+              37,
+              49
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              4,
+              8,
+              9,
+              18,
+              22,
+              30,
+              48
+            ],
+            "indicadorSurpresinha": false
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 25052,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "14.025052-2",
+          "dv": 2,
+          "dvMunicipio": 1,
+          "id": 25052,
+          "idMunicipio": 1440,
+          "idUF": 41,
+          "logradouro": "AVENIDA IGUACU 1133                               ",
+          "nome": "C. M. DE CASTRO - LOTERICA - EIRELI                                                                                ",
+          "nomeFantasia": "LOTERICA MANGUEIRINHA",
+          "nomeMunicipio": "MANGUEIRINHA                       ",
+          "nomeUF": "PARANA              ",
+          "numeroFormatado": "14.025052-2",
+          "polo": 14,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 41,
+            "digitoVerificador": 1,
+            "numero": 1440
+          },
+          "nome": "MANGUEIRINHA",
+          "uf": {
+            "id": 41,
+            "nome": "PARANA              ",
+            "sigla": "PR"
+          }
+        },
+        "nomeFantasia": "LOTERICA MANGUEIRINHA",
+        "nomeRazaoSocial": "C. M. DE CASTRO - LOTERICA - EIRELI",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 2,
+        "qtdCotaDigital": 28,
+        "qtdCotaDisponivel": 26,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 28,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 41,
+          "nome": "PARANA              ",
+          "sigla": "PR"
+        },
+        "vrCotaComTarifa": 20.25,
+        "vrCotaSemTarifa": 15,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 147,
+        "vrTarifaServicoCota": 5.25,
+        "vrTarifaServicoUltimaCota": 5.25,
+        "vrTotalBolaoComTarifa": 567,
+        "vrTotalBolaoSemTarifa": 420,
+        "vrUltimaCotaComTarifa": 20.25,
+        "vrUltimaCotaSemTarifa": 15
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723185304,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%8D%00%C3%86:%C2%85C%C3%BF%C2%91%C3%90Y0%C2%B5%C2%BDd%C3%9EH%C2%85%26%C3%9F%0Eu%C3%9D%C2%A9%C3%8EW%5B%C2%8B%C3%BDB%1BHS!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:29.666",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              17,
+              26,
+              31,
+              37,
+              44,
+              51,
+              56
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              9,
+              14,
+              27,
+              41,
+              52,
+              54,
+              55
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              9,
+              20,
+              21,
+              33,
+              52,
+              56,
+              59
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              10,
+              36,
+              42,
+              48,
+              49,
+              50,
+              52
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              20,
+              21,
+              35,
+              46,
+              48,
+              50,
+              51
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              6,
+              7,
+              11,
+              22,
+              43,
+              49,
+              57
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              6,
+              35,
+              41,
+              46,
+              56,
+              57,
+              58
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              7,
+              10,
+              23,
+              31,
+              46,
+              53,
+              56
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              10,
+              12,
+              19,
+              23,
+              40,
+              55,
+              59
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              8,
+              22,
+              40,
+              43,
+              47,
+              54,
+              56
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 9857,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "05.009857-8",
+          "dv": 8,
+          "dvMunicipio": 2,
+          "id": 9857,
+          "idMunicipio": 1170,
+          "idUF": 23,
+          "logradouro": "R PROFESSORA ALAIDE RAMOS                         ",
+          "nome": "LOTERIA PONTES LTDA                                                                                                ",
+          "nomeFantasia": "LOTERIA PONTES",
+          "nomeMunicipio": "RERIUTABA                          ",
+          "nomeUF": "CEARA               ",
+          "numeroFormatado": "05.009857-8",
+          "polo": 5,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 23,
+            "digitoVerificador": 2,
+            "numero": 1170
+          },
+          "nome": "RERIUTABA",
+          "uf": {
+            "id": 23,
+            "nome": "CEARA               ",
+            "sigla": "CE"
+          }
+        },
+        "nomeFantasia": "LOTERIA PONTES",
+        "nomeRazaoSocial": "LOTERIA PONTES LTDA",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 48,
+        "qtdCotaDisponivel": 42,
+        "qtdCotaFisica": 2,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 50,
+        "qtdCotaVendidas": 6,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 23,
+          "nome": "CEARA               ",
+          "sigla": "CE"
+        },
+        "vrCotaComTarifa": 11.34,
+        "vrCotaSemTarifa": 8.4,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 147,
+        "vrTarifaServicoCota": 2.94,
+        "vrTarifaServicoUltimaCota": 2.94,
+        "vrTotalBolaoComTarifa": 567,
+        "vrTotalBolaoSemTarifa": 420,
+        "vrUltimaCotaComTarifa": 11.34,
+        "vrUltimaCotaSemTarifa": 8.4
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723188670,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1AI%C3%BE)%C2%BF%C3%B6A%C2%B2%C2%A0D%C3%9E%C3%B2B%00J%0F%C3%83OYU%C3%B0%C2%BE%C3%87%C2%BEQG%C3%9E%C3%8BKZ%C3%B5%C2%94i!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:33.033",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              2,
+              13,
+              17,
+              21,
+              27,
+              28,
+              54,
+              58
+            ],
+            "indicadorSurpresinha": false
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 8203,
+        "lotericaFormatada": {
+          "bairro": "CAPAO RASO                              ",
+          "codigo": "14.008203-4",
+          "dv": 4,
+          "dvMunicipio": 2,
+          "id": 8203,
+          "idMunicipio": 690,
+          "idUF": 41,
+          "logradouro": "AV BRASILIA                                       ",
+          "nome": "BARBOSA LOTERIAS LTDA                                                                                              ",
+          "nomeFantasia": "BRASILIA LOTERIAS",
+          "nomeMunicipio": "CURITIBA                           ",
+          "nomeUF": "PARANA              ",
+          "numeroFormatado": "14.008203-4",
+          "polo": 14,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 41,
+            "digitoVerificador": 2,
+            "numero": 690
+          },
+          "nome": "CURITIBA",
+          "uf": {
+            "id": 41,
+            "nome": "PARANA              ",
+            "sigla": "PR"
+          }
+        },
+        "nomeFantasia": "BRASILIA LOTERIAS",
+        "nomeRazaoSocial": "BARBOSA LOTERIAS LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 3,
+        "qtdCotaDigital": 6,
+        "qtdCotaDisponivel": 2,
+        "qtdCotaFisica": 5,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 11,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 8,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 41,
+          "nome": "PARANA              ",
+          "sigla": "PR"
+        },
+        "vrCotaComTarifa": 20.61,
+        "vrCotaSemTarifa": 15.27,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 58.8,
+        "vrTarifaServicoCota": 5.34,
+        "vrTarifaServicoUltimaCota": 5.4,
+        "vrTotalBolaoComTarifa": 226.8,
+        "vrTotalBolaoSemTarifa": 168,
+        "vrUltimaCotaComTarifa": 20.7,
+        "vrUltimaCotaSemTarifa": 15.3
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723192027,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%0En%3F%C2%B8%C2%89%C2%AA%C3%80%C3%A8%15K%C2%AB%C2%A0%26%C3%AB%C3%99%C2%AA%C2%90*%5E%C2%9A%C2%91%25%2B%C3%9A+%15g%C2%89d%C3%BE+%C2%B9!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:36.430",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              3,
+              28,
+              31,
+              46,
+              49,
+              55,
+              57
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              10,
+              17,
+              29,
+              36,
+              46,
+              48,
+              53
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              9,
+              11,
+              19,
+              34,
+              51,
+              57,
+              60
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              4,
+              15,
+              22,
+              34,
+              37,
+              49,
+              52
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              5,
+              6,
+              13,
+              23,
+              39,
+              42,
+              60
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              7,
+              11,
+              16,
+              17,
+              33,
+              53,
+              60
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              17,
+              22,
+              26,
+              32,
+              40,
+              46
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              2,
+              8,
+              9,
+              23,
+              27,
+              28,
+              30
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              3,
+              6,
+              31,
+              43,
+              45,
+              52
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              3,
+              9,
+              22,
+              34,
+              40,
+              50,
+              59
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 3173,
+        "lotericaFormatada": {
+          "bairro": "PARQUE  AMAZONIA                        ",
+          "codigo": "08.003173-0",
+          "dv": 0,
+          "dvMunicipio": 7,
+          "id": 3173,
+          "idMunicipio": 870,
+          "idUF": 52,
+          "logradouro": "AV JOSE R. DE MORAES                              ",
+          "nome": "LOTERIA AMAZONAS LT                                                                                                ",
+          "nomeFantasia": "LOTERIA AMAZONAS LT",
+          "nomeMunicipio": "GOIANIA                            ",
+          "nomeUF": "GOIAS               ",
+          "numeroFormatado": "08.003173-0",
+          "polo": 8,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 52,
+            "digitoVerificador": 7,
+            "numero": 870
+          },
+          "nome": "GOIANIA",
+          "uf": {
+            "id": 52,
+            "nome": "GOIAS               ",
+            "sigla": "GO"
+          }
+        },
+        "nomeFantasia": "LOTERIA AMAZONAS LT",
+        "nomeRazaoSocial": "LOTERIA AMAZONAS LT",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 7,
+        "qtdCotaDisponivel": 4,
+        "qtdCotaFisica": 15,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 22,
+        "qtdCotaVendidas": 3,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 52,
+          "nome": "GOIAS               ",
+          "sigla": "GO"
+        },
+        "vrCotaComTarifa": 25.77,
+        "vrCotaSemTarifa": 19.09,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 147,
+        "vrTarifaServicoCota": 6.68,
+        "vrTarifaServicoUltimaCota": 6.72,
+        "vrTotalBolaoComTarifa": 567,
+        "vrTotalBolaoSemTarifa": 420,
+        "vrUltimaCotaComTarifa": 25.83,
+        "vrUltimaCotaSemTarifa": 19.11
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723195434,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%A3%C3%B3~%C2%99%C2%B4%C2%BE%C2%B7%C2%92%C3%81%C2%B1%0F9%C3%90%7FK%7B%C2%B7F%C2%BE%C3%9C%1Fz)%C2%AD%03%C3%BA:%C2%88s%C3%9D%C3%A4%C3%A8!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:39.815",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              11,
+              12,
+              14,
+              16,
+              37,
+              38,
+              39,
+              44,
+              59
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              3,
+              7,
+              8,
+              10,
+              13,
+              18,
+              40,
+              58
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 19480,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "07.019480-7",
+          "dv": 7,
+          "dvMunicipio": 4,
+          "id": 19480,
+          "idMunicipio": 270,
+          "idUF": 50,
+          "logradouro": "R BARAO DO RIO BRANCO                             ",
+          "nome": "LOTERICA CARANDA LTDA                                                                                              ",
+          "nomeFantasia": "LOTERICA CARANDA",
+          "nomeMunicipio": "CAMPO GRANDE                       ",
+          "nomeUF": "MATO GROSSO DO SUL  ",
+          "numeroFormatado": "07.019480-7",
+          "polo": 7,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 50,
+            "digitoVerificador": 4,
+            "numero": 270
+          },
+          "nome": "CAMPO GRANDE",
+          "uf": {
+            "id": 50,
+            "nome": "MATO GROSSO DO SUL  ",
+            "sigla": "MS"
+          }
+        },
+        "nomeFantasia": "LOTERICA CARANDA",
+        "nomeRazaoSocial": "LOTERICA CARANDA LTDA",
+        "qtdApostas": 2,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 2,
+        "qtdCotaDigital": 9,
+        "qtdCotaDisponivel": 6,
+        "qtdCotaFisica": 4,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 13,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 9,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 50,
+          "nome": "MATO GROSSO DO SUL  ",
+          "sigla": "MS"
+        },
+        "vrCotaComTarifa": 104.66,
+        "vrCotaSemTarifa": 77.53,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 352.79,
+        "vrTarifaServicoCota": 27.13,
+        "vrTarifaServicoUltimaCota": 27.23,
+        "vrTotalBolaoComTarifa": 1360.79,
+        "vrTotalBolaoSemTarifa": 1008,
+        "vrUltimaCotaComTarifa": 104.87,
+        "vrUltimaCotaSemTarifa": 77.64
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723198816,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%3E%C3%92%C3%A5h$%C2%9DSc%C3%96X0%C3%AFO%C3%97%C3%AD%C2%88%C3%A4$%C3%9D%C2%85%C2%90%C3%B4%02)%C3%81%C2%83%C3%AA%C2%8Eg%C2%8D%C3%B11!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:43.198",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              6,
+              14,
+              15,
+              17,
+              21,
+              36
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              2,
+              15,
+              23,
+              25,
+              45,
+              56
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              7,
+              8,
+              9,
+              25,
+              45,
+              48
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              7,
+              21,
+              22,
+              31,
+              46,
+              48
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              5,
+              10,
+              13,
+              34,
+              40,
+              55
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              4,
+              26,
+              27,
+              53,
+              57,
+              60
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              4,
+              6,
+              12,
+              26,
+              34,
+              37
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              2,
+              17,
+              19,
+              24,
+              39,
+              54
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              2,
+              6,
+              13,
+              14,
+              32,
+              56
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              8,
+              10,
+              17,
+              22,
+              37,
+              53
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 22110,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "22.022110-3",
+          "dv": 3,
+          "dvMunicipio": 8,
+          "id": 22110,
+          "idMunicipio": 30,
+          "idUF": 28,
+          "logradouro": "AV JOAO RODRIGUES ARACAJU PARQUE SH               ",
+          "nome": "LOTERICA PREMIUM LTDA ME                                                                                           ",
+          "nomeFantasia": "LOTERICA PREMIUM",
+          "nomeMunicipio": "ARACAJU                            ",
+          "nomeUF": "SERGIPE             ",
+          "numeroFormatado": "22.022110-3",
+          "polo": 22,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 28,
+            "digitoVerificador": 8,
+            "numero": 30
+          },
+          "nome": "ARACAJU",
+          "uf": {
+            "id": 28,
+            "nome": "SERGIPE             ",
+            "sigla": "SE"
+          }
+        },
+        "nomeFantasia": "LOTERICA PREMIUM",
+        "nomeRazaoSocial": "LOTERICA PREMIUM LTDA ME",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 2,
+        "qtdCotaDigital": 6,
+        "qtdCotaDisponivel": 4,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 6,
+        "qtdCotaVendidas": 0,
+        "qtdNumeros": 6,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 28,
+          "nome": "SERGIPE             ",
+          "sigla": "SE"
+        },
+        "vrCotaComTarifa": 13.5,
+        "vrCotaSemTarifa": 10,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 21,
+        "vrTarifaServicoCota": 3.5,
+        "vrTarifaServicoUltimaCota": 3.5,
+        "vrTotalBolaoComTarifa": 81,
+        "vrTotalBolaoSemTarifa": 60,
+        "vrUltimaCotaComTarifa": 13.5,
+        "vrUltimaCotaSemTarifa": 10
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723202198,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1AR7t%1Bj%C2%BE%C3%AB%C2%9C@Gd%C2%AE%C2%AC%C2%8DT%09K%C2%95%C2%B1$hP%C3%94v)%C3%B3GyuJ%C2%83%C2%94!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:46.574",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              14,
+              20,
+              24,
+              28,
+              33,
+              35,
+              36,
+              46,
+              49,
+              54,
+              57
+            ],
+            "indicadorSurpresinha": false
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 19676,
+        "lotericaFormatada": {
+          "bairro": "TAGUATINGA                              ",
+          "codigo": "04.019676-3",
+          "dv": 3,
+          "dvMunicipio": 8,
+          "id": 19676,
+          "idMunicipio": 10,
+          "idUF": 53,
+          "logradouro": "QNB 13 LOTE 01 LOJA                               ",
+          "nome": "LOTERICA LIGA DA SORTE LTDA                                                                                        ",
+          "nomeFantasia": "LOTERICA LIGA DA SORTE",
+          "nomeMunicipio": "BRASILIA                           ",
+          "nomeUF": "DISTRITO FEDERAL    ",
+          "numeroFormatado": "04.019676-3",
+          "polo": 4,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 53,
+            "digitoVerificador": 8,
+            "numero": 10
+          },
+          "nome": "BRASILIA",
+          "uf": {
+            "id": 53,
+            "nome": "DISTRITO FEDERAL    ",
+            "sigla": "DF"
+          }
+        },
+        "nomeFantasia": "LOTERICA LIGA DA SORTE",
+        "nomeRazaoSocial": "LOTERICA LIGA DA SORTE LTDA",
+        "qtdApostas": 1,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 2,
+        "qtdCotaDigital": 90,
+        "qtdCotaDisponivel": 81,
+        "qtdCotaFisica": 10,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 100,
+        "qtdCotaVendidas": 7,
+        "qtdNumeros": 11,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 53,
+          "nome": "DISTRITO FEDERAL    ",
+          "sigla": "DF"
+        },
+        "vrCotaComTarifa": 37.42,
+        "vrCotaSemTarifa": 27.72,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 970.19,
+        "vrTarifaServicoCota": 9.7,
+        "vrTarifaServicoUltimaCota": 9.89,
+        "vrTotalBolaoComTarifa": 3742.19,
+        "vrTotalBolaoSemTarifa": 2772,
+        "vrUltimaCotaComTarifa": 37.61,
+        "vrUltimaCotaSemTarifa": 27.72
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723205589,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1Ay%C3%AEZD%C2%B1%C2%87y%7FE%3CIL%04%08F:%C3%8F%C3%8A%C2%A6%2F%C2%98%C2%BC%C3%8D%C2%A4i%C3%9A%C3%B7%0E%C2%A9%C3%B1%C3%AB%C2%B7!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:49.980",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              6,
+              16,
+              24,
+              27,
+              50,
+              51,
+              59
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              13,
+              20,
+              22,
+              27,
+              49,
+              55,
+              57
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              9,
+              11,
+              21,
+              31,
+              41,
+              49,
+              57
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              7,
+              13,
+              14,
+              20,
+              53,
+              58,
+              59
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              6,
+              16,
+              26,
+              40,
+              49,
+              50,
+              60
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              37,
+              38,
+              52,
+              53,
+              59,
+              60
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": true,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 11103,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "18.011103-5",
+          "dv": 5,
+          "dvMunicipio": 2,
+          "id": 11103,
+          "idMunicipio": 990,
+          "idUF": 43,
+          "logradouro": "RUA ANTONIO STELLA                                ",
+          "nome": "LOTERICA IBIRAIARAS LTDA                                                                                           ",
+          "nomeFantasia": "LOTERICA MEGA SORTE",
+          "nomeMunicipio": "IBIRAIARAS                         ",
+          "nomeUF": "RIO GRANDE DO SUL   ",
+          "numeroFormatado": "18.011103-5",
+          "polo": 18,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 43,
+            "digitoVerificador": 2,
+            "numero": 990
+          },
+          "nome": "IBIRAIARAS",
+          "uf": {
+            "id": 43,
+            "nome": "RIO GRANDE DO SUL   ",
+            "sigla": "RS"
+          }
+        },
+        "nomeFantasia": "LOTERICA MEGA SORTE",
+        "nomeRazaoSocial": "LOTERICA IBIRAIARAS LTDA",
+        "qtdApostas": 6,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 6,
+        "qtdCotaDigital": 25,
+        "qtdCotaDisponivel": 18,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 25,
+        "qtdCotaVendidas": 1,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 43,
+          "nome": "RIO GRANDE DO SUL   ",
+          "sigla": "RS"
+        },
+        "vrCotaComTarifa": 13.6,
+        "vrCotaSemTarifa": 10.08,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 88.19,
+        "vrTarifaServicoCota": 3.52,
+        "vrTarifaServicoUltimaCota": 3.71,
+        "vrTotalBolaoComTarifa": 340.19,
+        "vrTotalBolaoSemTarifa": 252,
+        "vrUltimaCotaComTarifa": 13.79,
+        "vrUltimaCotaSemTarifa": 10.08
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723208997,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%A7%02%C2%B8%C2%AB%C3%AD%0E%C2%A9%C3%89%C2%95%C3%97%C3%8A%C3%BE%0E%C3%9A*%C3%A6%C3%AAO%25%5D%C2%A8%C3%9243%C3%B5DCi%C2%8F%C3%85Z%C3%86!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:53.312",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              6,
+              20,
+              37,
+              41,
+              45,
+              53,
+              56
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              4,
+              8,
+              25,
+              33,
+              50,
+              54,
+              58
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              5,
+              11,
+              17,
+              22,
+              48,
+              51,
+              54
+            ],
+            "indicadorSurpresinha": false
+          },
+          {
+            "dezenas": [
+              1,
+              11,
+              21,
+              46,
+              52,
+              54,
+              60
+            ],
+            "indicadorSurpresinha": false
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 5560,
+        "lotericaFormatada": {
+          "bairro": "CENTRO                                  ",
+          "codigo": "08.005560-5",
+          "dv": 5,
+          "dvMunicipio": 8,
+          "id": 5560,
+          "idMunicipio": 860,
+          "idUF": 52,
+          "logradouro": "AV GOIAS                                          ",
+          "nome": "MOREIRA & ANTUNES LTDA                                                                                             ",
+          "nomeFantasia": "LOTERIA DO JOAQUIM",
+          "nomeMunicipio": "GOIANESIA                          ",
+          "nomeUF": "GOIAS               ",
+          "numeroFormatado": "08.005560-5",
+          "polo": 8,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 52,
+            "digitoVerificador": 8,
+            "numero": 860
+          },
+          "nome": "GOIANESIA",
+          "uf": {
+            "id": 52,
+            "nome": "GOIAS               ",
+            "sigla": "GO"
+          }
+        },
+        "nomeFantasia": "LOTERIA DO JOAQUIM",
+        "nomeRazaoSocial": "MOREIRA & ANTUNES LTDA",
+        "qtdApostas": 4,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 10,
+        "qtdCotaDigital": 15,
+        "qtdCotaDisponivel": 2,
+        "qtdCotaFisica": 0,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 15,
+        "qtdCotaVendidas": 3,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 52,
+          "nome": "GOIAS               ",
+          "sigla": "GO"
+        },
+        "vrCotaComTarifa": 15.12,
+        "vrCotaSemTarifa": 11.2,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 58.8,
+        "vrTarifaServicoCota": 3.92,
+        "vrTarifaServicoUltimaCota": 3.92,
+        "vrTotalBolaoComTarifa": 226.8,
+        "vrTotalBolaoSemTarifa": 168,
+        "vrUltimaCotaComTarifa": 15.12,
+        "vrUltimaCotaSemTarifa": 11.2
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723212319,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C3%B8%C2%80%0C%C3%B8%10%26%C3%9A%C3%B4%C3%B1%17%C2%A4%C2%B3%C3%A5':%C3%9C%C2%9Dr%C3%BF%C2%AE%C2%B8%C2%BA%C2%A2%C3%94%C2%B3%C2%A4%C3%A8%C3%AC%C2%B0a%12%C2%AA!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:26:56.664",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              18,
+              24,
+              29,
+              34,
+              40,
+              52,
+              59
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              5,
+              9,
+              22,
+              30,
+              33,
+              39,
+              54
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              12,
+              14,
+              31,
+              43,
+              46,
+              51
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              6,
+              18,
+              25,
+              31,
+              37,
+              44,
+              54
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              3,
+              15,
+              27,
+              41,
+              49,
+              55,
+              58
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              6,
+              18,
+              19,
+              25,
+              38,
+              52
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              18,
+              20,
+              27,
+              30,
+              39,
+              46,
+              56
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              10,
+              15,
+              29,
+              38,
+              39,
+              42,
+              57
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              9,
+              11,
+              18,
+              29,
+              35,
+              46,
+              53
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              14,
+              22,
+              25,
+              26,
+              27,
+              29,
+              50
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 13946,
+        "lotericaFormatada": {
+          "bairro": "BOA VIAGEM                              ",
+          "codigo": "15.013946-2",
+          "dv": 2,
+          "dvMunicipio": 6,
+          "id": 13946,
+          "idMunicipio": 1160,
+          "idUF": 26,
+          "logradouro": "AV ENGENHEIRO DOMINGOS FERREIRA                   ",
+          "nome": "IMPRIM@ TECNOLOGIA COM SERV LTDA                                                                                   ",
+          "nomeFantasia": "LUCK LOTERIAS",
+          "nomeMunicipio": "RECIFE                             ",
+          "nomeUF": "PERNAMBUCO          ",
+          "numeroFormatado": "15.013946-2",
+          "polo": 15,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 26,
+            "digitoVerificador": 6,
+            "numero": 1160
+          },
+          "nome": "RECIFE",
+          "uf": {
+            "id": 26,
+            "nome": "PERNAMBUCO          ",
+            "sigla": "PE"
+          }
+        },
+        "nomeFantasia": "LUCK LOTERIAS",
+        "nomeRazaoSocial": "IMPRIM@ TECNOLOGIA COM SERV LTDA",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 25,
+        "qtdCotaDisponivel": 19,
+        "qtdCotaFisica": 5,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 30,
+        "qtdCotaVendidas": 6,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 26,
+          "nome": "PERNAMBUCO          ",
+          "sigla": "PE"
+        },
+        "vrCotaComTarifa": 18.9,
+        "vrCotaSemTarifa": 14,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 147,
+        "vrTarifaServicoCota": 4.9,
+        "vrTarifaServicoUltimaCota": 4.9,
+        "vrTotalBolaoComTarifa": 567,
+        "vrTotalBolaoSemTarifa": 420,
+        "vrUltimaCotaComTarifa": 18.9,
+        "vrUltimaCotaSemTarifa": 14
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723215675,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%98g%C2%AC%C2%B52gQ%C2%BB%C2%A8%C3%8C%C2%A9%C3%82%C3%9E%0A%C2%8AdY%C3%94-%C2%A9%C2%A2%C3%8B%C2%B2%13%C2%A3%C3%9B%C3%B5%C2%B6%C3%B6%C2%89%C3%AE%C2%B5!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-22T09:27:00.102",
+      "payload": {
+        "apostas": [
+          {
+            "dezenas": [
+              12,
+              18,
+              23,
+              32,
+              34,
+              37,
+              39
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              15,
+              17,
+              35,
+              36,
+              48,
+              57,
+              58
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              21,
+              35,
+              37,
+              43,
+              48,
+              52,
+              57
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              1,
+              11,
+              43,
+              44,
+              52,
+              54,
+              55
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              11,
+              13,
+              16,
+              18,
+              24,
+              41,
+              58
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              2,
+              8,
+              11,
+              20,
+              24,
+              54,
+              57
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              33,
+              41,
+              45,
+              49,
+              50,
+              58,
+              59
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              13,
+              15,
+              25,
+              26,
+              32,
+              34,
+              47
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              6,
+              8,
+              13,
+              27,
+              37,
+              44,
+              56
+            ],
+            "indicadorSurpresinha": true
+          },
+          {
+            "dezenas": [
+              2,
+              10,
+              17,
+              30,
+              33,
+              49,
+              54
+            ],
+            "indicadorSurpresinha": true
+          }
+        ],
+        "concurso": 3035,
+        "contemResiduo": false,
+        "dataSorteio": "23/07/2026",
+        "diaSorteio": "Quinta-feira",
+        "horaSorteio": "21:00:00",
+        "loterica": 8097,
+        "lotericaFormatada": {
+          "bairro": "TAGUATINGA NORTE                        ",
+          "codigo": "04.008097-8",
+          "dv": 8,
+          "dvMunicipio": 8,
+          "id": 8097,
+          "idMunicipio": 10,
+          "idUF": 53,
+          "logradouro": "QNM 38 CONJ D LT 47 LJ  - M NORTE                 ",
+          "nome": "OLIVEIRA E VILELA LTDA                                                                                             ",
+          "nomeFantasia": "LOTERIA M NORTE",
+          "nomeMunicipio": "BRASILIA                           ",
+          "nomeUF": "DISTRITO FEDERAL    ",
+          "numeroFormatado": "04.008097-8",
+          "polo": 4,
+          "situacao": {
+            "descricao": "ATIVO                              ",
+            "valor": 1
+          }
+        },
+        "modalidade": "MEGA_SENA",
+        "municipioCota": {
+          "id": {
+            "codigoUF": 53,
+            "digitoVerificador": 8,
+            "numero": 10
+          },
+          "nome": "BRASILIA",
+          "uf": {
+            "id": 53,
+            "nome": "DISTRITO FEDERAL    ",
+            "sigla": "DF"
+          }
+        },
+        "nomeFantasia": "LOTERIA M NORTE",
+        "nomeRazaoSocial": "OLIVEIRA E VILELA LTDA",
+        "qtdApostas": 10,
+        "qtdCotaBaixadas": 0,
+        "qtdCotaBaixadasImpressas": 0,
+        "qtdCotaDigital": 41,
+        "qtdCotaDisponivel": 31,
+        "qtdCotaFisica": 9,
+        "qtdCotaReservada": 0,
+        "qtdCotaTotal": 50,
+        "qtdCotaVendidas": 10,
+        "qtdNumeros": 7,
+        "tipoConcurso": 1,
+        "uf": {
+          "id": 53,
+          "nome": "DISTRITO FEDERAL    ",
+          "sigla": "DF"
+        },
+        "vrCotaComTarifa": 11.34,
+        "vrCotaSemTarifa": 8.4,
+        "vrPremioEstimado": 62000000,
+        "vrTarifaBolao": 147,
+        "vrTarifaServicoCota": 2.94,
+        "vrTarifaServicoUltimaCota": 2.94,
+        "vrTotalBolaoComTarifa": 567,
+        "vrTotalBolaoSemTarifa": 420,
+        "vrUltimaCotaComTarifa": 11.34,
+        "vrUltimaCotaSemTarifa": 8.4
+      },
+      "versao": "2.99.1.1"
+    },
+    "ts": 1784723219119,
+    "url": "/silce-servico-rest/rest/v1/Ym9sb2VzL2RldGFsaGFyLWJvbGFv/?q=%60%0F%26%04Ra%1B%C3%B8$%C3%9C%C3%BCg%03%C2%B2$%1A%C2%A4%C2%B6%C2%B2P%5EW%C2%AD'%C3%93W%C2%9D%C2%83%1D%C3%AE%C2%B0%19%C2%AD%7F%5E%C2%84O9%C2%9FR%C2%BC%C2%A8%C2%95%C3%88%C2%BCL%C3%BD%C2%B0!%23!%23!%C2%85%C3%BA%C3%88YSY%0Bl%C3%A4ta%C2%A4%C2%9Ahl%1B!%23!%23!forge.random.get"
+  }
+]

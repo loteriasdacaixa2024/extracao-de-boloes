@@ -1,0 +1,727 @@
+[
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-01T14:55:04.820",
+      "payload": "2026-07-01T14:55:04.820",
+      "versao": "2.99.0.11"
+    },
+    "ts": 1782928634574,
+    "url": "/silce-servico-rest/rest/v1/cGFyYW1ldHJvcy1zaW11bGFjYW8vZGF0YWhvcmEtc2Vydmlkb3I=/"
+  },
+  {
+    "data": {
+      "dataHoraServidor": "2026-07-01T14:56:28.562",
+      "payload": [
+        {
+          "modalidadesCombo": [
+            {
+              "mod": "LOTOFACIL",
+              "modalidade": {
+                "descricao": "Lotofácil",
+                "descricaoEspecial": "Lotofácil da Independência",
+                "descricaoGestor": "Lotofácil",
+                "valor": 8
+              },
+              "numero": 3724,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 15,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "QUINA",
+              "modalidade": {
+                "descricao": "Quina",
+                "descricaoEspecial": "Quina de São João",
+                "descricaoGestor": "Quina",
+                "valor": 3
+              },
+              "numero": 7054,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 5,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "MAIS_MILIONARIA",
+              "modalidade": {
+                "descricao": "Mais Milionária",
+                "descricaoEspecial": "",
+                "descricaoGestor": "+Milionária",
+                "valor": 9
+              },
+              "numero": 368,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeDezenasTrevos": 2,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "DUPLA_SENA",
+              "modalidade": {
+                "descricao": "Dupla Sena",
+                "descricaoEspecial": "Dupla de Páscoa",
+                "descricaoGestor": "Dupla Sena",
+                "valor": 18
+              },
+              "numero": 2977,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "LOTOMANIA",
+              "modalidade": {
+                "descricao": "Lotomania",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Lotomania",
+                "valor": 16
+              },
+              "numero": 2944,
+              "quantidadeApostas": 2,
+              "quantidadeDezenas": 50,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "DIA_DE_SORTE",
+              "modalidade": {
+                "descricao": "Dia de Sorte",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Dia de Sorte",
+                "valor": 11
+              },
+              "numero": 1234,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 7,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "SUPER_7",
+              "modalidade": {
+                "descricao": "Super Sete",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Super Sete",
+                "valor": 7
+              },
+              "numero": 867,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 7,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            }
+          ],
+          "tipoCombo": {
+            "codigo": 8,
+            "descricao": "Não deixe para amanhã a chance de ficar milionário. Aposte nas modalidades do dia!",
+            "nome": "Sorte de Hoje",
+            "novo": false
+          },
+          "valor": 27
+        },
+        {
+          "modalidadesCombo": [
+            {
+              "mod": "MEGA_SENA",
+              "modalidade": {
+                "descricao": "Mega-Sena",
+                "descricaoEspecial": "Mega da Virada",
+                "descricaoGestor": "Mega-Sena",
+                "valor": 2
+              },
+              "numero": 3026,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeTeimosinhas": 12,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "LOTOFACIL",
+              "modalidade": {
+                "descricao": "Lotofácil",
+                "descricaoEspecial": "Lotofácil da Independência",
+                "descricaoGestor": "Lotofácil",
+                "valor": 8
+              },
+              "numero": 3724,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 15,
+              "quantidadeTeimosinhas": 24,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "QUINA",
+              "modalidade": {
+                "descricao": "Quina",
+                "descricaoEspecial": "Quina de São João",
+                "descricaoGestor": "Quina",
+                "valor": 3
+              },
+              "numero": 7054,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 5,
+              "quantidadeTeimosinhas": 24,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "MAIS_MILIONARIA",
+              "modalidade": {
+                "descricao": "Mais Milionária",
+                "descricaoEspecial": "",
+                "descricaoGestor": "+Milionária",
+                "valor": 9
+              },
+              "numero": 368,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeDezenasTrevos": 2,
+              "quantidadeTeimosinhas": 5,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "DUPLA_SENA",
+              "modalidade": {
+                "descricao": "Dupla Sena",
+                "descricaoEspecial": "Dupla de Páscoa",
+                "descricaoGestor": "Dupla Sena",
+                "valor": 18
+              },
+              "numero": 2977,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeTeimosinhas": 12,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "LOTOMANIA",
+              "modalidade": {
+                "descricao": "Lotomania",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Lotomania",
+                "valor": 16
+              },
+              "numero": 2944,
+              "quantidadeApostas": 2,
+              "quantidadeDezenas": 50,
+              "quantidadeTeimosinhas": 12,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "DIA_DE_SORTE",
+              "modalidade": {
+                "descricao": "Dia de Sorte",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Dia de Sorte",
+                "valor": 11
+              },
+              "numero": 1234,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 7,
+              "quantidadeTeimosinhas": 24,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "SUPER_7",
+              "modalidade": {
+                "descricao": "Super Sete",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Super Sete",
+                "valor": 7
+              },
+              "numero": 867,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 7,
+              "quantidadeTeimosinhas": 12,
+              "tipoConcurso": "NORMAL"
+            }
+          ],
+          "tipoCombo": {
+            "codigo": 9,
+            "descricao": "Quer sorte o mês inteiro? Pacote de apostas teimosinhas de todas as modalidades disponíveis, exceto Timemania e Loteca.",
+            "nome": "Fezinha do Mês",
+            "novo": false
+          },
+          "valor": 462
+        },
+        {
+          "modalidadesCombo": [
+            {
+              "mod": "MEGA_SENA",
+              "modalidade": {
+                "descricao": "Mega-Sena",
+                "descricaoEspecial": "Mega da Virada",
+                "descricaoGestor": "Mega-Sena",
+                "valor": 2
+              },
+              "numero": 3026,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeDezenasTrevos": 2,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "LOTOFACIL",
+              "modalidade": {
+                "descricao": "Lotofácil",
+                "descricaoEspecial": "Lotofácil da Independência",
+                "descricaoGestor": "Lotofácil",
+                "valor": 8
+              },
+              "numero": 3724,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 15,
+              "quantidadeDezenasTrevos": 2,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "MAIS_MILIONARIA",
+              "modalidade": {
+                "descricao": "Mais Milionária",
+                "descricaoEspecial": "",
+                "descricaoGestor": "+Milionária",
+                "valor": 9
+              },
+              "numero": 368,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeDezenasTrevos": 2,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "DUPLA_SENA",
+              "modalidade": {
+                "descricao": "Dupla Sena",
+                "descricaoEspecial": "Dupla de Páscoa",
+                "descricaoGestor": "Dupla Sena",
+                "valor": 18
+              },
+              "numero": 2977,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeDezenasTrevos": 2,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "DIA_DE_SORTE",
+              "modalidade": {
+                "descricao": "Dia de Sorte",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Dia de Sorte",
+                "valor": 11
+              },
+              "numero": 1234,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 7,
+              "quantidadeDezenasTrevos": 2,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            }
+          ],
+          "tipoCombo": {
+            "codigo": 11,
+            "descricao": "Pacote com as modalidades preferidas pelas apostadoras. Várias chances para realizar seus sonhos. Já Pensou?   ",
+            "nome": "Loterias Pra Elas",
+            "novo": false
+          },
+          "valor": 21
+        },
+        {
+          "modalidadesCombo": [
+            {
+              "mod": "MEGA_SENA",
+              "modalidade": {
+                "descricao": "Mega-Sena",
+                "descricaoEspecial": "Mega da Virada",
+                "descricaoGestor": "Mega-Sena",
+                "valor": 2
+              },
+              "numero": 3026,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeTeimosinhas": 3,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "LOTOFACIL",
+              "modalidade": {
+                "descricao": "Lotofácil",
+                "descricaoEspecial": "Lotofácil da Independência",
+                "descricaoGestor": "Lotofácil",
+                "valor": 8
+              },
+              "numero": 3724,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 15,
+              "quantidadeTeimosinhas": 6,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "QUINA",
+              "modalidade": {
+                "descricao": "Quina",
+                "descricaoEspecial": "Quina de São João",
+                "descricaoGestor": "Quina",
+                "valor": 3
+              },
+              "numero": 7054,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 5,
+              "quantidadeTeimosinhas": 6,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "MAIS_MILIONARIA",
+              "modalidade": {
+                "descricao": "Mais Milionária",
+                "descricaoEspecial": "",
+                "descricaoGestor": "+Milionária",
+                "valor": 9
+              },
+              "numero": 368,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeDezenasTrevos": 2,
+              "quantidadeTeimosinhas": 2,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "DUPLA_SENA",
+              "modalidade": {
+                "descricao": "Dupla Sena",
+                "descricaoEspecial": "Dupla de Páscoa",
+                "descricaoGestor": "Dupla Sena",
+                "valor": 18
+              },
+              "numero": 2977,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 6,
+              "quantidadeTeimosinhas": 4,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "LOTOMANIA",
+              "modalidade": {
+                "descricao": "Lotomania",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Lotomania",
+                "valor": 16
+              },
+              "numero": 2944,
+              "quantidadeApostas": 2,
+              "quantidadeDezenas": 50,
+              "quantidadeTeimosinhas": 3,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "TIMEMANIA",
+              "modalidade": {
+                "descricao": "Timemania",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Timemania",
+                "valor": 20
+              },
+              "numero": 2410,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 10,
+              "quantidadeTeimosinhas": 3,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "DIA_DE_SORTE",
+              "modalidade": {
+                "descricao": "Dia de Sorte",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Dia de Sorte",
+                "valor": 11
+              },
+              "numero": 1234,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 7,
+              "quantidadeTeimosinhas": 6,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "SUPER_7",
+              "modalidade": {
+                "descricao": "Super Sete",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Super Sete",
+                "valor": 7
+              },
+              "numero": 867,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 7,
+              "quantidadeTeimosinhas": 3,
+              "tipoConcurso": "NORMAL"
+            }
+          ],
+          "tipoCombo": {
+            "codigo": 6,
+            "descricao": "Com este pacote você garante suas apostas para todas as modalidades, incluindo teimosinhas para a semana inteira. Já Pensou?",
+            "nome": "Chance Todo Dia",
+            "novo": false
+          },
+          "valor": 133.5
+        },
+        {
+          "modalidadesCombo": [
+            {
+              "mod": "MEGA_SENA",
+              "modalidade": {
+                "descricao": "Mega-Sena",
+                "descricaoEspecial": "Mega da Virada",
+                "descricaoGestor": "Mega-Sena",
+                "valor": 2
+              },
+              "numero": 3026,
+              "quantidadeApostas": 2,
+              "quantidadeDezenas": 6,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "LOTOFACIL",
+              "modalidade": {
+                "descricao": "Lotofácil",
+                "descricaoEspecial": "Lotofácil da Independência",
+                "descricaoGestor": "Lotofácil",
+                "valor": 8
+              },
+              "numero": 3724,
+              "quantidadeApostas": 2,
+              "quantidadeDezenas": 15,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "QUINA",
+              "modalidade": {
+                "descricao": "Quina",
+                "descricaoEspecial": "Quina de São João",
+                "descricaoGestor": "Quina",
+                "valor": 3
+              },
+              "numero": 7054,
+              "quantidadeApostas": 2,
+              "quantidadeDezenas": 5,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "MAIS_MILIONARIA",
+              "modalidade": {
+                "descricao": "Mais Milionária",
+                "descricaoEspecial": "",
+                "descricaoGestor": "+Milionária",
+                "valor": 9
+              },
+              "numero": 368,
+              "quantidadeApostas": 2,
+              "quantidadeDezenas": 6,
+              "quantidadeDezenasTrevos": 2,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "DUPLA_SENA",
+              "modalidade": {
+                "descricao": "Dupla Sena",
+                "descricaoEspecial": "Dupla de Páscoa",
+                "descricaoGestor": "Dupla Sena",
+                "valor": 18
+              },
+              "numero": 2977,
+              "quantidadeApostas": 2,
+              "quantidadeDezenas": 6,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "TIMEMANIA",
+              "modalidade": {
+                "descricao": "Timemania",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Timemania",
+                "valor": 20
+              },
+              "numero": 2410,
+              "quantidadeApostas": 2,
+              "quantidadeDezenas": 10,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "SUPER_7",
+              "modalidade": {
+                "descricao": "Super Sete",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Super Sete",
+                "valor": 7
+              },
+              "numero": 867,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 7,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            }
+          ],
+          "tipoCombo": {
+            "codigo": 3,
+            "descricao": "Para quem quer ficar mais que milionário: pacote para concursos com prêmios acima de R$ 1,5 milhão, incluindo o concurso especial vigente.",
+            "nome": "Milionário",
+            "novo": false
+          },
+          "valor": 53
+        },
+        {
+          "modalidadesCombo": [
+            {
+              "mod": "LOTOFACIL",
+              "modalidade": {
+                "descricao": "Lotofácil",
+                "descricaoEspecial": "Lotofácil da Independência",
+                "descricaoGestor": "Lotofácil",
+                "valor": 8
+              },
+              "numero": 3724,
+              "quantidadeApostas": 8,
+              "quantidadeDezenas": 15,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "LOTOMANIA",
+              "modalidade": {
+                "descricao": "Lotomania",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Lotomania",
+                "valor": 16
+              },
+              "numero": 2944,
+              "quantidadeApostas": 2,
+              "quantidadeDezenas": 50,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "DIA_DE_SORTE",
+              "modalidade": {
+                "descricao": "Dia de Sorte",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Dia de Sorte",
+                "valor": 11
+              },
+              "numero": 1234,
+              "quantidadeApostas": 6,
+              "quantidadeDezenas": 7,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "SUPER_7",
+              "modalidade": {
+                "descricao": "Super Sete",
+                "descricaoEspecial": "",
+                "descricaoGestor": "Super Sete",
+                "valor": 7
+              },
+              "numero": 867,
+              "quantidadeApostas": 4,
+              "quantidadeDezenas": 7,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            }
+          ],
+          "tipoCombo": {
+            "codigo": 5,
+            "descricao": "Com este pacote você aposta nas modalidades com maior chance de acerto: Lotofácil, Dia de Sorte, Super Sete e Lotomania.",
+            "nome": "Sorte Fácil",
+            "novo": false
+          },
+          "valor": 61
+        },
+        {
+          "modalidadesCombo": [
+            {
+              "mod": "MEGA_SENA",
+              "modalidade": {
+                "descricao": "Mega-Sena",
+                "descricaoEspecial": "Mega da Virada",
+                "descricaoGestor": "Mega-Sena",
+                "valor": 2
+              },
+              "numero": 3026,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 9,
+              "quantidadeDezenasTrevos": 3,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "LOTOFACIL",
+              "modalidade": {
+                "descricao": "Lotofácil",
+                "descricaoEspecial": "Lotofácil da Independência",
+                "descricaoGestor": "Lotofácil",
+                "valor": 8
+              },
+              "numero": 3724,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 17,
+              "quantidadeDezenasTrevos": 3,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "QUINA",
+              "modalidade": {
+                "descricao": "Quina",
+                "descricaoEspecial": "Quina de São João",
+                "descricaoGestor": "Quina",
+                "valor": 3
+              },
+              "numero": 7054,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 8,
+              "quantidadeDezenasTrevos": 3,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            },
+            {
+              "mod": "MAIS_MILIONARIA",
+              "modalidade": {
+                "descricao": "Mais Milionária",
+                "descricaoEspecial": "",
+                "descricaoGestor": "+Milionária",
+                "valor": 9
+              },
+              "numero": 368,
+              "quantidadeApostas": 1,
+              "quantidadeDezenas": 8,
+              "quantidadeDezenasTrevos": 3,
+              "quantidadeTeimosinhas": 0,
+              "tipoConcurso": "NORMAL"
+            }
+          ],
+          "tipoCombo": {
+            "codigo": 10,
+            "descricao": "Aumente suas chances com este pacote exclusivo de apostas múltiplas e concorra aos prêmios das modalidades mais amadas do Brasil!",
+            "nome": "Combo Vip",
+            "novo": false
+          },
+          "valor": 1652
+        }
+      ],
+      "versao": "2.99.0.11"
+    },
+    "ts": 1782928634577,
+    "url": "/silce-servico-rest/rest/v1/Y29tYm9z/"
+  }
+]

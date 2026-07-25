@@ -51,19 +51,44 @@ def carregar_json_boloes(path: str) -> List[dict]:
             data = json.load(f)
         return data if isinstance(data, list) else []
     except Exception:
+        # Arquivo truncado/corrompido (queda no meio do save) — tenta reparo leve
+        try:
+            return _carregar_json_reparado(path)
+        except Exception:
+            return []
+
+
+def _carregar_json_reparado(path: str) -> List[dict]:
+    """Recorta até o último objeto completo de uma lista JSON truncada."""
+    with open(path, encoding='utf-8', errors='replace') as f:
+        raw = f.read()
+    if not raw.strip().startswith('['):
         return []
+    # procura último '},' ou '}' de um item completo
+    idx = raw.rfind('\n  },')
+    if idx < 0:
+        idx = raw.rfind('\n  }')
+    if idx < 0:
+        return []
+    fragmento = raw[: idx + 4].rstrip().rstrip(',') + '\n]\n'
+    data = json.loads(fragmento)
+    return data if isinstance(data, list) else []
 
 
 def salvar_json_boloes(path: str, boloes: List[dict]) -> bool:
-    """Grava JSON. Retorna False se vazio (não sobrescreve arquivo com dados)."""
+    """Grava JSON de forma atômica (tmp + replace). Evita arquivo truncado."""
     if not boloes:
         existentes = carregar_json_boloes(path)
         if existentes:
             return False
         return False
     os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
-    with open(path, 'w', encoding='utf-8') as f:
+    tmp = f'{path}.tmp'
+    with open(tmp, 'w', encoding='utf-8') as f:
         json.dump(boloes, f, ensure_ascii=False, indent=2)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, path)
     return True
 
 
@@ -227,11 +252,13 @@ def localizar_arquivo_sessao_existente(
     mod = re.sub(r'[^a-z0-9\-]+', '-', (mod_slug or '').lower()).strip('-')
     if conc and conc != 'sem-concurso' and mod:
         _add(caminho_json_sessao(pasta_json, f'boloes_{conc}_{mod}'))
+        # Fallback: espelho CONSOLIDADO (se a sessão estiver corrompida)
+        _add(os.path.join(pasta_json, f'boloes_{conc}_{mod}_CONSOLIDADO.json'))
 
     if mod:
         for path in glob.glob(os.path.join(pasta_json, f'boloes_*_{mod}.json')):
-            if '_CONSOLIDADO' in os.path.basename(path):
-                continue
+            _add(path)
+        for path in glob.glob(os.path.join(pasta_json, f'boloes_*_{mod}_CONSOLIDADO.json')):
             _add(path)
 
     melhor_path: Optional[str] = None
@@ -249,9 +276,16 @@ def localizar_arquivo_sessao_existente(
             m = re.match(r'boloes_(\d+)_', base)
             if m and m.group(1) != conc_alvo:
                 continue
-        if len(dados) >= len(melhor_dados):
-            melhor_path = path
-            melhor_dados = dados
+        eh_cons = '_CONSOLIDADO' in os.path.basename(path)
+        melhor_cons = bool(melhor_path and '_CONSOLIDADO' in os.path.basename(melhor_path))
+        if len(dados) > len(melhor_dados):
+            melhor_path, melhor_dados = path, dados
+        elif len(dados) == len(melhor_dados):
+            # Empate: prefere o JSON de sessão (sem _CONSOLIDADO)
+            if melhor_cons and not eh_cons:
+                melhor_path, melhor_dados = path, dados
+            elif melhor_path is None:
+                melhor_path, melhor_dados = path, dados
 
     return melhor_path, melhor_dados
 

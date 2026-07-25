@@ -286,6 +286,10 @@ def parse_bolao_api(
         or payload.get('valorCota')
     )
     tarifa = payload.get('vrTarifaServicoUltimaCota') or payload.get('vrTarifaServico')
+    lot_fmt = payload.get('lotericaFormatada') or {}
+    nome_fantasia = (
+        lot_fmt.get('nomeFantasia') or payload.get('nomeFantasia') or ''
+    ).strip()
 
     dados: Dict[str, Any] = {
         'fonte': fonte,
@@ -296,6 +300,7 @@ def parse_bolao_api(
             payload.get('nomeLoterica') or payload.get('nomeRazaoSocial')
             or payload.get('razaoSocial') or ''
         ).strip(),
+        'nome_fantasia': nome_fantasia,
         'codigo_loterica': cod_lot,
         'cidade': cidade,
         'uf': uf,

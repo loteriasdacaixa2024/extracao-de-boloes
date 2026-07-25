@@ -1,0 +1,29 @@
+# Credenciais e segredos (NUNCA versionar)
+config.local.json
+credentials.json
+.env
+.env.*
+!.env.example
+
+# Logs locais
+logs/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env.local
+
+# Sistema / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Capturas / dados sensíveis de sessão (se existirem)
+cookies*.json
+session*.json
+*token*
