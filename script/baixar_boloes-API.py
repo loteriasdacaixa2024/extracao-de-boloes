@@ -252,8 +252,8 @@ def _exibir_resumo_pre_extracao(mod, concurso: str, cfg) -> None:
     _separador()
     _out('')
     _out('  Agora:')
-    _out('  1. O Edge vai abrir')
-    _out('  2. Faça LOGIN na Caixa (filtros no site = opcional)')
+    _out('  1. O Edge abre e o LOGIN é automático')
+    _out('  2. No Edge: escolha a MODALIDADE (e filtros) MANUALMENTE')
     _out('  3. PAUSA — volte aqui e digite SIM (Enter vazio NÃO inicia)')
     _out('  4. Só então o script começa a paginar até acabar')
     _separador()
@@ -467,9 +467,10 @@ def iniciar_navegador() -> bool:
                 from login_caixa.fluxo import (
                     LoginAutomatizadoError,
                     executar_login_automatizado,
+                    _parece_logado_no_portal,
                 )
                 executar_login_automatizado(driver=driver, manter_navegador_aberto=True)
-                _out('  [LOGIN AUTO] Etapas concluídas.')
+                _out('  [LOGIN AUTO] Login concluído.')
             except LoginAutomatizadoError as exc:
                 _out(f'  [LOGIN AUTO] Interrompido: {exc}')
                 _out('  >>> Continue o login MANUALMENTE no Edge.')
@@ -477,10 +478,39 @@ def iniciar_navegador() -> bool:
                 _out(f'  [LOGIN AUTO] Falha inesperada: {exc}')
                 _out('  >>> Continue o login MANUALMENTE no Edge.')
 
-        driver.get(URL_BOLOES)
-        _out('\n  Edge aberto na página de bolões.')
-        _out('  >>> PAUSA: confirme LOGIN no navegador (filtros opcionais).')
-        _out('  >>> Nada é baixado até você voltar aqui e pressionar ENTER.')
+            # Após login: só garante estar no portal logado.
+            # Modalidade/filtros = MANUAL no Edge. Extração só depois do SIM.
+            try:
+                ja_logado = _parece_logado_no_portal(driver)
+            except Exception:
+                ja_logado = False
+            try:
+                url_atual = (driver.current_url or '').lower()
+            except Exception:
+                url_atual = ''
+
+            if ja_logado and 'bolao-caixa' not in url_atual:
+                _out('  Abrindo Bolões Caixa (você já está logado)...')
+                try:
+                    driver.get(URL_BOLOES)
+                except Exception as exc:
+                    _out(f'  [AVISO] Não abriu bolões automaticamente: {exc}')
+            elif not ja_logado:
+                _out('  [AVISO] Sessão ainda não confirmada — abra Bolões no Edge se precisar.')
+                try:
+                    driver.get(URL_BOLOES)
+                except Exception:
+                    pass
+        else:
+            driver.get(URL_BOLOES)
+
+        _out('')
+        _out('  ' + '=' * 56)
+        _out('  LOGIN AUTO FINALIZADO — agora é com VOCÊ no Edge:')
+        _out('    1) Confirme que está LOGADO')
+        _out('    2) Escolha a MODALIDADE (e filtros) MANUALMENTE no site')
+        _out('    3) Volte ao terminal e digite SIM para iniciar a extração')
+        _out('  ' + '=' * 56)
         return True
     except Exception as exc:
         print(f'\n>>> ERRO ao abrir Edge: {exc}')
@@ -732,8 +762,8 @@ def aguardar_site_pronto() -> bool:
     print('\n' + '=' * 60)
     print(f'  ⏸⏸⏸  PAUSA — SCRIPT PARADO  [{VERSAO_EXTRATOR}]')
     print('=' * 60)
-    print('\n  1. Faça LOGIN no Edge')
-    print('  2. Filtros no site = opcional')
+    print('\n  1. Confirme que está LOGADO no Edge (login automático)')
+    print('  2. Escolha a MODALIDADE (e filtros) MANUALMENTE no site')
     print('  3. Volte AQUI e digite SIM (Enter vazio NÃO inicia)')
     print('')
     print('  ⚠  NADA será baixado antes de você digitar SIM.')
