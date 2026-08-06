@@ -2,23 +2,76 @@
 chcp 65001 >nul
 setlocal EnableExtensions
 
-echo Abrindo os terminais de servidores...
-echo Extrator: CHECKPOINT-RESUME-v3.1  (script\baixar_boloes-API.py)
-echo Login automatico Caixa: ATIVADO neste atalho (LOGIN_CAIXA_AUTO=1)
+echo ========================================
+echo  Iniciar servidores + extrator + login
+echo ========================================
 
-:: Pasta deste projeto (onde esta o .bat) e pasta pai (venv + app.py)
+:: Pasta do extrator = pasta deste .bat
 set "PASTA_BOLOES=%~dp0"
 if "%PASTA_BOLOES:~-1%"=="\" set "PASTA_BOLOES=%PASTA_BOLOES:~0,-1%"
-for %%i in ("%PASTA_BOLOES%\..") do set "RAIZ=%%~fi"
-for %%i in ("%PASTA_BOLOES%") do set "NOME_PASTA=%%~nxi"
 
-:: Credenciais: config.local.json dentro de %NOME_PASTA% (NAO versionar no GitHub)
-:: Ativa o login automatizado no mesmo Edge do extrator
+set "RAIZ="
+set "SERVIDOR_PY="
+set "PYTHON_EXE="
+
+:: Ordem de busca da RAIZ do servidor Flask
+call :resolver_raiz "%PASTA_BOLOES%\.."
+if "%RAIZ%"=="" call :resolver_raiz "D:\Loterias\AnalisePorPosicao-DiaDeSorte-Only"
+if "%RAIZ%"=="" call :resolver_raiz "%PASTA_BOLOES%\..\LoteriasBoloesDaSorte"
+if "%RAIZ%"=="" call :resolver_raiz "I:\Meu Drive\LoteriasBoloesDaSorte"
+if "%RAIZ%"=="" call :resolver_raiz "D:\Loterias\LoteriasBoloesDaSorte"
+
+if "%RAIZ%"=="" (
+  echo.
+  echo [ERRO] Nao encontrei servidor ^(app.py ou servidor.py^) com venv.
+  echo.
+  pause
+  exit /b 1
+)
+
+if not exist "%PASTA_BOLOES%\script\baixar_boloes-API.py" (
+  echo [ERRO] Extrator nao encontrado:
+  echo   %PASTA_BOLOES%\script\baixar_boloes-API.py
+  pause
+  exit /b 1
+)
+
+echo.
+echo [OK] Servidor : %RAIZ%\%SERVIDOR_PY%
+echo [OK] Python   : %PYTHON_EXE%
+echo [OK] Extrator : %PASTA_BOLOES%\script\baixar_boloes-API.py
+echo [OK] Login auto: LIGADO ^(LOGIN_CAIXA_AUTO=1^)
+echo.
+echo Abrindo Windows Terminal...
+echo.
+
 set "LOGIN_CAIXA_AUTO=1"
 
-:: Abre o Windows Terminal dividido em dois (Split-Pane Horizontal)
+:: Painel 1 = servidor (liga direto) | Painel 2 = extrator + login (inicia direto)
 "%LOCALAPPDATA%\Microsoft\WindowsApps\wt.exe" ^
-  -d "%RAIZ%" powershell -NoExit -Command ".\.venv\Scripts\activate\; clear\; Write-Host -ForegroundColor Green '========================================'\; Write-Host -ForegroundColor Green ' SERVIDOR PRINCIPAL (app.py)'\; Write-Host -ForegroundColor Green '========================================'\; Write-Host 'Pressione ENTER para ligar...'\; Read-Host\; python app.py" ^
-  ; split-pane -H -d "%RAIZ%" powershell -NoExit -Command "$env:LOGIN_CAIXA_AUTO='1'\; .\.venv\Scripts\activate\; clear\; Write-Host -ForegroundColor Cyan '========================================'\; Write-Host -ForegroundColor Cyan ' EXTRATOR DE BOLOES - Caixa (API)'\; Write-Host -ForegroundColor Yellow ' VERSAO: CHECKPOINT-RESUME-v3.1'\; Write-Host -ForegroundColor Cyan '========================================'\; Write-Host -ForegroundColor Green ' LOGIN AUTOMATICO: ligado (mesmo Edge)'\; Write-Host '  - Edge abre -> termos/CPF/codigo/senha'\; Write-Host '  - Digite o codigo do e-mail e clique MANUAL em Enviar'\; Write-Host '  - Depois: ENTER / SIM no terminal como antes'\; Write-Host '[1] modalidade + concurso -> Edge+LOGIN -> PAUSA -> digite SIM'\; Write-Host '[2] manual: ENTER a cada pagina'\; Write-Host -ForegroundColor Yellow 'Credenciais: %NOME_PASTA%\config.local.json (gitignore)'\; Write-Host -ForegroundColor Yellow 'IMPORTANTE: se NAO aparecer v3.1, feche ESTE terminal e abra de novo'\; Write-Host 'Pressione ENTER para rodar...'\; Read-Host\; python -u %NOME_PASTA%\script\baixar_boloes-API.py"
+  -d "%RAIZ%" cmd /k "title SERVIDOR & echo ======================================== & echo  SERVIDOR PRINCIPAL ^(%SERVIDOR_PY%^) & echo ======================================== & echo Pasta: %RAIZ% & echo. & echo Ligando servidor... & \"%PYTHON_EXE%\" \"%RAIZ%\%SERVIDOR_PY%\"" ^
+  ; split-pane -H -d "%PASTA_BOLOES%" cmd /k "title EXTRATOR & set LOGIN_CAIXA_AUTO=1 & echo ======================================== & echo  EXTRATOR DE BOLOES - Caixa ^(API^) & echo  VERSAO: CHECKPOINT-RESUME-v3.1 & echo ======================================== & echo LOGIN AUTOMATICO: ligado ^(mesmo Edge^) & echo   1^) Digite o codigo do e-mail no Edge & echo   2^) Clique MANUAL em Enviar & echo   3^) Depois ENTER/SIM no terminal & echo Credenciais: config.local.json ^(gitignore^) & echo. & echo Iniciando extrator... & \"%PYTHON_EXE%\" -u \"%PASTA_BOLOES%\script\baixar_boloes-API.py\""
 
 endlocal
+exit /b 0
+
+
+:resolver_raiz
+:: %1 = candidato a pasta raiz do servidor
+set "CAND=%~f1"
+if not exist "%CAND%" goto :eof
+
+set "SRV="
+if exist "%CAND%\app.py" set "SRV=app.py"
+if exist "%CAND%\servidor.py" set "SRV=servidor.py"
+if "%SRV%"=="" goto :eof
+
+set "PY="
+if exist "%CAND%\.venv\Scripts\python.exe" set "PY=%CAND%\.venv\Scripts\python.exe"
+if "%PY%"=="" if exist "%CAND%\venv\Scripts\python.exe" set "PY=%CAND%\venv\Scripts\python.exe"
+if "%PY%"=="" goto :eof
+
+set "RAIZ=%CAND%"
+set "SERVIDOR_PY=%SRV%"
+set "PYTHON_EXE=%PY%"
+goto :eof

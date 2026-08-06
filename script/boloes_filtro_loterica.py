@@ -2049,134 +2049,220 @@ def _estado_no_texto(texto: str, estado) -> bool:
     t = normalizar_texto(texto)
     sigla = estado.sigla.upper()
     nome = normalizar_texto(estado.nome)
-    if sigla == t or f' {sigla} ' in f' {t} ':
+    tokens = t.replace('-', ' ').replace('/', ' ').split()
+    if sigla in tokens:
         return True
-    if nome in t or t.startswith(nome[:8]):
+    if nome and (nome in t or any(tok.startswith(nome[:6]) for tok in tokens if len(tok) >= 4)):
         return True
-    if 'SAO PAULO' in t and estado.sigla == 'SP':
+    if estado.sigla == 'SP' and 'SAO PAULO' in t:
         return True
     return False
 
 
+def _ler_estado_selecionado_ui(driver) -> str:
+    """Tenta ler o texto/valor do filtro de estado atualmente selecionado."""
+    try:
+        return (driver.execute_script("""
+            function visivel(el) {
+                if (!el) return false;
+                try { return !!(el.offsetParent || el.getClientRects().length); } catch(e) { return false; }
+            }
+            var labs = document.querySelectorAll('label, span, div, strong');
+            for (var i = 0; i < labs.length; i++) {
+                var t = (labs[i].textContent || '').trim().toUpperCase();
+                if (t !== 'ESTADO' && t !== 'UF' && t.indexOf('ESTADO') !== 0 && t !== 'UNIDADE FEDERATIVA') continue;
+                var root = labs[i].parentElement || labs[i];
+                var sel = root.querySelector('select');
+                if (!sel) {
+                    var nxt = labs[i].nextElementSibling;
+                    for (var k = 0; k < 4 && nxt && !sel; k++) {
+                        if (nxt.tagName === 'SELECT') sel = nxt;
+                        else sel = nxt.querySelector && nxt.querySelector('select');
+                        nxt = nxt.nextElementSibling;
+                    }
+                }
+                if (sel && sel.options && sel.selectedIndex >= 0) {
+                    var opt = sel.options[sel.selectedIndex];
+                    return ((opt && opt.text) || sel.value || '').trim();
+                }
+            }
+            var sels = document.querySelectorAll('select');
+            for (var s = 0; s < sels.length; s++) {
+                var sel2 = sels[s];
+                if (!visivel(sel2)) continue;
+                var ng = ((sel2.getAttribute('ng-model') || '') + ' ' + (sel2.id || '') + ' ' + (sel2.name || '')).toLowerCase();
+                if (ng.indexOf('estado') < 0 && ng.indexOf('uf') < 0 && ng.indexOf('iduf') < 0) continue;
+                if (sel2.selectedIndex >= 0) {
+                    var o = sel2.options[sel2.selectedIndex];
+                    return ((o && o.text) || sel2.value || '').trim();
+                }
+            }
+            return '';
+        """) or '').strip()
+    except Exception:
+        return ''
+
+
 def selecionar_estado_bolao(driver, estado, log_fn: LogFn = None) -> bool:
-    """Seleciona UF no filtro do site (dropdown ou lista)."""
+    """Seleciona UF no filtro do site (select nativo / Angular)."""
     if not estado:
         return False
     try:
         _dismiss_overlays(driver)
         _expandir_painel_filtros(driver)
         _scroll_para_filtros(driver)
-        time.sleep(0.4)
+        time.sleep(0.5)
+
+        selects_meta = driver.execute_script("""
+            var out = [];
+            var sels = document.querySelectorAll('select');
+            for (var i = 0; i < sels.length; i++) {
+                var sel = sels[i];
+                var vis = !!(sel.offsetParent || (sel.getClientRects && sel.getClientRects().length));
+                if (!vis) continue;
+                var meta = ((sel.getAttribute('ng-model')||'')+' '+(sel.id||'')+' '+(sel.name||'')+' '+(sel.getAttribute('aria-label')||'')).toLowerCase();
+                var score = 0;
+                if (meta.indexOf('estado')>=0 || meta.indexOf('iduf')>=0 || meta.indexOf('uf')>=0) score += 5;
+                var lab = '';
+                try {
+                    var p = sel.closest('div,td,li,fieldset') || sel.parentElement;
+                    lab = ((p && p.innerText) || '').toLowerCase().slice(0, 120);
+                } catch(e) {}
+                if (lab.indexOf('estado')>=0 || /\\buf\\b/.test(lab)) score += 3;
+                out.push({idx: i, score: score, nopts: sel.options ? sel.options.length : 0});
+            }
+            out.sort(function(a,b){ return b.score - a.score || b.nopts - a.nopts; });
+            return out;
+        """) or []
+
+        all_selects = driver.find_elements(By.TAG_NAME, 'select')
+        ordem = []
+        for item in selects_meta:
+            try:
+                ordem.append(all_selects[int(item.get('idx'))])
+            except Exception:
+                pass
+        if not ordem:
+            ordem = [s for s in all_selects if s.is_displayed()]
 
         alvos_txt = [
             estado.nome,
             estado.nome.replace('SAO', 'SÃO'),
+            estado.nome.title(),
             f'{estado.sigla} -',
+            f'{estado.sigla} –',
             estado.sigla,
         ]
+        if estado.sigla == 'SP':
+            alvos_txt.extend(['SAO PAULO', 'SÃO PAULO', 'São Paulo'])
 
-        for sel_el in driver.find_elements(By.TAG_NAME, 'select'):
-            if not sel_el.is_displayed():
-                continue
+        for sel_el in ordem:
             try:
+                if not sel_el.is_displayed():
+                    continue
                 dropdown = Select(sel_el)
+                if len(dropdown.options) < 10:
+                    continue
                 for opt in dropdown.options:
                     txt = (opt.text or '').strip()
-                    if not txt:
+                    val = (opt.get_attribute('value') or '').strip()
+                    if not txt and not val:
                         continue
-                    if _estado_no_texto(txt, estado):
+                    hit = _estado_no_texto(txt, estado) or str(estado.codigo_ibge) == val
+                    if not hit:
+                        for alvo in alvos_txt:
+                            if alvo and alvo.upper() in (txt or '').upper():
+                                hit = True
+                                break
+                    if not hit:
+                        continue
+                    if txt:
                         dropdown.select_by_visible_text(txt)
-                        time.sleep(0.5)
-                        _log(f'  [ESTADO] Selecionado: {txt} ({estado.sigla})', log_fn)
-                        return True
-                    for alvo in alvos_txt:
-                        if alvo and alvo.upper() in txt.upper():
-                            dropdown.select_by_visible_text(txt)
-                            time.sleep(0.5)
-                            _log(f'  [ESTADO] Selecionado: {txt} ({estado.sigla})', log_fn)
-                            return True
-                    if str(estado.codigo_ibge) == (opt.get_attribute('value') or '').strip():
-                        dropdown.select_by_value(str(estado.codigo_ibge))
-                        time.sleep(0.5)
-                        _log(f'  [ESTADO] Selecionado por código IBGE {estado.codigo_ibge}', log_fn)
-                        return True
+                    else:
+                        dropdown.select_by_value(val)
+                    time.sleep(0.35)
+                    driver.execute_script(
+                        """
+                        var sel = arguments[0];
+                        sel.dispatchEvent(new Event('input', {bubbles:true}));
+                        sel.dispatchEvent(new Event('change', {bubbles:true}));
+                        if (typeof angular !== 'undefined') {
+                            try { angular.element(sel).triggerHandler('change'); } catch(e) {}
+                        }
+                        """,
+                        sel_el,
+                    )
+                    time.sleep(0.45)
+                    _log(f'  [ESTADO] Selecionado: {txt or val} ({estado.sigla})', log_fn)
+                    return True
             except Exception:
                 continue
-
-        xpaths = (
-            f"//*[contains(@class,'estado') or contains(@id,'estado') or contains(@ng-model,'estado')]"
-            f"//*[contains(., '{estado.nome.title()}') or contains(., '{estado.sigla}')]",
-            f"//label[contains(.,'Estado')]/following::*[contains(., '{estado.sigla}')][1]",
-            f"//*[self::li or self::button or self::a][contains(., '{estado.nome.title()}')]",
-            f"//*[self::li or self::button or self::a][contains(., 'São Paulo')]" if estado.sigla == 'SP' else '',
-        )
-        for xp in xpaths:
-            if not xp:
-                continue
-            try:
-                for el in driver.find_elements(By.XPATH, xp):
-                    if not el.is_displayed():
-                        continue
-                    txt = (el.text or '').strip()
-                    if txt and _estado_no_texto(txt, estado):
-                        driver.execute_script('arguments[0].scrollIntoView({block: "center"});', el)
-                        time.sleep(0.3)
-                        try:
-                            el.click()
-                        except Exception:
-                            driver.execute_script('arguments[0].click();', el)
-                        time.sleep(0.8)
-                        _log(f'  [ESTADO] Clique: {txt[:40]} ({estado.sigla})', log_fn)
-                        return True
-            except Exception:
-                pass
 
         ok_js = driver.execute_script("""
             var estado = arguments[0];
             function norm(t) {
-                return (t || '').toUpperCase().replace(/\\s+/g, ' ').trim();
+                return (t || '').toUpperCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/\\s+/g,' ').trim();
             }
-            var alvos = [estado.nome, 'SAO PAULO', estado.sigla];
+            var nome = norm(estado.nome);
+            var sigla = norm(estado.sigla);
+            var ibge = String(estado.codigo_ibge);
+
             var sels = document.querySelectorAll('select');
             for (var i = 0; i < sels.length; i++) {
                 var sel = sels[i];
-                if (!sel.offsetParent) continue;
+                if (!sel.options || sel.options.length < 10) continue;
                 for (var j = 0; j < sel.options.length; j++) {
                     var opt = sel.options[j];
                     var txt = norm(opt.text);
-                    for (var k = 0; k < alvos.length; k++) {
-                        if (alvos[k] && txt.indexOf(norm(alvos[k])) >= 0) {
-                            sel.selectedIndex = j;
-                            sel.dispatchEvent(new Event('change', {bubbles: true}));
-                            if (typeof angular !== 'undefined') {
-                                try { angular.element(sel).triggerHandler('change'); } catch(e) {}
-                            }
-                            return opt.text.trim();
-                        }
+                    var val = String(opt.value || '');
+                    var hit = (sigla && (' '+txt+' ').indexOf(' '+sigla+' ') >= 0)
+                           || (nome && txt.indexOf(nome) >= 0)
+                           || val === ibge;
+                    if (!hit) continue;
+                    sel.selectedIndex = j;
+                    sel.dispatchEvent(new Event('input', {bubbles:true}));
+                    sel.dispatchEvent(new Event('change', {bubbles:true}));
+                    if (typeof angular !== 'undefined') {
+                        try { angular.element(sel).triggerHandler('change'); } catch(e) {}
                     }
-                    if (String(opt.value) === String(estado.codigo_ibge)) {
-                        sel.selectedIndex = j;
-                        sel.dispatchEvent(new Event('change', {bubbles: true}));
-                        return opt.text.trim();
-                    }
+                    return 'select:' + (opt.text || val);
                 }
             }
-            if (typeof angular !== 'undefined') {
-                var sc = angular.element(document.body).scope();
-                for (var d = 0; d < 16 && sc; d++) {
-                    if (sc.idUF != null) { sc.idUF = estado.codigo_ibge; sc.$applyAsync(); return 'angular-idUF'; }
-                    if (sc.estado != null) { sc.estado = estado.codigo_ibge; sc.$applyAsync(); return 'angular-estado'; }
-                    if (sc.filtro && sc.filtro.idUF != null) {
-                        sc.filtro.idUF = estado.codigo_ibge; sc.$applyAsync(); return 'angular-filtro-idUF';
+
+            if (typeof angular === 'undefined') return null;
+            var chaves = ['idUF','codigoUF','uf','estado','idEstado','codigoEstado','sgUf','siglaUF'];
+            var sc = angular.element(document.body).scope();
+            for (var d = 0; d < 20 && sc; d++) {
+                for (var c = 0; c < chaves.length; c++) {
+                    var k = chaves[c];
+                    if (sc[k] !== undefined) {
+                        try {
+                            sc[k] = (k.toLowerCase().indexOf('uf')>=0 && k.length <= 4) ? estado.sigla : estado.codigo_ibge;
+                            if (sc.$applyAsync) sc.$applyAsync(); else if (sc.$apply) sc.$apply();
+                            return 'angular-'+k;
+                        } catch(e) {}
                     }
-                    sc = sc.$parent;
                 }
+                if (sc.filtro) {
+                    for (var c2 = 0; c2 < chaves.length; c2++) {
+                        var k2 = chaves[c2];
+                        if (sc.filtro[k2] !== undefined) {
+                            try {
+                                sc.filtro[k2] = (k2.toLowerCase().indexOf('uf')>=0 && k2.length <= 4)
+                                    ? estado.sigla : estado.codigo_ibge;
+                                if (sc.$applyAsync) sc.$applyAsync(); else if (sc.$apply) sc.$apply();
+                                return 'angular-filtro-'+k2;
+                            } catch(e) {}
+                        }
+                    }
+                }
+                sc = sc.$parent;
             }
             return null;
         """, {'nome': estado.nome, 'sigla': estado.sigla, 'codigo_ibge': estado.codigo_ibge})
         if ok_js:
             time.sleep(0.8)
-            _log(f'  [ESTADO] Aplicado via script: {estado.nome} ({estado.sigla})', log_fn)
+            _log(f'  [ESTADO] Aplicado via script ({ok_js}): {estado.nome} ({estado.sigla})', log_fn)
             return True
 
         _log(f'  [ESTADO] Não encontrado no site: {estado.nome} — selecione manualmente se necessário.', log_fn)
@@ -2194,7 +2280,8 @@ def aplicar_filtro_varredura_automatica(
     log_fn: LogFn = None,
 ) -> bool:
     """
-    Modo [1] por UF: modalidade no site + dezenas + estado + Aplicar → página 1.
+    Modo [1] por UF: modalidade + ESTADO + Aplicar → página 1.
+    Só retorna True se o estado foi selecionado (evita rebaixar SP em loop).
     """
     _log(f'\n  [VARREDURA] Preparando {estado.sigla} — {modalidade_cfg.label} | {cfg.qtd_dezenas} dez.', log_fn)
     selecionar_modalidade_bolao(driver, modalidade_cfg, log_fn)
@@ -2210,19 +2297,39 @@ def aplicar_filtro_varredura_automatica(
     except Exception:
         pass
 
-    selecionar_estado_bolao(driver, estado, log_fn)
-    time.sleep(0.5)
+    ok_estado = selecionar_estado_bolao(driver, estado, log_fn)
+    if not ok_estado:
+        time.sleep(0.8)
+        _expandir_painel_filtros(driver)
+        _scroll_para_filtros(driver)
+        ok_estado = selecionar_estado_bolao(driver, estado, log_fn)
+    if not ok_estado:
+        _log(
+            f'  [VARREDURA] Estado {estado.sigla} NÃO selecionado — '
+            'não vou Aplicar (evita baixar de novo a lista errada).',
+            log_fn,
+        )
+        return False
 
+    time.sleep(0.4)
     if cfg.qtd_dezenas:
         _selecionar_qtd_dezenas(driver, cfg.qtd_dezenas, log_fn)
 
-    if _clicar_aplicar(driver):
-        _aguardar_lista_apos_aplicar(driver)
-        _log(f'  [VARREDURA] Filtro aplicado — {estado.sigla} | pagina 1', log_fn)
-        return True
+    if not _clicar_aplicar(driver):
+        _log('  [VARREDURA] Botão Aplicar não encontrado — confira filtros no Edge.', log_fn)
+        return False
 
-    _log('  [VARREDURA] Botão Aplicar não encontrado — confira filtros no Edge.', log_fn)
-    return False
+    _aguardar_lista_apos_aplicar(driver)
+    lido = _ler_estado_selecionado_ui(driver)
+    if lido and not _estado_no_texto(lido, estado):
+        _log(
+            f'  [VARREDURA] Após Aplicar, UI mostra "{lido}" — esperado {estado.sigla}.',
+            log_fn,
+        )
+        return False
+
+    _log(f'  [VARREDURA] Filtro aplicado — {estado.sigla} | pagina 1', log_fn)
+    return True
 
 
 def aplicar_filtros_completos(

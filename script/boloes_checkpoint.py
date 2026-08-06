@@ -249,3 +249,84 @@ def perguntar_retomada(
 
     out_fn(f'  >> Continuando a partir da pagina {ultima + 1}.')
     return ultima + 1, True
+
+
+def perguntar_retomada_varredura(
+    pasta_json: str,
+    arquivo_base: str,
+    *,
+    input_fn: Callable[[str], str] = input,
+    out_fn: Callable[[str], None] = print,
+) -> Tuple[bool, str, int, list]:
+    """
+    Retomada do modo [1] (27 UFs).
+
+    Retorna (continuar, uf_retomar, pagina_retomar, ufs_concluidas).
+    - continuar=False → usuário escolheu NOVA (começar do zero: SP pág. 1).
+    - continuar=True sem checkpoint incompleto → seguir fluxo normal (sem forçar página).
+    """
+    ck = carregar_checkpoint(pasta_json) or {}
+    ufs_ok = [str(u).upper() for u in (ck.get('ufs_concluidas') or []) if str(u).strip()]
+    status = str(ck.get('status') or '')
+    uf_atual = str(ck.get('uf_atual') or '').upper()
+    pagina_atual = int(ck.get('pagina_atual') or 0)
+    total = int(ck.get('total_paginas') or 0)
+    ab_ck = str(ck.get('arquivo_base') or '').removesuffix('.json')
+    ab = (arquivo_base or '').removesuffix('.json')
+
+    # Checkpoint de outro arquivo → não oferece retomada deste
+    if ab_ck and ab and ab_ck != ab:
+        return True, '', 1, []
+
+    incompleto = status in (STATUS_EXECUTANDO, STATUS_PAUSADO) and (
+        pagina_atual > 0 or bool(uf_atual) or bool(ufs_ok)
+    )
+    if status == STATUS_CONCLUIDO and (not total or pagina_atual >= total) and len(ufs_ok) >= 27:
+        return True, '', 1, list(ufs_ok)
+
+    if not incompleto and status != STATUS_CONCLUIDO:
+        return True, '', 1, list(ufs_ok)
+
+    # UF em andamento NÃO pode estar em "concluídas" — senão a retomada pula ela
+    if uf_atual and status in (STATUS_EXECUTANDO, STATUS_PAUSADO):
+        ufs_ok = [u for u in ufs_ok if u != uf_atual]
+
+    pagina_prox = pagina_atual + 1 if pagina_atual > 0 else 1
+    if pagina_prox < 1:
+        pagina_prox = 1
+
+    mod = ck.get('modalidade_label') or ck.get('modalidade') or '?'
+    conc = ck.get('concurso') or '?'
+    qtd = int(ck.get('boloes_extraidos') or 0)
+    quando = ck.get('atualizado_em') or '?'
+
+    out_fn('')
+    out_fn('=' * 60)
+    out_fn('  EXTRACAO INCOMPLETA DETECTADA')
+    out_fn('=' * 60)
+    out_fn(f'  Modalidade : {mod}')
+    out_fn(f'  Concurso   : {conc}')
+    out_fn(f'  UF atual   : {uf_atual or "?"}  |  página {pagina_atual}' + (f' / {total}' if total else ''))
+    out_fn(f'  Próximo    : {uf_atual or "SP"} página {pagina_prox}')
+    if ufs_ok:
+        out_fn(f'  UFs ok     : {", ".join(ufs_ok)} ({len(ufs_ok)}/27)')
+    out_fn(f'  Bolões     : {qtd}')
+    out_fn(f'  Status     : {status}')
+    out_fn(f'  Atualizado : {quando}')
+    out_fn(f'  Arquivo    : {(ab_ck or ab)}.json')
+    out_fn('-' * 60)
+    out_fn(f'  [C] Continuar de onde parou ({uf_atual or "SP"} pág. {pagina_prox})')
+    out_fn('  [N] Nova extração (SP página 1 — NÃO apaga o JSON; só reinicia o checkpoint)')
+    out_fn('=' * 60)
+
+    try:
+        resp = (input_fn('  Escolha [C/N] (Enter=Continuar): ') or '').strip().upper()
+    except EOFError:
+        resp = 'C'
+
+    if resp in ('N', 'NOVA', 'NEW'):
+        out_fn('  >> Nova varredura: SP página 1 (JSON existente será mesclado por hash).')
+        return False, '', 1, []
+
+    out_fn(f'  >> Continuando: {uf_atual or "SP"} a partir da página {pagina_prox}.')
+    return True, uf_atual, pagina_prox, ufs_ok
