@@ -168,7 +168,12 @@ def resolver_pagina_retomada(
 ) -> Tuple[int, Optional[Dict[str, Any]]]:
     """
     Retorna (ultima_pagina_ok, checkpoint).
-    Prefere checkpoint; se ausente, usa max(pagina) do JSON.
+
+    ultima_pagina_ok = última página CONSIDERADA COMPLETA.
+    A retomada (Continuar) começa em ultima+1.
+
+    Prefere checkpoint (pagina_atual = última completa). O max(pagina) do JSON
+    pode ser uma página PARCIAL — não deve empurrar a retomada para além dela.
     """
     ck = carregar_checkpoint(pasta_json)
     pagina_json = ultima_pagina_do_json(boloes_existentes)
@@ -181,6 +186,11 @@ def resolver_pagina_retomada(
         if ab_ck and ab and ab_ck != ab and pagina_json > 0:
             # prioriza o JSON da sessão atual
             return pagina_json, None
+
+    # Checkpoint incompleto: pagina_atual é a última completa (mesmo se o JSON
+    # já tiver registros da página seguinte — retomada deve reabrir essa página).
+    if ck and checkpoint_incompleto(ck) and pagina_ck > 0:
+        return pagina_ck, ck
 
     ultima = max(pagina_ck, pagina_json)
     if ultima <= 0:

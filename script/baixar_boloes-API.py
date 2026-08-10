@@ -75,10 +75,12 @@ from boloes_checkpoint import (
     reset_pause_flags,
     salvar_checkpoint,
 )
+from boloes_estados import estados_varredura, imprimir_fila_estados
 from boloes_pasta_bds import detectar_modalidade_site
 from boloes_filtro_loterica import (
     FiltroLotericaConfig,
     _carregar_config_cache,
+    aplicar_filtro_varredura_automatica,
     bolao_atende_filtro,
     bolao_corresponde_loterica,
     cfg_qualquer_loterica,
@@ -1291,9 +1293,23 @@ def _capturar_pagina_atual(
     n_esperado = meta['n_esperado']
     codigos = meta['codigos']
 
+    # Retomada intra-página: quantos desta página já estão no JSON
+    ab_ck = painel.get('arquivo_base') or arquivo_base
+    path_json_pag = os.path.join(PASTA_JSON, f'{ab_ck}.json') if ab_ck else ''
+    existentes_pag = carregar_json_boloes(path_json_pag) if path_json_pag else []
+    ja_coletados = sum(1 for b in existentes_pag if b.get('pagina') == pagina)
+    if ja_coletados:
+        print(
+            f'  [CHECKPOINT] JSON já tem {ja_coletados} bolão(ões) da página {pagina}'
+            + (f' (meta tela={n_esperado}).' if n_esperado else '.')
+        )
+
     if n_esperado:
         print(f'  [TELA] Meta desta página: {n_esperado} bolão(ões).')
-        print('  [TELA] Iniciando cliques em Detalhes...')
+        if ja_coletados >= n_esperado:
+            print('  [TELA] Página já coberta no JSON — não inicia cliques.')
+        else:
+            print('  [TELA] Iniciando cliques em Detalhes...')
     else:
         print('  [TELA] Nenhum Detalhes visível — tentando lista API interceptada...')
 
@@ -1316,6 +1332,7 @@ def _capturar_pagina_atual(
     detalhar_pagina_ate_esperado(
         driver, cfg, parser_slug, hashes, n_esperado, codigos, print,
         on_progresso=_salvar_tempo_real if arquivo_base else None,
+        ja_coletados=ja_coletados,
     )
 
     n_caps = len(ler_capturas_api(driver))
@@ -1332,23 +1349,31 @@ def _capturar_pagina_atual(
     )
     painel['arquivo_base'] = ab
 
+    # Contagem efetiva na página (disco + novos desta passagem)
+    existentes_apos = carregar_json_boloes(os.path.join(PASTA_JSON, f'{ab}.json')) if ab else []
+    n_pagina_json = sum(1 for b in existentes_apos if b.get('pagina') == pagina)
+    n_efetivo = max(n_gravados, n_pagina_json, ja_coletados)
+
     novos_loterica = _boloes_do_filtro(
         [b for b in boloes if b.get('pagina') == pagina], cfg,
     )
-    if cfg.termo and n_gravados and len(novos_loterica) != n_gravados:
+    if cfg.termo and n_efetivo and len(novos_loterica) != n_gravados and n_gravados:
         _out(
             f'  [FILTRO] Lotérica alvo nesta pág.: {len(novos_loterica)} de {n_gravados} '
             f'(todos {n_gravados} foram gravados no JSON da modalidade).'
         )
 
-    if not n_gravados and n_caps > 0:
+    if not n_gravados and n_caps > 0 and n_pagina_json < (n_esperado or 1):
         _diagnosticar_capturas_sem_filtro(cfg, parser_slug)
 
-    painel['pendentes_pagina'] = max(0, n_esperado - n_gravados) if n_esperado else 0
-    if n_esperado and n_gravados < n_esperado:
-        print(f'  [AVISO] Página incompleta: {n_gravados}/{n_esperado} bolões gravados no JSON.')
+    painel['pendentes_pagina'] = max(0, n_esperado - n_efetivo) if n_esperado else 0
+    painel['pagina_completa'] = bool(n_esperado and n_efetivo >= n_esperado) or (not n_esperado and n_efetivo > 0)
+    if n_esperado and n_efetivo < n_esperado:
+        print(f'  [AVISO] Página incompleta: {n_efetivo}/{n_esperado} bolões no JSON desta página.')
+    elif n_esperado and n_efetivo >= n_esperado and n_gravados == 0 and ja_coletados:
+        print(f'  [CHECKPOINT] Página {pagina} confirmada no JSON: {n_efetivo}/{n_esperado}.')
 
-    return n_gravados
+    return n_efetivo
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -1557,7 +1582,7 @@ def _loop_extracao_paginas(
             kb = os.path.getsize(path_json) / 1024
             _out(f'  📁 Arquivo: {total_disco} reg. | {kb:.1f} KB | {os.path.basename(path_json)}')
 
-        # Checkpoint após página concluída com sucesso
+        # Checkpoint: só avança pagina_atual se a página estiver completa no JSON.
         meta_pag = ler_metadados_paginacao_api(driver) or painel.get('paginacao_api') or {}
         total_paginas = int(meta_pag.get('ultima_pagina') or 0)
         if meta_pag:
@@ -1566,19 +1591,38 @@ def _loop_extracao_paginas(
             up = int(meta_pag.get('ultima_pagina') or pagina)
             print(f'  [PÁGINA] API: página {pa} de {up} ({meta_pag.get("total_registros", "?")} bolões).')
 
+        n_esp = int(painel.get('detalhes_tela_pagina') or 0)
+        pagina_ok = bool(painel.get('pagina_completa'))
+        if not pagina_ok and n_esp:
+            existentes_ck = carregar_json_boloes(path_json)
+            n_pag_ck = sum(1 for b in existentes_ck if b.get('pagina') == pagina)
+            pagina_ok = n_pag_ck >= n_esp
+            if not pagina_ok:
+                _out(
+                    f'  [CHECKPOINT] Página {pagina} incompleta '
+                    f'({n_pag_ck}/{n_esp}) — retomada permanecerá nesta página.'
+                )
+
+        pagina_checkpoint = pagina if (pagina_ok or not n_esp) else max(0, pagina - 1)
         salvar_checkpoint(
             PASTA_JSON,
             modalidade=(mod_esperada.slug if mod_esperada else mod_slug) or '',
             modalidade_label=(mod_esperada.label if mod_esperada else '') or '',
             concurso=painel.get('concurso_alvo') or '',
             arquivo_base=arquivo_base,
-            pagina_atual=pagina,
+            pagina_atual=pagina_checkpoint,
             total_paginas=total_paginas,
             boloes_extraidos=total_disco or len(hashes),
             status=STATUS_EXECUTANDO,
             extra=_extra_ck(),
         )
-        _out(f'  [CHECKPOINT] Página {pagina} gravada — próximo retomaria em {pagina + 1}.')
+        if pagina_checkpoint >= pagina:
+            _out(f'  [CHECKPOINT] Página {pagina} gravada — próximo retomaria em {pagina + 1}.')
+        else:
+            _out(
+                f'  [CHECKPOINT] Página {pagina} incompleta no checkpoint — '
+                f'próximo retomaria na página {pagina} (não em {pagina + 1}).'
+            )
 
         if voce_encerra:
             print(
@@ -1753,6 +1797,20 @@ def extrair_automatico() -> Tuple[list, Optional[str]]:
     cfg = cfg_atual
 
     arquivo_base = gerar_arquivo_base(cfg, mod, concurso_final)
+    fila = estados_varredura('SP')
+    imprimir_fila_estados('SP')
+
+    ck = carregar_checkpoint(PASTA_JSON) or {}
+    ufs_concluidas = [
+        str(u).upper() for u in (ck.get('ufs_concluidas') or []) if str(u).strip()
+    ]
+    uf_retomar = ''
+    pagina_retomar = 1
+    if ck.get('status') in (STATUS_EXECUTANDO, STATUS_PAUSADO):
+        uf_retomar = str(ck.get('uf_atual') or '').upper()
+        pagina_retomar = int(ck.get('pagina_atual') or 0) + 1
+        if pagina_retomar < 1:
+            pagina_retomar = 1
 
     print('\n' + '=' * 60)
     print('  EXTRAÇÃO AUTOMÁTICA — LISTA DO SITE')
@@ -1762,6 +1820,10 @@ def extrair_automatico() -> Tuple[list, Optional[str]]:
     print('  Filtro     : NENHUM (você só escolheu a modalidade)')
     print('  Ação       : clicar Detalhes → próxima página → até acabar')
     print(f'  Arquivo    : {arquivo_base}.json (gravado em tempo real)')
+    if ufs_concluidas:
+        print(f'  UFs já ok  : {", ".join(ufs_concluidas)}')
+    if uf_retomar:
+        print(f'  Retomada   : {uf_retomar} página {pagina_retomar}')
     print(LEGENDA_API)
 
     # forcar_pagina_inicial=None → _loop pergunta [C] Continuar / [N] Nova pela página

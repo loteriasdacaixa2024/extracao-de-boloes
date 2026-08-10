@@ -563,6 +563,54 @@ return true;
 """
 
 
+_JS_MARCAR_PRIMEIROS_DET_DONE = """
+var n = Math.max(0, parseInt(arguments[0], 10) || 0);
+if (!n) return 0;
+var RE_DETALHES = /detalh/i;
+function visivel(el) {
+  if (!el) return false;
+  try {
+    var st = window.getComputedStyle(el);
+    if (st.display === 'none' || st.visibility === 'hidden') return false;
+  } catch (e) {}
+  return true;
+}
+function pushBtn(list, btn) {
+  if (!btn || list.indexOf(btn) >= 0) return;
+  list.push(btn);
+}
+var out = [];
+var rowSels = [
+  '[ng-repeat*="cota"]', '[ng-repeat*="Cota"]', '[ng-repeat*="bolao"]', '[ng-repeat*="Bolao"]',
+  '.card', '[class*="bolao"]', '[class*="Bolao"]', 'tr[ng-repeat]', 'li[ng-repeat]'
+];
+rowSels.forEach(function (sel) {
+  document.querySelectorAll(sel).forEach(function (row) {
+    if (!visivel(row)) return;
+    row.querySelectorAll('button, a, [role="button"]').forEach(function (btn) {
+      if (!visivel(btn)) return;
+      var t = (btn.textContent || btn.innerText || '').trim();
+      if (RE_DETALHES.test(t)) pushBtn(out, btn);
+    });
+  });
+});
+document.querySelectorAll('button, a, [role="button"]').forEach(function (btn) {
+  if (!visivel(btn)) return;
+  var t = (btn.textContent || btn.innerText || '').trim();
+  if (RE_DETALHES.test(t)) pushBtn(out, btn);
+});
+out.sort(function (a, b) {
+  return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+});
+var marcados = 0;
+for (var i = 0; i < out.length && marcados < n; i++) {
+  out[i].setAttribute('data-boloes-det-done', '1');
+  marcados++;
+}
+return marcados;
+"""
+
+
 _JS_COLETAR_BOTOES_DETALHES = """
 var RE_DETALHES = /detalh/i;
 var somentePendentes = !!arguments[0];
@@ -804,6 +852,30 @@ def limpar_marcas_detalhes_pagina(driver) -> None:
         driver.execute_script(_JS_LIMPAR_MARCAS_DET)
     except Exception:
         pass
+
+
+def marcar_detalhes_ja_extraidos(
+    driver,
+    qtd: int,
+    log_fn: Optional[Callable[[str], None]] = None,
+) -> int:
+    """
+    Marca os primeiros `qtd` botões Detalhes (ordem visual) como já processados.
+    Usado na retomada: registros já no JSON desta página → não reclicar.
+    """
+    n = max(0, int(qtd or 0))
+    if n <= 0:
+        return 0
+    try:
+        marcados = int(driver.execute_script(_JS_MARCAR_PRIMEIROS_DET_DONE, n) or 0)
+    except Exception:
+        marcados = 0
+    if log_fn and marcados:
+        log_fn(
+            f'  [CHECKPOINT] {marcados} Detalhes já no JSON — '
+            f'pulando; próximo clique a partir do #{marcados + 1}.'
+        )
+    return marcados
 
 
 def preparar_pagina_para_detalhes(
@@ -1347,24 +1419,40 @@ def detalhar_pagina_ate_esperado(
     log_fn: Optional[Callable[[str], None]] = None,
     max_rodadas: int = 15,
     on_progresso: Optional[Callable[[List[Dict[str, Any]]], None]] = None,
+    ja_coletados: int = 0,
 ) -> List[Dict[str, Any]]:
     """
     Clica em todos os Detalhes da pagina (rodadas ate bater meta ou esgotar botoes).
 
     Se on_progresso for informado, e chamado a cada rodada com os bolões
     coletados ate o momento (permite salvar em tempo real).
+
+    ja_coletados: quantidade já gravada no JSON desta página (retomada).
+    Conta no progresso e marca os primeiros botões para não reclicar.
     """
     hashes_inicio = len(hashes_vistos)
     boloes_novos: List[Dict[str, Any]] = []
     estagnacao = 0
     meta = n_esperado
+    previos = max(0, int(ja_coletados or 0))
+
+    if previos and meta and previos >= meta:
+        if log_fn:
+            log_fn(
+                f'  [CHECKPOINT] Página já completa no JSON '
+                f'({previos}/{meta}) — sem reclicar Detalhes.'
+            )
+        return boloes_novos
+
+    if previos:
+        marcar_detalhes_ja_extraidos(driver, previos, log_fn)
 
     for rodada in range(1, max_rodadas + 1):
         chunk = coletar_boloes_das_capturas(
             driver, hashes_vistos, log_fn, filtro_cfg, parser_slug, filtrar_dezenas=False,
         )
         boloes_novos.extend(chunk)
-        n_ok_pagina = len(hashes_vistos) - hashes_inicio
+        n_ok_pagina = previos + (len(hashes_vistos) - hashes_inicio)
 
         # Callback de progresso (salvar em tempo real)
         if on_progresso and chunk:
@@ -1392,12 +1480,23 @@ def detalhar_pagina_ate_esperado(
             break
         if pendentes_btn == 0 and not meta:
             break
+        # Já cobertos no JSON + sem botão pendente → não insiste em reclicar
+        if pendentes_btn == 0 and previos and n_ok_pagina >= previos:
+            if log_fn:
+                log_fn(
+                    f'  [CHECKPOINT] Sem Detalhes pendentes na tela '
+                    f'(coletados={n_ok_pagina}/{meta or "?"}).'
+                )
+            break
 
         if log_fn:
             log_fn(
                 f'  [TELA] Rodada {rodada}: meta={meta} | coletados={n_ok_pagina} | '
                 f'faltam={pendentes} | botoes_pendentes={pendentes_btn}'
             )
+
+        if pendentes <= 0 and meta:
+            break
 
         n_disp = disparar_detalhes_sem_popup(
             driver, log_fn, filtro_cfg, max_itens=max(pendentes, pendentes_btn, 1),
