@@ -412,6 +412,7 @@ def executar_etapas(
     logger.info("Etapa 8 — Campo senha preenchido")
     espera_minima_seguranca()
 
+<<<<<<< HEAD
     # Se o redirect/OAuth já concluiu (usuário já logado), não fica preso no Entrar.
     if _focar_se_ja_logado(driver, logger):
         logger.info("Etapa 9 — Já logado no portal; pulando clique em Entrar.")
@@ -463,10 +464,38 @@ def executar_etapas(
             # CRÍTICO: esperar OAuth voltar ao silce-web ANTES de qualquer driver.get()
             _aguardar_retorno_portal_logado(driver, logger)
 
+=======
+    logger.info("Etapa 9 — Aguardando botão Entrar (%s)", S.CSS_BOTAO_ENTRAR)
+    try:
+        btn = esperar_clicavel(
+            driver,
+            By.CSS_SELECTOR,
+            S.CSS_BOTAO_ENTRAR,
+            timeout=15,
+            descricao="Etapa 9 — button[tabindex='1']",
+        )
+        try:
+            btn.click()
+        except Exception:
+            driver.execute_script("arguments[0].click();", btn)
+    except ElementoNaoEncontrado:
+        _clicar_candidatos(
+            driver,
+            S.CSS_BOTAO_ENTRAR_ALT,
+            logger,
+            "Etapa 9 — Entrar (alternativos)",
+        )
+    logger.info("Etapa 9 — Clique em Entrar realizado")
+
+    # CRÍTICO: esperar o OAuth voltar ao silce-web ANTES de qualquer driver.get()
+    # Se navegar cedo demais, a sessão cai e o site pede CPF de novo.
+    _aguardar_retorno_portal_logado(driver, logger)
+>>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
     logger.info(
         "Automação de login ENCERRADA com sessão no portal. "
         "Não recarregue a página de login."
     )
+<<<<<<< HEAD
     if _parece_logado_no_portal(driver) or _focar_se_ja_logado(driver, logger):
         print("\n  [LOGIN] Sessão confirmada — aviso sonoro.", flush=True)
         _aviso_sonoro_login_ok(logger)
@@ -498,6 +527,8 @@ def _focar_se_ja_logado(driver: WebDriver, logger: logging.Logger) -> bool:
     except WebDriverException:
         pass
     return False
+=======
+>>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
 
 
 def _parece_logado_no_portal(driver: WebDriver) -> bool:
