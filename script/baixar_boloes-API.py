@@ -2,20 +2,16 @@
 """
 Extrator de bolões via API (interceptação JSON) — Caixa.
 
-Fluxo [1] AUTOMÁTICO (principal):
-  1. Terminal pede: MODALIDADE + CONCURSO (antes de abrir o Edge)
-<<<<<<< HEAD
-  2. Edge abre — faça LOGIN → escolha SÓ a modalidade → PAUSA → digite SIM
-  3. Script clica Detalhes e avança páginas até acabar (sem filtro de estado)
-  4. JSON gravado em json-boloes/ em tempo real
-=======
-  2. Edge abre — faça LOGIN (filtros opcionais) → PAUSA → ENTER no terminal
-  3. Script percorre as 27 UFs (SP primeiro), aplica filtro de estado e pagina até acabar
-  4. Cada UF: estado no site → pág. 1…N → próxima UF (mesmo JSON de sessão)
-  5. JSON gravado em json-boloes/ em tempo real
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
+Fluxo [C] CICLO COMPLETO (recomendado):
+  1. Login → abre inicio-bolao → lê cards (modalidade + concurso)
+  2. PAUSA — digite SIM (pode mexer no Edge; nada baixa antes)
+  3. App clica Compre seu bolão e extrai → 1 JSON por modalidade
 
-Fluxo [2] MANUAL (opcional): ENTER a cada página / vários filtros na mesma sessão.
+Fluxo [1] AUTOMÁTICO (uma modalidade):
+  1. Terminal pede: MODALIDADE + CONCURSO
+  2. Edge → login → PAUSA → SIM → pagina a lista do site
+
+Fluxo [2] MANUAL: ENTER a cada página / vários filtros na mesma sessão.
 """
 from __future__ import annotations
 
@@ -91,7 +87,6 @@ from boloes_filtro_loterica import (
     bolao_atende_filtro,
     bolao_corresponde_loterica,
     cfg_qualquer_loterica,
-    eh_ultima_pagina,
     gerar_arquivo_base,
     garantir_sessao_caixa,
     ler_config_extracao,
@@ -104,21 +99,22 @@ from boloes_filtro_loterica import (
     preparar_pagina_loterica,
     sessao_caixa_ativa,
     slug_loterica,
-    ultima_pagina_detectada,
 )
 
 CONFERENCIAS_BOLOES_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, '..'))
 PASTA_JSON = os.path.join(CONFERENCIAS_BOLOES_DIR, 'json-boloes')
 PASTA_CAPTURAS = os.path.join(CONFERENCIAS_BOLOES_DIR, 'capturas-api')
 URL_BOLOES = 'https://www.loteriasonline.caixa.gov.br/silce-web/#/bolao-caixa'
+URL_INICIO_BOLAO = (
+    'https://www.loteriasonline.caixa.gov.br/silce-web/#/inicio-bolao'
+)
 
-MSG_ULTIMA_PAGINA = 'Última página — botão Seguinte desabilitado. Extração concluída.'
+MSG_ULTIMA_PAGINA = (
+    'Fim REAL da lista — não há mais páginas/ofertas desta modalidade '
+    '(não é só o fim de um estado).'
+)
 
-<<<<<<< HEAD
-VERSAO_EXTRATOR = 'CHECKPOINT-RESUME-v3.3 (lista do site — sem filtro UF)'
-=======
-VERSAO_EXTRATOR = 'CHECKPOINT-RESUME-v3.2 (varredura 27 UFs)'
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
+VERSAO_EXTRATOR = 'CICLO-COMPLETO-v4.4.4 (paginacao todos os estados)'
 
 
 for _pasta in (CONFERENCIAS_BOLOES_DIR, PASTA_JSON, PASTA_CAPTURAS):
@@ -274,26 +270,16 @@ def _exibir_resumo_pre_extracao(mod, concurso: str, cfg) -> None:
     _separador('-')
     _out(f'  Modalidade  : {mod.label if mod else "detectar automaticamente"}')
     _out(f'  Concurso    : {concurso if concurso else "detectar automaticamente"}')
-<<<<<<< HEAD
     _out('  Lotérica    : qualquer (lista do site — SEM filtro de estado)')
-=======
-    _out('  Lotérica    : qualquer | estados: varredura automática das 27 UFs')
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
     _out(f'  Destino     : json-boloes/')
     _out(f'  Gravação    : tempo real (KBs crescem a cada página)')
     _separador()
     _out('')
     _out('  Agora:')
     _out('  1. O Edge abre e o LOGIN é automático')
-<<<<<<< HEAD
-    _out('  2. No Edge: escolha SÓ a MODALIDADE (não mexa em estado/lotérica)')
+    _out('  2. No Edge: escolha a MODALIDADE (+ concurso). Sem filtrar estado')
     _out('  3. PAUSA — volte aqui e digite SIM (Enter vazio NÃO inicia)')
     _out('  4. O script clica Detalhes e avança páginas até acabar')
-=======
-    _out('  2. No Edge: escolha a MODALIDADE (e filtros) MANUALMENTE')
-    _out('  3. PAUSA — volte aqui e digite SIM (Enter vazio NÃO inicia)')
-    _out('  4. O script percorre as 27 UFs e pagina cada uma até acabar')
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
     _separador()
 
 
@@ -546,12 +532,8 @@ def iniciar_navegador() -> bool:
         _out('  ' + '=' * 56)
         _out('  LOGIN AUTO FINALIZADO — agora é com VOCÊ no Edge:')
         _out('    1) Confirme que está LOGADO')
-<<<<<<< HEAD
-        _out('    2) Escolha SÓ a MODALIDADE no site (não mexa em estado)')
-=======
-        _out('    2) Escolha a MODALIDADE (e filtros) MANUALMENTE no site')
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
-        _out('    3) Volte ao terminal e digite SIM para iniciar a extração')
+        _out('    2) No [C]: o app lê os cards e PAUSA — digite SIM para extrair')
+        _out('    3) No [1]: abra a lista da modalidade e digite SIM')
         _out('  ' + '=' * 56)
         return True
     except Exception as exc:
@@ -796,7 +778,7 @@ def _ler_confirmacao_sim() -> str:
             buf.append(ch)
 
 
-def aguardar_site_pronto() -> bool:
+def aguardar_site_pronto(modo_ciclo: bool = False) -> bool:
     """
     PAUSA rígida: Enter vazio NÃO inicia.
     Só continua após digitar SIM + login confirmado + bolões visíveis na tela.
@@ -804,13 +786,14 @@ def aguardar_site_pronto() -> bool:
     print('\n' + '=' * 60)
     print(f'  ⏸⏸⏸  PAUSA — SCRIPT PARADO  [{VERSAO_EXTRATOR}]')
     print('=' * 60)
-    print('\n  1. Confirme que está LOGADO no Edge (login automático)')
-<<<<<<< HEAD
-    print('  2. Escolha SÓ a MODALIDADE no site (sem filtro de estado)')
-=======
-    print('  2. Escolha a MODALIDADE (e filtros) MANUALMENTE no site')
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
-    print('  3. Volte AQUI e digite SIM (Enter vazio NÃO inicia)')
+    if modo_ciclo:
+        print('\n  1. Cards já detectados no Edge (inicio-bolao)')
+        print('  2. Pode clicar no site normalmente enquanto o terminal espera')
+        print('  3. Digite SIM UMA VEZ — aí o app clica Compre seu bolão e baixa')
+    else:
+        print('\n  1. Confirme que está LOGADO no Edge (login automático)')
+        print('  2. Deixe a lista de bolões aberta (sem filtrar estado)')
+        print('  3. Digite SIM — o app só clica Detalhes e passa as páginas')
     print('')
     print('  ⚠  NADA será baixado antes de você digitar SIM.')
     print(f'  JSON: {PASTA_JSON}')
@@ -840,6 +823,10 @@ def aguardar_site_pronto() -> bool:
         if not _usuario_logado_caixa():
             print('\n  ❌ Login NÃO detectado no Edge. Faça login e digite SIM de novo.')
             continue
+
+        if modo_ciclo:
+            _out('\n  ✔ Login OK — liberando extração (cards → Compre seu bolão → JSON)...')
+            return True
 
         _out('  Verificando bolões visíveis na página...')
         n_det = aguardar_detalhes_visiveis(driver, minimo=1, timeout=12, log_fn=_out)
@@ -891,18 +878,29 @@ def _modalidade_do_bolao_item(bolao: dict):
 
 
 def _filtrar_boloes_modalidade(boloes: list, mod_esperada) -> tuple[list, int]:
+    """Mantém só a modalidade esperada. Descarta outras (anti-mistura)."""
     if not mod_esperada or not boloes:
         return list(boloes), 0
     ok: list = []
     descartados = 0
+    slug_ok = mod_esperada.slug
+    parser_ok = getattr(mod_esperada, 'parser_slug', slug_ok)
+    exemplos: list[str] = []
     for b in boloes:
         mod = _modalidade_do_bolao_item(b)
         if mod is None:
             ok.append(b)
-        elif mod.slug == mod_esperada.slug:
+        elif mod.slug == slug_ok or mod.slug == parser_ok or getattr(mod, 'parser_slug', '') == parser_ok:
             ok.append(b)
         else:
             descartados += 1
+            if len(exemplos) < 3:
+                exemplos.append(mod.label)
+    if descartados:
+        _out(
+            f'  [ERRO INTEGRIDADE] {descartados} bolão(ões) de outra modalidade '
+            f'(ex.: {", ".join(exemplos)}) — NÃO gravados em {mod_esperada.label}.'
+        )
     return ok, descartados
 
 
@@ -983,7 +981,9 @@ def _validar_modalidade_coerencia(mod_esperada, boloes: list) -> None:
 def _renomear_json_sessao(arquivo_base: str, boloes: list, mod) -> str:
     if not boloes:
         return arquivo_base
-    novo = nome_arquivo_sessao(extrair_concurso_de_boloes(boloes), extrair_modalidade_de_boloes(boloes) or mod)
+    # Isolamento: slug do arquivo SEMPRE o da modalidade da sessão (nunca majority polluída)
+    conc = extrair_concurso_de_boloes(boloes)
+    novo = nome_arquivo_sessao(conc, mod)
     if novo == arquivo_base:
         return arquivo_base
     antigo = os.path.join(PASTA_JSON, f'{arquivo_base}.json')
@@ -1292,23 +1292,85 @@ def _capturar_pagina_atual(
                 print(f'  [TELA] Página {pagina}: {n_det} botão(ões) Detalhes visíveis.')
         elif not manual:
             print(f'  [PÁGINA] Avançando para página {pagina} (Seguinte)...')
+            from boloes_filtro_loterica import _ler_pagina_atual_ui
+            ui_antes = _ler_pagina_atual_ui(driver)
+            meta_antes = painel.get('paginacao_api') or ler_metadados_paginacao_api(driver) or {}
+            pa_antes = int(meta_antes.get('pagina_atual') or ui_antes or 0)
+            up_antes = int(meta_antes.get('ultima_pagina') or 0)
+
             if not ir_proxima_pagina_lista(driver, print):
                 if cfg.termo:
                     if not preparar_pagina_loterica(driver, cfg, pagina, print):
                         print('  [FILTRO] Falha ao preparar página.')
                         return -1
-                elif ultima_pagina_detectada(driver) or eh_ultima_pagina(driver):
-                    return -2
                 else:
-                    meta_nav = ler_metadados_paginacao_api(driver)
-                    ultima = (meta_nav or {}).get('ultima_pagina') or 0
-                    if pagina <= ultima and ir_para_pagina_lista(driver, pagina, print):
-                        print(f'  [PÁGINA] Navegou para página {pagina} (fallback Angular).')
-                    elif ultima_pagina_detectada(driver) or eh_ultima_pagina(driver):
+                    ui_depois_fail = _ler_pagina_atual_ui(driver)
+                    if (
+                        ui_antes is not None
+                        and ui_depois_fail is not None
+                        and int(ui_depois_fail) < int(ui_antes)
+                    ):
+                        print(
+                            f'  [PÁGINA] FIM — paginação voltou '
+                            f'({ui_antes} → {ui_depois_fail}). Extração desta lista concluída.'
+                        )
                         return -2
+                    # NÃO encerrar só porque API diz ultimaPagina ou Seguinte
+                    # "parece" disabled — na virada SP→MG isso é falso positivo.
+                    # Tenta Angular/número para a página pedida; só -2 se nada avançar.
+                    print(
+                        f'  [PÁGINA] Avanço padrão falhou (pág. {pagina}). '
+                        f'Tentando salto direto (fim real só se a lista não mudar)...'
+                    )
+                    if ir_para_pagina_lista(driver, pagina, print):
+                        print(f'  [PÁGINA] Navegou para página {pagina} (fallback direto).')
                     else:
-                        print(f'  [PÁGINA] Seguinte falhou ao ir para página {pagina}.')
-                        return -1
+                        meta_nav = ler_metadados_paginacao_api(driver)
+                        ultima = (meta_nav or {}).get('ultima_pagina') or 0
+                        pa_nav = (meta_nav or {}).get('pagina_atual') or ui_depois_fail or 0
+                        # Última tentativa: Angular mesmo além do ultimaPagina da API
+                        from boloes_filtro_loterica import _angular_ir_para_pagina
+                        if _angular_ir_para_pagina(driver, pagina, print):
+                            time.sleep(2.0)
+                            ui_ok = _ler_pagina_atual_ui(driver)
+                            if ui_ok == pagina or (ui_antes is not None and ui_ok and int(ui_ok) > int(ui_antes)):
+                                print(f'  [PÁGINA] Navegou para página {pagina} (Angular forçado).')
+                            else:
+                                print(
+                                    f'  [PÁGINA] FIM REAL — não avançou além de '
+                                    f'{pa_nav or ui_antes}'
+                                    + (f' (API ultima={ultima})' if ultima else '')
+                                    + '.'
+                                )
+                                return -2
+                        else:
+                            print(
+                                f'  [PÁGINA] FIM REAL — impossível ir para página {pagina} '
+                                f'(lista nacional encerrada; não é só fim de um estado).'
+                            )
+                            return -2
+            else:
+                ui_depois = _ler_pagina_atual_ui(driver)
+                if (
+                    ui_antes is not None
+                    and ui_depois is not None
+                    and int(ui_depois) < int(ui_antes)
+                ):
+                    print(
+                        f'  [PÁGINA] FIM — wrap após Seguinte '
+                        f'({ui_antes} → {ui_depois}). Não processa outra lista/UF.'
+                    )
+                    return -2
+                meta_depois = ler_metadados_paginacao_api(driver) or {}
+                pa_dep = int(meta_depois.get('pagina_atual') or ui_depois or 0)
+                # Wrap real (voltou p/ 1) — não confundir com virada de estado na mesma lista
+                if pa_antes > 1 and pa_dep == 1 and ui_depois is not None and int(ui_depois) == 1:
+                    print(
+                        f'  [PÁGINA] FIM — paginação resetou para pág. 1 após {pa_antes}'
+                        + (f'/{up_antes}' if up_antes else '')
+                        + '.'
+                    )
+                    return -2
             time.sleep(1.2)
             n_det = aguardar_detalhes_visiveis(driver, minimo=1, timeout=12)
             if n_det:
@@ -1362,6 +1424,7 @@ def _capturar_pagina_atual(
         driver, cfg, parser_slug, hashes, n_esperado, codigos, print,
         on_progresso=_salvar_tempo_real if arquivo_base else None,
         ja_coletados=ja_coletados,
+        sem_popup=bool(painel.get('sem_popup')),
     )
 
     n_caps = len(ler_capturas_api(driver))
@@ -1417,6 +1480,7 @@ def _loop_extracao_paginas(
     uf_varredura: str = '',
     ufs_concluidas: Optional[list] = None,
     marcar_concluido_ao_fim: bool = True,
+    sem_popup: bool = False,
 ):
     boloes: list = []
     hashes: set = set()
@@ -1425,10 +1489,16 @@ def _loop_extracao_paginas(
     painel['rodada_filtro'] = rodada_filtro
     painel['arquivo_base'] = arquivo_base
     painel['concurso_alvo'] = concurso_alvo or _concurso_de_arquivo_base(arquivo_base)
+    painel['sem_popup'] = bool(sem_popup)
     if uf_varredura:
         painel['uf_varredura'] = uf_varredura
     if painel_extra:
         painel.update(painel_extra)
+        # painel_extra não deve apagar a flag do modo rápido
+        if sem_popup:
+            painel['sem_popup'] = True
+    if painel.get('sem_popup'):
+        _out('  [RÁPIDO] Modo SEM POPUP ativo nesta extração.')
     inicio = time.time()
     pagina = 1
     pausado = False
@@ -1555,6 +1625,7 @@ def _loop_extracao_paginas(
                 break
             if resp in ('P', 'PAUSAR', 'PAUSE'):
                 pausado = True
+                painel['pausado_operador'] = True
                 _out('  [CHECKPOINT] Pausado pelo usuário.')
                 break
             if resp == 'FIM':
@@ -1663,18 +1734,16 @@ def _loop_extracao_paginas(
 
         if pause_solicitada(PASTA_JSON):
             pausado = True
+            painel['pausado_operador'] = True
             _out('\n  [CHECKPOINT] PAUSA — página atual concluída. Pode fechar e continuar depois.')
             break
 
-        if not voce_encerra:
-            if ultima_pagina_detectada(driver):
-                print(f'\n  {MSG_ULTIMA_PAGINA}')
-                chegou_ao_fim = True
-                break
-
+        # Fim real só na próxima iteração se o avanço falhar (-2).
+        # Não encerra por aparência do Seguinte / ultimaPagina (virada SP→MG).
         pagina += 1
 
     tempo = int(time.time() - inicio)
+    painel['chegou_ao_fim'] = bool(chegou_ao_fim)
     conc = painel.get('concurso_alvo') or _concurso_de_arquivo_base(arquivo_base)
     recuperados = _recuperar_boloes_das_capturas(
         cfg, parser_slug, mod_slug, arquivo_base, rodada_filtro,
@@ -1701,32 +1770,19 @@ def _loop_extracao_paginas(
         # (ex.: total=148 com página 161 ainda válida) e marcava SP como ok cedo demais.
         if pausado:
             status_fim = STATUS_PAUSADO
-<<<<<<< HEAD
             painel['uf_concluida'] = False
         elif chegou_ao_fim:
             if uf_varredura and uf_varredura not in ufs_ok:
                 ufs_ok.append(uf_varredura)
             status_fim = STATUS_CONCLUIDO if marcar_concluido_ao_fim else STATUS_EXECUTANDO
             painel['uf_concluida'] = True
-=======
-        elif chegou_ao_fim or (total_paginas_fim and ultima_ok >= total_paginas_fim):
-            if uf_varredura and uf_varredura not in ufs_ok:
-                ufs_ok.append(uf_varredura)
-            status_fim = STATUS_CONCLUIDO if marcar_concluido_ao_fim else STATUS_EXECUTANDO
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
         else:
             # Interrompido / sessão / abort — mantém UF em andamento (não entra em ufs_concluidas)
             status_fim = STATUS_PAUSADO
-<<<<<<< HEAD
             painel['uf_concluida'] = False
         # Ao pausar/interromper: garanta que a UF atual NÃO fique em ufs_concluidas
         if not painel.get('uf_concluida') and uf_varredura and uf_varredura in ufs_ok:
             ufs_ok = [u for u in ufs_ok if u != uf_varredura]
-=======
-        painel['uf_concluida'] = bool(
-            chegou_ao_fim or (total_paginas_fim and ultima_ok >= total_paginas_fim)
-        ) and not pausado
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
         salvar_checkpoint(
             PASTA_JSON,
             modalidade=(mod_esperada.slug if mod_esperada else mod_slug) or '',
@@ -1743,23 +1799,16 @@ def _loop_extracao_paginas(
             _out(f'\n  [CHECKPOINT] Status=Pausado | última OK={ultima_ok} | próximo={ultima_ok + 1}')
         elif status_fim == STATUS_CONCLUIDO:
             _out(f'\n  [CHECKPOINT] Status=Concluído | páginas={ultima_ok}')
-<<<<<<< HEAD
         elif painel.get('uf_concluida'):
-=======
-        else:
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
             _out(
                 f'\n  [CHECKPOINT] UF {uf_varredura or "?"} ok | páginas={ultima_ok} | '
                 f'próximas UFs: {27 - len(ufs_ok)}'
             )
-<<<<<<< HEAD
         else:
             _out(
                 f'\n  [CHECKPOINT] Status={status_fim} | UF {uf_varredura or "?"} '
                 f'pág. {ultima_ok} (ainda em andamento)'
             )
-=======
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
         reset_pause_flags(PASTA_JSON)
 
     if painel.get('paginas_com_dados', 0) == 0:
@@ -1799,17 +1848,105 @@ def _consolidar_e_resumir(boloes_sessao, mod_esperada):
 # EXTRAÇÃO AUTOMÁTICA — fluxo [1] com pergunta pré-Edge
 # ─────────────────────────────────────────────────────────────────────────────
 
+def _extrair_como_opcao_1(
+    mod,
+    concurso_pre: str = '',
+    *,
+    rodada_filtro: int = 1,
+    forcar_pagina_inicial: Optional[int] = None,
+    sem_popup: bool = False,
+    estado=None,
+    ufs_concluidas: Optional[list] = None,
+    aplicar_filtro_uf: bool = False,
+) -> Tuple[list, Optional[str], dict]:
+    """
+    Núcleo do [1]/[C]: Detalhes → páginas até o fim.
+
+    Fluxo padrão [C]/[1]: lista do site sem filtro de UF.
+    (Parâmetro estado fica disponível, mas o ciclo NÃO filtra UF.)
+    """
+    from boloes_filtro_loterica import cfg_varredura_automatica
+
+    if estado is not None:
+        cfg = cfg_varredura_automatica(mod)
+    else:
+        cfg = cfg_qualquer_loterica(None)
+
+    mod_slug = mod.slug if mod else 'boloes'
+    parser_slug = mod.parser_slug if mod else ''
+    concurso_final = concurso_pre or ''
+    arquivo_base = gerar_arquivo_base(cfg, mod, concurso_final)
+    uf_sigla = getattr(estado, 'sigla', '') or ''
+
+    print('\n' + '=' * 60)
+    if sem_popup:
+        print('  EXTRAÇÃO — VIA API (SEM POPUP)')
+    else:
+        print('  EXTRAÇÃO — LISTA DO SITE (popup visível)')
+    print('=' * 60)
+    print(f'  Modalidade : {mod.label if mod else "auto-detectar"}')
+    print(f'  Concurso   : {concurso_final if concurso_final else "auto-detectar"}')
+    if uf_sigla:
+        print(f'  Estado/UF  : {uf_sigla} — {getattr(estado, "nome", "")}')
+        print(f'  Filtro     : UF {uf_sigla} + qualquer lotérica'
+              + (f' + {cfg.qtd_dezenas} dez.' if cfg.qtd_dezenas else ''))
+    else:
+        print('  Filtro     : NENHUM (sem estado / lotérica)')
+    print('  Ação       : Detalhes → próxima página → até acabar')
+    if sem_popup:
+        print('  Download   : API detalhar-bolao (sem popup)')
+    else:
+        print('  Popup      : SIM (você vê abrir/fechar)')
+    print(f'  Arquivo    : {arquivo_base}.json (gravado em tempo real)')
+    print(LEGENDA_API)
+
+    if aplicar_filtro_uf and estado is not None and driver is not None:
+        ok = aplicar_filtro_varredura_automatica(
+            driver, cfg, mod, estado, log_fn=_out,
+        )
+        if not ok:
+            print(f'  [UF] Não aplicou filtro {uf_sigla} — pulando esta UF.')
+            return [], arquivo_base, {
+                'paginas_processadas': 0,
+                'uf_concluida': False,
+                'chegou_ao_fim': False,
+                'erro_filtro_uf': True,
+            }
+
+    boloes_final, _, painel, ab = _loop_extracao_paginas(
+        cfg, parser_slug, mod_slug, arquivo_base,
+        manual_paginas=False, rodada_filtro=rodada_filtro, mod_esperada=mod,
+        concurso_alvo=concurso_final,
+        forcar_pagina_inicial=forcar_pagina_inicial,
+        uf_varredura=uf_sigla,
+        ufs_concluidas=list(ufs_concluidas or []),
+        marcar_concluido_ao_fim=True,
+        sem_popup=sem_popup,
+    )
+    arquivo_base = ab or arquivo_base
+    if painel is None:
+        painel = {}
+    if painel.get('uf_concluida') or painel.get('chegou_ao_fim'):
+        painel['chegou_ao_fim'] = True
+
+    if boloes_final:
+        mod_final = extrair_modalidade_de_boloes(boloes_final) or mod
+        ab = _renomear_json_sessao(arquivo_base, boloes_final, mod_final)
+        arquivo_base = ab or arquivo_base
+        _validar_modalidade_coerencia(mod_final, boloes_final)
+        ufs = sorted({(b.get('uf') or '').upper() for b in boloes_final if b.get('uf')})
+        if ufs:
+            print(f'  UFs presentes no JSON (campo da lotérica): {", ".join(ufs)} ({len(ufs)})')
+
+    return boloes_final or [], arquivo_base, painel or {}
+
+
 def extrair_automatico() -> Tuple[list, Optional[str]]:
     """
     [1] Fluxo completo:
         Terminal → modalidade + concurso
-<<<<<<< HEAD
-        Edge → login → usuário escolhe SÓ a modalidade → SIM
+        Edge → login → lista aberta → SIM
         Script clica Detalhes e pagina até acabar (SEM filtro de estado/lotérica)
-=======
-        Edge → login → ENTER
-        Percorre as 27 UFs (SP primeiro), filtra estado e pagina até acabar cada uma
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
     """
     global SESSAO_AUTORIZADA, ROTULO_ARQUIVO, ROTULO_NOME
 
@@ -1845,151 +1982,8 @@ def extrair_automatico() -> Tuple[list, Optional[str]]:
     SESSAO_AUTORIZADA = True
 
     mod = ROTULO_ARQUIVO or _modalidade_extracao(driver)
-    mod_slug = mod.slug if mod else 'boloes'
-    parser_slug = mod.parser_slug if mod else ''
-    concurso_final = concurso_pre
-    cfg = cfg_atual
+    boloes_final, ab, painel = _extrair_como_opcao_1(mod, concurso_pre)
 
-    arquivo_base = gerar_arquivo_base(cfg, mod, concurso_final)
-    fila = estados_varredura('SP')
-    imprimir_fila_estados('SP')
-
-    ck = carregar_checkpoint(PASTA_JSON) or {}
-    ufs_concluidas = [
-        str(u).upper() for u in (ck.get('ufs_concluidas') or []) if str(u).strip()
-    ]
-    uf_retomar = ''
-    pagina_retomar = 1
-    if ck.get('status') in (STATUS_EXECUTANDO, STATUS_PAUSADO):
-        uf_retomar = str(ck.get('uf_atual') or '').upper()
-        pagina_retomar = int(ck.get('pagina_atual') or 0) + 1
-        if pagina_retomar < 1:
-            pagina_retomar = 1
-
-    print('\n' + '=' * 60)
-<<<<<<< HEAD
-    print('  EXTRAÇÃO AUTOMÁTICA — LISTA DO SITE')
-    print('=' * 60)
-    print(f'  Modalidade : {mod.label if mod else "auto-detectar"}')
-    print(f'  Concurso   : {concurso_final if concurso_final else "auto-detectar"}')
-    print('  Filtro     : NENHUM (você só escolheu a modalidade)')
-    print('  Ação       : clicar Detalhes → próxima página → até acabar')
-=======
-    print('  EXTRAÇÃO AUTOMÁTICA — INICIANDO (27 UFs)')
-    print('=' * 60)
-    print(f'  Modalidade : {mod.label if mod else "auto-detectar"}')
-    print(f'  Concurso   : {concurso_final if concurso_final else "auto-detectar"}')
-    print('  Filtro     : qualquer lotérica + varredura por estado (UF)')
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
-    print(f'  Arquivo    : {arquivo_base}.json (gravado em tempo real)')
-    if ufs_concluidas:
-        print(f'  UFs já ok  : {", ".join(ufs_concluidas)}')
-    if uf_retomar:
-        print(f'  Retomada   : {uf_retomar} página {pagina_retomar}')
-    print(LEGENDA_API)
-
-<<<<<<< HEAD
-    # forcar_pagina_inicial=None → _loop pergunta [C] Continuar / [N] Nova pela página
-    boloes_final, _, painel, ab = _loop_extracao_paginas(
-        cfg, parser_slug, mod_slug, arquivo_base,
-        manual_paginas=False, rodada_filtro=1, mod_esperada=mod,
-        concurso_alvo=concurso_final,
-        forcar_pagina_inicial=None,
-        uf_varredura='',
-        ufs_concluidas=[],
-        marcar_concluido_ao_fim=True,
-    )
-    arquivo_base = ab or arquivo_base
-=======
-    boloes_final: list = []
-    ab = arquivo_base
-    pendentes = [e for e in fila if e.sigla not in ufs_concluidas]
-    if not pendentes:
-        _out('\n  [UF] Todas as 27 UFs já constam como concluídas no checkpoint.')
-        path_json = os.path.join(PASTA_JSON, f'{arquivo_base}.json')
-        boloes_final = carregar_json_boloes(path_json)
-    else:
-        for i, estado in enumerate(pendentes, 1):
-            restantes = len(pendentes) - i + 1
-            print('\n' + '=' * 60)
-            print(f'  UF {i}/{len(pendentes)} — {estado.sigla} ({estado.nome}) | restam {restantes}')
-            print('=' * 60)
-
-            if mod is None:
-                mod = _modalidade_extracao(driver)
-                mod_slug = mod.slug if mod else mod_slug
-                parser_slug = mod.parser_slug if mod else parser_slug
-
-            if mod:
-                ok_uf = aplicar_filtro_varredura_automatica(driver, cfg, mod, estado, _out)
-                if not ok_uf:
-                    _out(
-                        f'  [AVISO] Filtro de estado {estado.sigla} não aplicado no site — '
-                        'tentando extrair mesmo assim.'
-                    )
-            else:
-                _out('  [AVISO] Modalidade indefinida — não foi possível aplicar filtro de UF.')
-
-            if estado.sigla == uf_retomar and pagina_retomar > 1:
-                forcar = pagina_retomar
-            else:
-                forcar = 1
-
-            eh_ultima_uf = i == len(pendentes)
-            boloes, _, painel, ab = _loop_extracao_paginas(
-                cfg, parser_slug, mod_slug, arquivo_base,
-                manual_paginas=False, rodada_filtro=i, mod_esperada=mod,
-                concurso_alvo=concurso_final,
-                forcar_pagina_inicial=forcar,
-                uf_varredura=estado.sigla,
-                ufs_concluidas=ufs_concluidas,
-                marcar_concluido_ao_fim=eh_ultima_uf,
-            )
-            arquivo_base = ab or arquivo_base
-            if boloes:
-                boloes_final = boloes
-
-            ck_pos = carregar_checkpoint(PASTA_JSON) or {}
-            if ck_pos.get('status') == STATUS_PAUSADO:
-                _out(f'\n  [UF] Pausado em {estado.sigla} — continue depois com [1].')
-                break
-
-            if painel.get('uf_concluida') or ck_pos.get('status') == STATUS_CONCLUIDO:
-                if estado.sigla not in ufs_concluidas:
-                    ufs_concluidas.append(estado.sigla)
-                uf_retomar = ''
-                pagina_retomar = 1
-                _out(f'  [UF] {estado.sigla} concluída | UFs ok: {len(ufs_concluidas)}/27')
-            elif painel.get('paginas_com_dados', 0) == 0:
-                _out(f'  [UF] {estado.sigla} sem bolões nesta rodada — seguindo.')
-                if estado.sigla not in ufs_concluidas:
-                    ufs_concluidas.append(estado.sigla)
-            else:
-                # Interrompido sem pausa explícita — mantém checkpoint da UF atual
-                break
-
-    if boloes_final:
-        mod_final = extrair_modalidade_de_boloes(boloes_final) or mod
-        ab = _renomear_json_sessao(ab or arquivo_base, boloes_final, mod_final)
-        _validar_modalidade_coerencia(mod_final, boloes_final)
-        ufs = sorted({(b.get('uf') or '').upper() for b in boloes_final if b.get('uf')})
-        if ufs:
-            print(f'  UFs capturadas no JSON: {", ".join(ufs)} ({len(ufs)}/27)')
-            faltando = [e.sigla for e in fila if e.sigla not in ufs]
-            if faltando:
-                print(f'  UFs ainda sem bolões no JSON: {", ".join(faltando)}')
-    return boloes_final, ab
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
-
-    if boloes_final:
-        mod_final = extrair_modalidade_de_boloes(boloes_final) or mod
-        ab = _renomear_json_sessao(arquivo_base, boloes_final, mod_final)
-        _validar_modalidade_coerencia(mod_final, boloes_final)
-        ufs = sorted({(b.get('uf') or '').upper() for b in boloes_final if b.get('uf')})
-        if ufs:
-            print(f'  UFs presentes no JSON (campo da lotérica): {", ".join(ufs)} ({len(ufs)})')
-
-    # Som só no fim real da lista (última página)
     if painel.get('uf_concluida'):
         _aviso_sonoro_extracao_completa()
     else:
@@ -1998,6 +1992,16 @@ def extrair_automatico() -> Tuple[list, Optional[str]]:
             _aviso_sonoro_extracao_completa()
 
     return boloes_final or [], ab
+
+
+def extrair_ciclo_completo() -> dict:
+    """
+    [C] — ciclo automático: cards inicio-bolao → Compre seu bolão → 1 JSON/mod.
+    """
+    from boloes_ciclo_completo import executar_ciclo_completo
+    import sys as _sys
+    return executar_ciclo_completo(_sys.modules[__name__], out_fn=_out)
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # EXTRAÇÃO MANUAL — fluxo [2]
@@ -2178,14 +2182,10 @@ def menu_principal() -> None:
             _imprimir_status_modalidade()
             _imprimir_tabela_modalidades_resumida()
             print(f'\n  JSON: {PASTA_JSON}')
-            print('\n[1] EXTRAIR AUTOMATICO')
-            print('    modalidade + concurso -> Edge -> login -> PAUSA -> digite SIM')
-<<<<<<< HEAD
-            print('    Clica Detalhes e pagina ate acabar | SEM filtro de estado')
-            print('    Enter vazio NAO inicia')
-=======
-            print('    Varre as 27 UFs (SP primeiro) | Enter vazio NAO inicia')
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
+            print('\n[C] INICIAR EXTRAÇÃO — CICLO COMPLETO  ★')
+            print('    = AUTO: lê cards → PAUSA SIM → Compre seu bolão | 1 JSON/mod')
+            print('[1] EXTRAIR AUTOMATICO (uma modalidade)')
+            print('    = lista já aberta | clique Detalhes COM popup')
             print('[2] EXTRAIR MANUAL (ENTER a cada pagina / varios filtros)')
             print('[3] Consolidar capturas-api/')
             print('[M] Tabela completa de modalidades')
@@ -2210,12 +2210,14 @@ def menu_principal() -> None:
             if opcao in ('4', '5', '6', '7', '8', '9'):
                 if _trocar_modalidade_por_entrada(opcao):
                     continue
-            if opcao not in ('0', '1', '2', '3', 'M'):
+            if opcao not in ('0', '1', '2', '3', 'C', 'I', 'INICIAR', 'M'):
                 mod_direto = resolver_modalidade_menu(opcao)
                 if mod_direto:
                     _aplicar_modalidade(mod_direto)
                     continue
-            if opcao == '1':
+            if opcao in ('C', 'I', 'INICIAR'):
+                extrair_ciclo_completo()
+            elif opcao == '1':
                 extrair_automatico()
             elif opcao == '2':
                 extrair_sessao_multi_filtros()

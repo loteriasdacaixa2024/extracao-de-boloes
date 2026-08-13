@@ -179,12 +179,11 @@ def resolver_pagina_retomada(
     pagina_json = ultima_pagina_do_json(boloes_existentes)
     pagina_ck = int((ck or {}).get('pagina_atual') or 0)
 
-    # Se checkpoint aponta para outro arquivo, ignora (exceto se vazio)
+    # Checkpoint de OUTRO arquivo/modalidade → nunca misturar com a sessão atual
     if ck and arquivo_base:
         ab_ck = str(ck.get('arquivo_base') or '').removesuffix('.json')
         ab = arquivo_base.removesuffix('.json')
-        if ab_ck and ab and ab_ck != ab and pagina_json > 0:
-            # prioriza o JSON da sessão atual
+        if ab_ck and ab and ab_ck != ab:
             return pagina_json, None
 
     # Checkpoint incompleto: pagina_atual é a última completa (mesmo se o JSON
@@ -196,6 +195,18 @@ def resolver_pagina_retomada(
     if ultima <= 0:
         return 0, ck if checkpoint_incompleto(ck) else None
     return ultima, ck
+
+
+def _arquivo_sessao_existe(pasta_json: str, arquivo_base: str) -> bool:
+    """True se o JSON da sessão existe de fato na pasta (não só checkpoint)."""
+    ab = (arquivo_base or '').removesuffix('.json').strip()
+    if not ab or not pasta_json:
+        return False
+    path = os.path.join(pasta_json, f'{ab}.json')
+    try:
+        return os.path.isfile(path) and os.path.getsize(path) > 2
+    except OSError:
+        return False
 
 
 def perguntar_retomada(
@@ -210,17 +221,30 @@ def perguntar_retomada(
     Se houver extração incompleta, pergunta ao usuário.
     Retorna (pagina_inicial, retomou).
     pagina_inicial = 1 (nova) ou ultima+1 (continuar).
+
+    Regra: pergunta [C/N] SE E SOMENTE SE existir o JSON daquela
+    modalidade/arquivo na pasta. Checkpoint órfão (outra mod / sem arquivo)
+    NÃO dispara pergunta.
     """
+    ab = (arquivo_base or '').removesuffix('.json')
+    tem_arquivo = bool(boloes_existentes) or _arquivo_sessao_existe(pasta_json, ab)
+    if not tem_arquivo:
+        return 1, False
+
     ultima, ck = resolver_pagina_retomada(pasta_json, arquivo_base, boloes_existentes)
     if ultima <= 0:
         return 1, False
 
+    # Checkpoint de outro JSON → não pergunta (já filtrado no resolver)
+    if ck and arquivo_base:
+        ab_ck = str(ck.get('arquivo_base') or '').removesuffix('.json')
+        if ab_ck and ab and ab_ck != ab:
+            return 1, False
+
     status = (ck or {}).get('status') or ''
     total = int((ck or {}).get('total_paginas') or 0)
-    # Já concluído até o fim → não oferece
-    if status == STATUS_CONCLUIDO and (not total or ultima >= total):
-        return 1, False
-    if status == STATUS_CONCLUIDO and not checkpoint_incompleto(ck) and ultima >= total > 0:
+    # Já marcado concluído → não oferece
+    if status == STATUS_CONCLUIDO:
         return 1, False
 
     # Sem checkpoint mas JSON parcial: ainda oferece retomada

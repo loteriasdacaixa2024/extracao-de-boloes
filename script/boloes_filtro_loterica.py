@@ -1507,15 +1507,40 @@ def _ir_para_pagina(driver, destino: int, log_fn: LogFn = None) -> bool:
 
 
 def _pagina_avancou(driver, assinatura_antes: str, pagina_antes: Optional[int]) -> bool:
+    """
+    True só se a página REALMENTE avançou (número maior).
+    Wrap 12→1 muda a lista mas NÃO é avanço — sem isso o extrator
+    “percorre outros estados e volta em SP”.
+    """
     pagina_depois = _ler_pagina_atual_ui(driver)
-    if pagina_antes is not None and pagina_depois is not None and pagina_depois > pagina_antes:
-        return True
+    if pagina_antes is not None and pagina_depois is not None:
+        if pagina_depois > pagina_antes:
+            return True
+        # Mesma página ou wrap (ex.: 12→1, 1→1): não avançou
+        return False
     assinatura_depois = _assinatura_lista_visivel(driver)
     return bool(assinatura_depois and assinatura_depois != assinatura_antes)
 
 
+def _detectou_wrap_paginacao(
+    pagina_antes: Optional[int],
+    pagina_depois: Optional[int],
+) -> bool:
+    """True se Seguinte voltou para página menor (fim da lista / reset)."""
+    if pagina_antes is None or pagina_depois is None:
+        return False
+    return int(pagina_depois) < int(pagina_antes)
+
+
 def _ir_proxima_pagina_lista(driver, log_fn: LogFn = None) -> bool:
-    """Avança exatamente UMA página — um único clique em Seguinte (com retentativas)."""
+    """
+    Avança exatamente UMA página.
+
+    Importante (lista nacional sem filtro UF):
+    o botão Seguinte pode *parecer* desabilitado na virada SP→MG etc.,
+    mas ainda avança. Não tratar aparência disabled como fim definitivo —
+    tenta Angular/clique forçado e só falha se a lista/página não mudarem.
+    """
     for tentativa in range(1, 5):
         if tentativa > 1:
             _log(f'  [PAGINA] Retentativa {tentativa}/4...', log_fn)
@@ -1527,37 +1552,76 @@ def _ir_proxima_pagina_lista(driver, log_fn: LogFn = None) -> bool:
         assinatura_antes = _assinatura_lista_visivel(driver)
         pagina_antes = _ler_pagina_atual_ui(driver)
 
-        btn = _localizar_botao_seguinte(driver)
+        # 1) Preferência: botão habilitado
+        btn = _localizar_botao_seguinte(driver, apenas_habilitado=True)
+        forcou_disabled = False
+        if not btn:
+            # 2) Aparência disabled — ainda tenta (falso positivo na virada de UF)
+            btn = _localizar_botao_seguinte(driver, apenas_habilitado=False)
+            if btn:
+                forcou_disabled = True
+                _log(
+                    '  [PAGINA] Seguinte aparenta desabilitado — tentando avanço forçado '
+                    '(pode ser virada de estado, não fim da modalidade).',
+                    log_fn,
+                )
+
         if not btn:
             _log('  [PAGINA] Botão Seguinte não encontrado.', log_fn)
-            continue
+        else:
+            try:
+                _clicar_seguinte_caixa(driver, btn, log_fn)
+                time.sleep(2.0)
+                _aguardar_lista_apos_aplicar(driver, timeout=12)
 
-        try:
-            _clicar_seguinte_caixa(driver, btn, log_fn)
-            time.sleep(2.0)
-            _aguardar_lista_apos_aplicar(driver, timeout=12)
-
-            if _pagina_avancou(driver, assinatura_antes, pagina_antes):
                 pagina_depois = _ler_pagina_atual_ui(driver)
-                if pagina_depois:
+                if _detectou_wrap_paginacao(pagina_antes, pagina_depois):
                     _log(
-                        f'  [PAGINA] OK — {pagina_antes or "?"} → {pagina_depois}.',
+                        f'  [PAGINA] FIM — wrap detectado '
+                        f'({pagina_antes} → {pagina_depois}). Não continua.',
                         log_fn,
                     )
-                else:
-                    _log('  [PAGINA] OK — lista mudou.', log_fn)
-                return True
+                    return False
 
-            _log('  [PAGINA] Seguinte clicado mas a lista não mudou.', log_fn)
-        except Exception as exc:
-            _log(f'  [PAGINA] Erro ao clicar Seguinte: {exc}', log_fn)
+                if _pagina_avancou(driver, assinatura_antes, pagina_antes):
+                    if forcou_disabled:
+                        _log(
+                            f'  [PAGINA] OK (forçado) — {pagina_antes or "?"} → '
+                            f'{pagina_depois or "nova lista"} '
+                            f'(continua; outro estado pode começar aqui).',
+                            log_fn,
+                        )
+                    elif pagina_depois:
+                        _log(
+                            f'  [PAGINA] OK — {pagina_antes or "?"} → {pagina_depois}.',
+                            log_fn,
+                        )
+                    else:
+                        _log('  [PAGINA] OK — lista mudou.', log_fn)
+                    return True
 
+                _log('  [PAGINA] Seguinte clicado mas a lista não mudou.', log_fn)
+            except Exception as exc:
+                _log(f'  [PAGINA] Erro ao clicar Seguinte: {exc}', log_fn)
+
+    # Fallbacks: Angular / número — mesmo além do ultimaPagina da API
     pagina_antes = _ler_pagina_atual_ui(driver)
+    assinatura_antes = _assinatura_lista_visivel(driver)
     destino = (pagina_antes or 0) + 1
-    if destino > 1 and _angular_ir_para_pagina(driver, destino, log_fn):
+    if destino < 2:
+        destino = 2
+
+    if _angular_ir_para_pagina(driver, destino, log_fn):
         time.sleep(2.0)
         _aguardar_lista_apos_aplicar(driver, timeout=10)
-        if _ler_pagina_atual_ui(driver) == destino:
+        pagina_depois = _ler_pagina_atual_ui(driver)
+        if _detectou_wrap_paginacao(pagina_antes, pagina_depois):
+            _log(
+                f'  [PAGINA] FIM — wrap Angular ({pagina_antes} → {pagina_depois}).',
+                log_fn,
+            )
+            return False
+        if pagina_depois == destino or _pagina_avancou(driver, assinatura_antes, pagina_antes):
             _log(f'  [PAGINA] OK — Angular direto para página {destino}.', log_fn)
             return True
 
@@ -1565,33 +1629,62 @@ def _ir_proxima_pagina_lista(driver, log_fn: LogFn = None) -> bool:
         from boloes_api_caixa import ler_metadados_paginacao_api
         meta = ler_metadados_paginacao_api(driver)
         if meta:
-            destino = int(meta['pagina_atual']) + 1
-            if destino <= int(meta['ultima_pagina']):
-                if _angular_ir_para_pagina(driver, destino, log_fn):
+            pa = int(meta.get('pagina_atual') or 0)
+            up = int(meta.get('ultima_pagina') or 0)
+            destino_api = pa + 1 if pa > 0 else destino
+            # NÃO bloquear por destino > ultimaPagina: a API subestima o total
+            # na virada de blocos/estados (ex.: SP pág.10 → MG pág.11).
+            if destino_api > 1:
+                if up and destino_api > up:
+                    _log(
+                        f'  [PAGINA] API diz última={up}, mas tentando pág. {destino_api} '
+                        f'(fim real só se a lista não avançar).',
+                        log_fn,
+                    )
+                if _angular_ir_para_pagina(driver, destino_api, log_fn):
                     time.sleep(2.0)
                     _aguardar_lista_apos_aplicar(driver, timeout=10)
-                    _log(f'  [PAGINA] OK — API indicou ir para página {destino}.', log_fn)
-                    return True
-                if _clicar_pagina_numero(driver, destino, log_fn):
+                    pagina_depois = _ler_pagina_atual_ui(driver)
+                    if not _detectou_wrap_paginacao(pagina_antes, pagina_depois) and (
+                        pagina_depois == destino_api
+                        or _pagina_avancou(driver, assinatura_antes, pagina_antes)
+                    ):
+                        _log(f'  [PAGINA] OK — API/Angular para página {destino_api}.', log_fn)
+                        return True
+                if _clicar_pagina_numero(driver, destino_api, log_fn):
                     time.sleep(2.0)
                     _aguardar_lista_apos_aplicar(driver, timeout=10)
-                    return True
+                    if _pagina_avancou(driver, assinatura_antes, pagina_antes):
+                        return True
     except Exception:
         pass
+
+    # Última tentativa: número destino na barra
+    if _clicar_pagina_numero(driver, destino, log_fn):
+        time.sleep(2.0)
+        _aguardar_lista_apos_aplicar(driver, timeout=10)
+        if _pagina_avancou(driver, assinatura_antes, pagina_antes):
+            return True
 
     return False
 
 
 def _tem_proxima_pagina(driver) -> bool:
     _scroll_para_paginacao(driver)
-    return _estado_botao_seguinte(driver) == 'habilitado'
+    # Aparência disabled NÃO prova fim — ainda pode haver próxima (virada de UF).
+    # Só "ausente" é indício forte; o avanço real confirma em _ir_proxima_pagina_lista.
+    estado = _estado_botao_seguinte(driver)
+    return estado in ('habilitado', 'desabilitado')
 
 
 def eh_ultima_pagina(driver) -> bool:
-    """True quando Seguinte existe desabilitado ou não há próxima página."""
+    """
+    Indício fraco: Seguinte ausente.
+    NÃO usar sozinho como fim da modalidade (falso positivo na virada de UF).
+    Preferir falha real de avanço em _ir_proxima_pagina_lista.
+    """
     _scroll_para_paginacao(driver)
-    estado = _estado_botao_seguinte(driver)
-    return estado in ('desabilitado', 'ausente')
+    return _estado_botao_seguinte(driver) == 'ausente'
 
 
 def _filtro_loterica_no_campo(valor_campo: str, cfg: FiltroLotericaConfig) -> bool:
@@ -2050,13 +2143,50 @@ def _estado_no_texto(texto: str, estado) -> bool:
     sigla = estado.sigla.upper()
     nome = normalizar_texto(estado.nome)
     tokens = t.replace('-', ' ').replace('/', ' ').split()
-    if sigla in tokens:
+    if sigla.lower() in tokens:
         return True
-    if nome and (nome in t or any(tok.startswith(nome[:6]) for tok in tokens if len(tok) >= 4)):
+    if nome and nome in t:
         return True
-    if estado.sigla == 'SP' and 'SAO PAULO' in t:
+    if estado.sigla == 'SP' and 'sao paulo' in t:
+        return True
+    if str(estado.codigo_ibge) in tokens:
         return True
     return False
+
+
+def _diagnostico_selects_uf(driver) -> str:
+    """Resumo dos <select> (log quando falha UF)."""
+    try:
+        info = driver.execute_script("""
+            var out = [];
+            var sels = document.querySelectorAll('select');
+            for (var i = 0; i < Math.min(sels.length, 8); i++) {
+                var s = sels[i];
+                var vis = !!(s.offsetParent || (s.getClientRects && s.getClientRects().length));
+                var opts = [];
+                for (var j = 0; j < Math.min((s.options||[]).length, 3); j++) {
+                    opts.push(((s.options[j].text||'')+'='+(s.options[j].value||'')).trim().slice(0,40));
+                }
+                out.push({
+                    i: i, vis: vis, n: (s.options||[]).length,
+                    id: s.id||'', name: s.name||'',
+                    model: s.getAttribute('ng-model')||'',
+                    sample: opts
+                });
+            }
+            return {total: sels.length, items: out};
+        """) or {}
+        total = info.get('total', 0)
+        parts = [f'selects={total}']
+        for it in info.get('items') or []:
+            parts.append(
+                f"#{it.get('i')} vis={it.get('vis')} n={it.get('n')} "
+                f"model={it.get('model') or it.get('id') or it.get('name')} "
+                f"ex={it.get('sample')}"
+            )
+        return ' | '.join(parts)[:500]
+    except Exception as exc:
+        return f'diag-erro:{exc}'
 
 
 def _ler_estado_selecionado_ui(driver) -> str:
@@ -2089,12 +2219,11 @@ def _ler_estado_selecionado_ui(driver) -> str:
             var sels = document.querySelectorAll('select');
             for (var s = 0; s < sels.length; s++) {
                 var sel2 = sels[s];
-                if (!visivel(sel2)) continue;
-                var ng = ((sel2.getAttribute('ng-model') || '') + ' ' + (sel2.id || '') + ' ' + (sel2.name || '')).toLowerCase();
+                var ng = ((sel2.getAttribute('ng-model')||'')+' '+(sel2.id||'')+' '+(sel2.name||'')).toLowerCase();
                 if (ng.indexOf('estado') < 0 && ng.indexOf('uf') < 0 && ng.indexOf('iduf') < 0) continue;
-                if (sel2.selectedIndex >= 0) {
-                    var o = sel2.options[sel2.selectedIndex];
-                    return ((o && o.text) || sel2.value || '').trim();
+                if (sel2.options && sel2.selectedIndex >= 0) {
+                    var o2 = sel2.options[sel2.selectedIndex];
+                    return ((o2 && o2.text) || sel2.value || '').trim();
                 }
             }
             return '';
@@ -2104,168 +2233,214 @@ def _ler_estado_selecionado_ui(driver) -> str:
 
 
 def selecionar_estado_bolao(driver, estado, log_fn: LogFn = None) -> bool:
-    """Seleciona UF no filtro do site (select nativo / Angular)."""
+    """
+    Seleciona UF no filtro do site.
+    Angular muitas vezes esconde o <select> — NÃO exigir is_displayed().
+    """
     if not estado:
         return False
     try:
         _dismiss_overlays(driver)
         _expandir_painel_filtros(driver)
         _scroll_para_filtros(driver)
-        time.sleep(0.5)
+        time.sleep(0.4)
 
-        selects_meta = driver.execute_script("""
-            var out = [];
+        payload = {
+            'nome': estado.nome,
+            'sigla': estado.sigla,
+            'codigo_ibge': int(estado.codigo_ibge),
+        }
+
+        ok_js = driver.execute_script("""
+            var estado = arguments[0];
+            function norm(t) {
+                return (t || '').toUpperCase().normalize('NFD')
+                    .replace(/[\\u0300-\\u036f]/g,'').replace(/\\s+/g,' ').trim();
+            }
+            function hitOpt(txt, val) {
+                var t = norm(txt);
+                var v = String(val || '');
+                var nome = norm(estado.nome);
+                var sigla = norm(estado.sigla);
+                var ibge = String(estado.codigo_ibge);
+                if (v === ibge || v === sigla) return true;
+                if (sigla && ((' '+t+' ').indexOf(' '+sigla+' ') >= 0
+                    || t.indexOf(sigla+'-') === 0 || t.indexOf(sigla+' -') === 0))
+                    return true;
+                if (nome && t.indexOf(nome) >= 0) return true;
+                if (sigla === 'SP' && t.indexOf('SAO PAULO') >= 0) return true;
+                return false;
+            }
+            function trig(sel) {
+                sel.dispatchEvent(new Event('input', {bubbles:true}));
+                sel.dispatchEvent(new Event('change', {bubbles:true}));
+                if (typeof angular !== 'undefined') {
+                    try { angular.element(sel).triggerHandler('change'); } catch(e) {}
+                    try { angular.element(sel).triggerHandler('input'); } catch(e) {}
+                }
+            }
+
             var sels = document.querySelectorAll('select');
+            var ranked = [];
             for (var i = 0; i < sels.length; i++) {
                 var sel = sels[i];
-                var vis = !!(sel.offsetParent || (sel.getClientRects && sel.getClientRects().length));
-                if (!vis) continue;
-                var meta = ((sel.getAttribute('ng-model')||'')+' '+(sel.id||'')+' '+(sel.name||'')+' '+(sel.getAttribute('aria-label')||'')).toLowerCase();
-                var score = 0;
-                if (meta.indexOf('estado')>=0 || meta.indexOf('iduf')>=0 || meta.indexOf('uf')>=0) score += 5;
-                var lab = '';
-                try {
-                    var p = sel.closest('div,td,li,fieldset') || sel.parentElement;
-                    lab = ((p && p.innerText) || '').toLowerCase().slice(0, 120);
-                } catch(e) {}
-                if (lab.indexOf('estado')>=0 || /\\buf\\b/.test(lab)) score += 3;
-                out.push({idx: i, score: score, nopts: sel.options ? sel.options.length : 0});
+                if (!sel.options || sel.options.length < 8) continue;
+                var meta = ((sel.getAttribute('ng-model')||'')+' '+(sel.id||'')+' '+(sel.name||'')
+                    +' '+(sel.getAttribute('aria-label')||'')).toLowerCase();
+                var score = sel.options.length;
+                if (meta.indexOf('estado')>=0 || meta.indexOf('iduf')>=0 || meta.indexOf('uf')>=0) score += 100;
+                ranked.push({sel: sel, score: score});
             }
-            out.sort(function(a,b){ return b.score - a.score || b.nopts - a.nopts; });
-            return out;
-        """) or []
+            ranked.sort(function(a,b){ return b.score - a.score; });
+            for (var r = 0; r < ranked.length; r++) {
+                var sel2 = ranked[r].sel;
+                for (var j = 0; j < sel2.options.length; j++) {
+                    var opt = sel2.options[j];
+                    if (!hitOpt(opt.text, opt.value)) continue;
+                    sel2.selectedIndex = j;
+                    sel2.value = opt.value;
+                    trig(sel2);
+                    return 'select:' + ((opt.text||opt.value||'').trim());
+                }
+            }
 
-        all_selects = driver.find_elements(By.TAG_NAME, 'select')
-        ordem = []
-        for item in selects_meta:
-            try:
-                ordem.append(all_selects[int(item.get('idx'))])
-            except Exception:
-                pass
-        if not ordem:
-            ordem = [s for s in all_selects if s.is_displayed()]
+            var labs = document.querySelectorAll('label, span, div, button, a, strong');
+            for (var L = 0; L < labs.length; L++) {
+                var lab = labs[L];
+                var lt = norm((lab.textContent || '').trim());
+                if (!(lt === 'ESTADO' || lt === 'UF' || lt.indexOf('ESTADO') === 0 || lt === 'UNIDADE FEDERATIVA'))
+                    continue;
+                try { lab.click(); } catch(e) {}
+                var root = lab.closest('div,td,li,fieldset,form') || lab.parentElement;
+                if (!root) continue;
+                var cand = root.querySelectorAll(
+                    'select, option, li, a, button, div[role="option"], md-option, .ui-select-choices-row'
+                );
+                for (var c = 0; c < cand.length; c++) {
+                    var el = cand[c];
+                    var tx = (el.textContent || '').trim();
+                    var vl = el.getAttribute('value') || el.getAttribute('data-value') || '';
+                    if (!hitOpt(tx, vl)) continue;
+                    if (el.tagName === 'OPTION') {
+                        var ps = el.parentElement;
+                        if (ps && ps.tagName === 'SELECT') {
+                            ps.value = el.value;
+                            trig(ps);
+                            return 'option-parent:' + tx;
+                        }
+                    }
+                    try { el.click(); return 'click:' + tx.slice(0, 40); } catch(e) {}
+                }
+            }
+
+            if (typeof angular === 'undefined') return null;
+            function setUF(obj, pathHint) {
+                if (!obj || typeof obj !== 'object') return null;
+                var chaves = ['idUF','codigoUF','uf','estado','idEstado','codigoEstado','sgUf','siglaUF','codigoIbge'];
+                for (var i = 0; i < chaves.length; i++) {
+                    var k = chaves[i];
+                    if (obj[k] === undefined) continue;
+                    try {
+                        var kl = k.toLowerCase();
+                        if (kl === 'uf' || kl === 'sguf' || kl === 'siglauf' || kl.indexOf('sigla') >= 0)
+                            obj[k] = estado.sigla;
+                        else if (typeof obj[k] === 'object' && obj[k] !== null) {
+                            obj[k].sigla = estado.sigla;
+                            obj[k].codigo = estado.codigo_ibge;
+                            obj[k].id = estado.codigo_ibge;
+                            obj[k].nome = estado.nome;
+                        } else
+                            obj[k] = estado.codigo_ibge;
+                        return (pathHint || '') + k;
+                    } catch(e) {}
+                }
+                return null;
+            }
+            var sc = angular.element(document.body).scope();
+            for (var d = 0; d < 25 && sc; d++) {
+                var hit = setUF(sc, 'scope.');
+                if (!hit && sc.filtro) hit = setUF(sc.filtro, 'filtro.');
+                if (!hit && sc.vm && sc.vm.filtro) hit = setUF(sc.vm.filtro, 'vm.filtro.');
+                if (!hit && sc.$ctrl && sc.$ctrl.filtro) hit = setUF(sc.$ctrl.filtro, '$ctrl.filtro.');
+                if (hit) {
+                    try { if (sc.$applyAsync) sc.$applyAsync(); else if (sc.$apply) sc.$apply(); } catch(e) {}
+                    return 'angular-' + hit;
+                }
+                sc = sc.$parent;
+            }
+            return null;
+        """, payload)
+
+        if ok_js:
+            time.sleep(0.7)
+            _log(f'  [ESTADO] Aplicado ({ok_js}): {estado.nome} ({estado.sigla})', log_fn)
+            return True
 
         alvos_txt = [
             estado.nome,
             estado.nome.replace('SAO', 'SÃO'),
-            estado.nome.title(),
             f'{estado.sigla} -',
             f'{estado.sigla} –',
             estado.sigla,
+            str(estado.codigo_ibge),
         ]
         if estado.sigla == 'SP':
             alvos_txt.extend(['SAO PAULO', 'SÃO PAULO', 'São Paulo'])
 
-        for sel_el in ordem:
+        for sel_el in driver.find_elements(By.TAG_NAME, 'select'):
             try:
-                if not sel_el.is_displayed():
-                    continue
                 dropdown = Select(sel_el)
-                if len(dropdown.options) < 10:
+                if len(dropdown.options) < 8:
                     continue
                 for opt in dropdown.options:
                     txt = (opt.text or '').strip()
                     val = (opt.get_attribute('value') or '').strip()
                     if not txt and not val:
                         continue
-                    hit = _estado_no_texto(txt, estado) or str(estado.codigo_ibge) == val
+                    hit = (
+                        _estado_no_texto(txt, estado)
+                        or str(estado.codigo_ibge) == val
+                        or estado.sigla == val
+                    )
                     if not hit:
+                        tu = (txt or '').upper()
                         for alvo in alvos_txt:
-                            if alvo and alvo.upper() in (txt or '').upper():
+                            if alvo and alvo.upper() in tu:
                                 hit = True
                                 break
                     if not hit:
                         continue
-                    if txt:
-                        dropdown.select_by_visible_text(txt)
-                    else:
-                        dropdown.select_by_value(val)
-                    time.sleep(0.35)
-                    driver.execute_script(
-                        """
-                        var sel = arguments[0];
-                        sel.dispatchEvent(new Event('input', {bubbles:true}));
-                        sel.dispatchEvent(new Event('change', {bubbles:true}));
-                        if (typeof angular !== 'undefined') {
-                            try { angular.element(sel).triggerHandler('change'); } catch(e) {}
-                        }
-                        """,
-                        sel_el,
-                    )
-                    time.sleep(0.45)
-                    _log(f'  [ESTADO] Selecionado: {txt or val} ({estado.sigla})', log_fn)
+                    try:
+                        if val:
+                            dropdown.select_by_value(val)
+                        else:
+                            dropdown.select_by_visible_text(txt)
+                    except Exception:
+                        driver.execute_script(
+                            """
+                            var sel = arguments[0], val = arguments[1];
+                            sel.value = val;
+                            sel.dispatchEvent(new Event('input', {bubbles:true}));
+                            sel.dispatchEvent(new Event('change', {bubbles:true}));
+                            if (typeof angular !== 'undefined') {
+                                try { angular.element(sel).triggerHandler('change'); } catch(e) {}
+                            }
+                            """,
+                            sel_el,
+                            val,
+                        )
+                    time.sleep(0.5)
+                    _log(f'  [ESTADO] Selecionado (Selenium): {txt or val} ({estado.sigla})', log_fn)
                     return True
             except Exception:
                 continue
 
-        ok_js = driver.execute_script("""
-            var estado = arguments[0];
-            function norm(t) {
-                return (t || '').toUpperCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/\\s+/g,' ').trim();
-            }
-            var nome = norm(estado.nome);
-            var sigla = norm(estado.sigla);
-            var ibge = String(estado.codigo_ibge);
-
-            var sels = document.querySelectorAll('select');
-            for (var i = 0; i < sels.length; i++) {
-                var sel = sels[i];
-                if (!sel.options || sel.options.length < 10) continue;
-                for (var j = 0; j < sel.options.length; j++) {
-                    var opt = sel.options[j];
-                    var txt = norm(opt.text);
-                    var val = String(opt.value || '');
-                    var hit = (sigla && (' '+txt+' ').indexOf(' '+sigla+' ') >= 0)
-                           || (nome && txt.indexOf(nome) >= 0)
-                           || val === ibge;
-                    if (!hit) continue;
-                    sel.selectedIndex = j;
-                    sel.dispatchEvent(new Event('input', {bubbles:true}));
-                    sel.dispatchEvent(new Event('change', {bubbles:true}));
-                    if (typeof angular !== 'undefined') {
-                        try { angular.element(sel).triggerHandler('change'); } catch(e) {}
-                    }
-                    return 'select:' + (opt.text || val);
-                }
-            }
-
-            if (typeof angular === 'undefined') return null;
-            var chaves = ['idUF','codigoUF','uf','estado','idEstado','codigoEstado','sgUf','siglaUF'];
-            var sc = angular.element(document.body).scope();
-            for (var d = 0; d < 20 && sc; d++) {
-                for (var c = 0; c < chaves.length; c++) {
-                    var k = chaves[c];
-                    if (sc[k] !== undefined) {
-                        try {
-                            sc[k] = (k.toLowerCase().indexOf('uf')>=0 && k.length <= 4) ? estado.sigla : estado.codigo_ibge;
-                            if (sc.$applyAsync) sc.$applyAsync(); else if (sc.$apply) sc.$apply();
-                            return 'angular-'+k;
-                        } catch(e) {}
-                    }
-                }
-                if (sc.filtro) {
-                    for (var c2 = 0; c2 < chaves.length; c2++) {
-                        var k2 = chaves[c2];
-                        if (sc.filtro[k2] !== undefined) {
-                            try {
-                                sc.filtro[k2] = (k2.toLowerCase().indexOf('uf')>=0 && k2.length <= 4)
-                                    ? estado.sigla : estado.codigo_ibge;
-                                if (sc.$applyAsync) sc.$applyAsync(); else if (sc.$apply) sc.$apply();
-                                return 'angular-filtro-'+k2;
-                            } catch(e) {}
-                        }
-                    }
-                }
-                sc = sc.$parent;
-            }
-            return null;
-        """, {'nome': estado.nome, 'sigla': estado.sigla, 'codigo_ibge': estado.codigo_ibge})
-        if ok_js:
-            time.sleep(0.8)
-            _log(f'  [ESTADO] Aplicado via script ({ok_js}): {estado.nome} ({estado.sigla})', log_fn)
-            return True
-
-        _log(f'  [ESTADO] Não encontrado no site: {estado.nome} — selecione manualmente se necessário.', log_fn)
+        diag = _diagnostico_selects_uf(driver)
+        _log(
+            f'  [ESTADO] Não encontrado no site: {estado.nome} ({estado.sigla}). '
+            f'Diag: {diag}',
+            log_fn,
+        )
         return False
     except Exception as exc:
         _log(f'  [ESTADO] Erro: {exc}', log_fn)
@@ -2280,13 +2455,14 @@ def aplicar_filtro_varredura_automatica(
     log_fn: LogFn = None,
 ) -> bool:
     """
-    Modo [1] por UF: modalidade + ESTADO + Aplicar → página 1.
+    Modo [1]/[C] por UF: modalidade + ESTADO + Aplicar → página 1.
     Só retorna True se o estado foi selecionado (evita rebaixar SP em loop).
     """
     _log(f'\n  [VARREDURA] Preparando {estado.sigla} — {modalidade_cfg.label} | {cfg.qtd_dezenas} dez.', log_fn)
     selecionar_modalidade_bolao(driver, modalidade_cfg, log_fn)
     time.sleep(1.0)
     _dismiss_overlays(driver)
+    _expandir_painel_filtros(driver)
     _scroll_para_filtros(driver)
 
     try:
@@ -2302,11 +2478,21 @@ def aplicar_filtro_varredura_automatica(
         time.sleep(0.8)
         _expandir_painel_filtros(driver)
         _scroll_para_filtros(driver)
+        try:
+            driver.execute_script('window.scrollTo(0, 420);')
+            time.sleep(0.3)
+        except Exception:
+            pass
         ok_estado = selecionar_estado_bolao(driver, estado, log_fn)
     if not ok_estado:
         _log(
             f'  [VARREDURA] Estado {estado.sigla} NÃO selecionado — '
             'não vou Aplicar (evita baixar de novo a lista errada).',
+            log_fn,
+        )
+        _log(
+            '  [VARREDURA] Dica: no Edge abra Filtrar, escolha o Estado, Aplicar, '
+            'e rode [C] Continuar — ou atualize a página e tente de novo.',
             log_fn,
         )
         return False
@@ -2356,12 +2542,22 @@ def tem_proxima_pagina(driver) -> bool:
 
 
 def ultima_pagina_detectada(driver) -> bool:
-    """True quando Seguinte está desabilitado ou ausente (fim das páginas no site)."""
+    """
+    Indício fraco de fim (Seguinte ausente após waits).
+
+    NÃO prova fim da modalidade: na virada SP→MG o botão pode parecer
+    desabilitado e ainda avançar. O loop deve tentar avançar; só encerra
+    se _ir_proxima_pagina_lista falhar de verdade (sem mudança de lista).
+    """
     for espera in (0, 1.2, 2.0):
         if espera:
             time.sleep(espera)
         _scroll_para_paginacao(driver)
-        if _estado_botao_seguinte(driver) == 'habilitado':
+        estado = _estado_botao_seguinte(driver)
+        if estado == 'habilitado':
+            return False
+        # 'desabilitado' → ainda pode haver próxima página (não é fim)
+        if estado == 'desabilitado':
             return False
     return eh_ultima_pagina(driver)
 

@@ -24,8 +24,9 @@ from boloes_api_parser import extrair_todos_boloes_json, parse_lista_boloes_api
 API_PREFIX = 'silce-servico-rest'
 
 LEGENDA_API = """
-  Modo VISIVEL: clica em cada botao Detalhes na tela (voce ve o popup abrir/fechar).
-  Contagem: botoes Detalhes visiveis = meta por pagina. JSON via interceptacao API.
+  Modo [1] VISIVEL: clica Detalhes e voce ve o popup abrir/fechar.
+  Modo [C] RAPIDO: MESMO fluxo do [1], mas baixa via API (detalhar-bolao) — SEM popup.
+  Contagem: botoes Detalhes = meta por pagina. JSON via interceptacao API.
 """
 
 
@@ -1053,43 +1054,91 @@ def aguardar_codigos_lista(
 _JS_MODO_SILENCIOSO = """
 (function (ativar) {
   var id = 'boloes-api-silent-style';
+  var obsKey = '__boloesSilentObs';
   var el = document.getElementById(id);
-  if (ativar && !el) {
-    el = document.createElement('style');
-    el.id = id;
+
+  function esconderDialogos() {
+    /* NÃO usar [class*="modal"] — casa com "modalidade" e quebra a lista */
+    var sels = [
+      '.modal', '.modal-backdrop', '.modal-dialog', '.modal-content',
+      '.modal.fade', '.modal.show', '.modal.in',
+      '[role="dialog"]', '[aria-modal="true"]',
+      '.cdk-overlay-container', '.cdk-overlay-backdrop', '.cdk-overlay-pane',
+      '.mat-dialog-container', '.mat-mdc-dialog-container',
+      '.ui-dialog', '.ui-widget-overlay',
+      '.fancybox-container', '.fancybox-overlay',
+      '[class*="popup-bolao"]', '[class*="PopupBolao"]',
+      '[class*="detalhe-bolao"]', '[class*="DetalheBolao"]',
+      '[id*="modalBolao"]', '[id*="ModalBolao"]', '[id*="modal-bolao"]'
+    ];
+    sels.forEach(function (sel) {
+      try {
+        document.querySelectorAll(sel).forEach(function (node) {
+          if (!node || node.getAttribute('data-boloes-silent-skip')) return;
+          node.style.setProperty('display', 'none', 'important');
+          node.style.setProperty('opacity', '0', 'important');
+          node.style.setProperty('visibility', 'hidden', 'important');
+          node.style.setProperty('pointer-events', 'none', 'important');
+          node.setAttribute('data-boloes-silent-hid', '1');
+        });
+      } catch (e) {}
+    });
+  }
+
+  if (ativar) {
+    if (!el) {
+      el = document.createElement('style');
+      el.id = id;
+      document.head.appendChild(el);
+    }
+    /* Selectors específicos — SEM [class*="modal"] (quebra "modalidade") */
     el.textContent = [
       '.modal, .modal-backdrop, .modal-dialog, .modal-content,',
-      '[class*="modal"], [role="dialog"], .popup, .overlay',
-      '.ui-dialog, .ui-widget-overlay',
-      '{ opacity:0!important; visibility:hidden!important;',
-      '  pointer-events:none!important; z-index:-1!important; }'
+      '.modal.fade, .modal.show, .modal.in,',
+      '[role="dialog"], [aria-modal="true"],',
+      '.cdk-overlay-container, .cdk-overlay-backdrop, .cdk-overlay-pane,',
+      '.mat-dialog-container, .mat-mdc-dialog-container,',
+      '.ui-dialog, .ui-widget-overlay, .fancybox-container, .fancybox-overlay,',
+      '[class*="popup-bolao"], [class*="PopupBolao"],',
+      '[class*="detalhe-bolao"], [class*="DetalheBolao"],',
+      '[id*="modalBolao"], [id*="ModalBolao"], [id*="modal-bolao"]',
+      '{ display:none!important; opacity:0!important; visibility:hidden!important;',
+      '  pointer-events:none!important; z-index:-9999!important; }',
+      'body.modal-open { overflow:auto!important; padding-right:0!important; }'
     ].join(' ');
-    document.head.appendChild(el);
-  } else if (!ativar && el) {
-    el.remove();
+    esconderDialogos();
+    if (!window[obsKey]) {
+      try {
+        window[obsKey] = new MutationObserver(function () { esconderDialogos(); });
+        window[obsKey].observe(document.documentElement, { childList: true, subtree: true });
+      } catch (e) {}
+    }
+  } else {
+    if (el) el.remove();
+    if (window[obsKey]) {
+      try { window[obsKey].disconnect(); } catch (e) {}
+      window[obsKey] = null;
+    }
+    try {
+      document.querySelectorAll('[data-boloes-silent-hid]').forEach(function (node) {
+        node.removeAttribute('data-boloes-silent-hid');
+        node.style.removeProperty('display');
+        node.style.removeProperty('opacity');
+        node.style.removeProperty('visibility');
+        node.style.removeProperty('pointer-events');
+      });
+    } catch (e) {}
   }
 })(arguments[0]);
 """
 
 
-_JS_DETALHAR_ASYNC = """
-var codigos = arguments[0];
-var offsetBtns = arguments[1] || 0;
-var maxItens = arguments[2] || 55;
+_JS_DETALHAR_UM_ASYNC = """
+var codigo = arguments[0] || '';
+var indice = arguments[1] || 0;
 var callback = arguments[arguments.length - 1];
-var delay = 520;
-var RE_DETALHES = /detalh/i;
-var RE_FALLBACK = /ver |comprar|apostar|cotas|jogo/i;
 
 (function () {
-  var css = document.getElementById('boloes-api-silent-style');
-  if (!css) {
-    css = document.createElement('style');
-    css.id = 'boloes-api-silent-style';
-    css.textContent = '.modal,.modal-backdrop,[class*="modal"],[role="dialog"],.popup,.ui-dialog,.ui-widget-overlay{opacity:0!important;visibility:hidden!important;pointer-events:none!important;z-index:-1!important;}';
-    document.head.appendChild(css);
-  }
-
   function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
   function listaDeScope(sc) {
@@ -1102,7 +1151,7 @@ var RE_FALLBACK = /ver |comprar|apostar|cotas|jogo/i;
     return null;
   }
 
-  function acharContextoAngular() {
+  function acharContexto() {
     if (typeof angular === 'undefined') return null;
     var nodes = document.querySelectorAll('[ng-repeat], .card, [class*="bolao"], [ng-controller]');
     for (var ni = 0; ni < nodes.length; ni++) {
@@ -1114,124 +1163,74 @@ var RE_FALLBACK = /ver |comprar|apostar|cotas|jogo/i;
     return null;
   }
 
-  function coletarBotoesDetalhes() {
-    var out = [];
-    function push(btn) { if (btn && out.indexOf(btn) < 0) out.push(btn); }
-    document.querySelectorAll('.card, [class*="bolao"]').forEach(function (card) {
-      if (!card || card.offsetParent === null) return;
-      var btnDet = null, btnFb = null;
-      card.querySelectorAll('button').forEach(function (btn) {
-        if (btn.offsetParent === null) return;
-        var t = (btn.textContent || '').trim();
-        if (RE_DETALHES.test(t)) btnDet = btn;
-        else if (!btnFb && RE_FALLBACK.test(t)) btnFb = btn;
-      });
-      if (btnDet) push(btnDet);
-      else if (btnFb) push(btnFb);
-    });
-    if (!out.length) {
-      document.querySelectorAll('button').forEach(function (btn) {
-        if (btn.offsetParent !== null && RE_DETALHES.test(btn.textContent || '')) push(btn);
-      });
+  (async function () {
+    var antes = (window.__boloesApiCapturas || []).length;
+    var ctx = acharContexto();
+    if (!ctx) {
+      callback({ ok: 0, via: '', motivo: 'sem-angular' });
+      return;
     }
-    out.sort(function (a, b) { return a.getBoundingClientRect().top - b.getBoundingClientRect().top; });
-    return out;
-  }
 
-  async function tentarAngular() {
-    var ctx = acharContextoAngular();
-    if (!ctx) return { ok: 0, via: '' };
+    var item = null;
+    if (codigo) {
+      for (var i = 0; i < ctx.lista.length; i++) {
+        if (String(ctx.lista[i].codigoBolao) === String(codigo)) { item = ctx.lista[i]; break; }
+      }
+    }
+    if (!item && ctx.lista[indice]) item = ctx.lista[indice];
+    if (!item) {
+      callback({ ok: 0, via: '', motivo: 'sem-item' });
+      return;
+    }
 
+    var arg = item.codigoBolao || item;
     var inj = null;
     try { inj = angular.element(document.querySelector('[ng-app]') || document.body).injector(); } catch (e) {}
-    var fns = ['detalharBolao', 'detalhar', 'abrirDetalhes', 'verDetalhes', 'detalhesBolao'];
-    var alvo = ctx.lista;
-    if (codigos && codigos.length) {
-      var map = {};
-      for (var mi = 0; mi < alvo.length; mi++) map[alvo[mi].codigoBolao] = alvo[mi];
-      alvo = [];
-      for (var ci = 0; ci < codigos.length; ci++) if (map[codigos[ci]]) alvo.push(map[codigos[ci]]);
-      if (offsetBtns > 0) alvo = alvo.slice(offsetBtns);
-    } else if (offsetBtns > 0) {
-      alvo = alvo.slice(offsetBtns);
-    }
+
+    var svcs = ['bolaoCaixaService', 'BolaoCaixaService', 'bolaoService', 'BolaoService', 'bolaoCaixaRestService'];
+    var metodos = ['detalharBolao', 'detalhar', 'getDetalheBolao', 'recuperarDetalheBolao'];
 
     if (inj) {
-      var svcs = ['bolaoCaixaService', 'BolaoCaixaService', 'bolaoService', 'BolaoService', 'bolaoCaixaRestService'];
-      var metodos = ['detalharBolao', 'detalhar', 'getDetalheBolao', 'recuperarDetalheBolao'];
       for (var si = 0; si < svcs.length; si++) {
         var svc = null;
         try { svc = inj.get(svcs[si]); } catch (e) { continue; }
         if (!svc) continue;
         for (var mj = 0; mj < metodos.length; mj++) {
           if (typeof svc[metodos[mj]] !== 'function') continue;
-          var fn = svc[metodos[mj]];
-          var okSvc = 0;
-          for (var li = 0; li < alvo.length; li++) {
-            try {
-              var arg = alvo[li].codigoBolao || alvo[li];
-              var ret = fn.call(svc, arg);
-              if (ret && typeof ret.then === 'function') await ret.catch(function () {});
-              okSvc++;
-              await sleep(delay);
-            } catch (e) {}
-          }
-          if (okSvc > 0) return { ok: okSvc, via: svcs[si] + '.' + metodos[mj] };
+          try {
+            var ret = svc[metodos[mj]].call(svc, arg);
+            if (ret && typeof ret.then === 'function') await ret.catch(function () {});
+            await sleep(120);
+            callback({
+              ok: 1,
+              via: svcs[si] + '.' + metodos[mj],
+              capturasNovas: (window.__boloesApiCapturas || []).length - antes,
+              codigo: String(item.codigoBolao || ''),
+            });
+            return;
+          } catch (e) {}
         }
       }
     }
 
-    var sc = ctx.scope;
+    var fns = ['detalharBolao', 'detalhar', 'abrirDetalhes', 'verDetalhes', 'detalhesBolao'];
     for (var fi = 0; fi < fns.length; fi++) {
-      if (typeof sc[fns[fi]] !== 'function') continue;
-      var ok2 = 0;
-      for (var lj = 0; lj < alvo.length; lj++) {
-        try {
-          var ret2 = sc[fns[fi]](alvo[lj]);
-          if (ret2 && typeof ret2.then === 'function') await ret2.catch(function () {});
-          ok2++;
-          await sleep(delay);
-        } catch (e) {}
-      }
-      if (ok2 > 0) return { ok: ok2, via: 'scope.' + fns[fi] };
-    }
-    return { ok: 0, via: '' };
-  }
-
-  async function tentarCliqueSilencioso() {
-    var btns = coletarBotoesDetalhes().slice(offsetBtns);
-    var ok = 0;
-    var lim = Math.min(btns.length, maxItens);
-    if (codigos && codigos.length) lim = Math.min(lim, codigos.length);
-    for (var i = 0; i < lim; i++) {
+      if (typeof ctx.scope[fns[fi]] !== 'function') continue;
       try {
-        btns[i].scrollIntoView({ block: 'center', behavior: 'instant' });
-        await sleep(80);
-        btns[i].click();
-        ok++;
-        await sleep(delay);
+        var ret2 = ctx.scope[fns[fi]](item);
+        if (ret2 && typeof ret2.then === 'function') await ret2.catch(function () {});
+        await sleep(120);
+        callback({
+          ok: 1,
+          via: 'scope.' + fns[fi],
+          capturasNovas: (window.__boloesApiCapturas || []).length - antes,
+          codigo: String(item.codigoBolao || ''),
+        });
+        return;
       } catch (e) {}
     }
-    return { ok: ok, via: ok ? 'detalhes-click' : '' };
-  }
 
-  (async function () {
-    var antes = (window.__boloesApiCapturas || []).length;
-    var ang = { ok: 0, via: '' };
-    if (codigos && codigos.length) ang = await tentarAngular();
-    if (ang.ok > 0) {
-      await sleep(500);
-      callback({ ok: ang.ok, via: ang.via, capturasNovas: (window.__boloesApiCapturas || []).length - antes });
-      return;
-    }
-    var clk = await tentarCliqueSilencioso();
-    await sleep(500);
-    callback({
-      ok: clk.ok,
-      via: clk.via || 'fallback',
-      capturasNovas: (window.__boloesApiCapturas || []).length - antes,
-      codigos: (codigos || []).length,
-    });
+    callback({ ok: 0, via: '', motivo: 'sem-metodo' });
   })();
 })();
 """
@@ -1262,22 +1261,160 @@ def disparar_detalhes_visivel(
     offset: int = 0,
     n_total: int = 0,
 ) -> int:
+    """[1] — clique Detalhes com popup VISÍVEL."""
+    return disparar_detalhes(
+        driver, log_fn=log_fn, max_itens=max_itens, offset=offset, n_total=n_total,
+        sem_popup=False,
+    )
+
+
+def _barra_progresso(atual: int, total: int, prefix: str = '[API]') -> str:
+    total = max(int(total or 0), 1)
+    atual = max(0, min(int(atual or 0), total))
+    pct = 100.0 * atual / total
+    largura = 20
+    cheios = int(round(largura * pct / 100.0))
+    barra = '█' * cheios + '░' * (largura - cheios)
+    return f'  {prefix} {barra} {atual}/{total} ({pct:.0f}%)'
+
+
+def _log_progresso(
+    log_fn: Optional[Callable[[str], None]],
+    atual: int,
+    total: int,
+    *,
+    prefix: str = '[API]',
+    extra: str = '',
+) -> None:
+    if not log_fn:
+        return
+    msg = _barra_progresso(atual, total, prefix)
+    if extra:
+        msg = f'{msg}  {extra}'
+    log_fn(msg)
+
+
+def _disparar_via_api_endpoint(
+    driver,
+    codigos: Optional[List[str]],
+    max_itens: int,
+    offset: int,
+    log_fn: Optional[Callable[[str], None]] = None,
+    n_total: int = 0,
+) -> int:
     """
-    Clica em TODOS os botoes Detalhes pendentes (popup visivel).
-    Re-busca apos cada clique; rola a pagina se faltar botao abaixo.
+    [C] — chama o endpoint detalhar-bolao via serviço Angular do site
+    (gera o ?q= criptografado). Sem abrir popup. 1 bolão por vez = barra anda.
     """
-    _garantir_modo_visivel(driver)
+    _modo_silencioso(driver, True)
+    lista = list(codigos or [])
+    if offset and lista:
+        lista = lista[offset:]
+    limite = max(int(max_itens or 1), 1)
+    if lista:
+        alvos: List[Optional[str]] = lista[:limite]
+    else:
+        alvos = [None] * limite
+
+    total_barra = max(int(n_total or 0), len(alvos), 1)
+    if log_fn:
+        log_fn('  [API] Baixando via endpoint detalhar-bolao (SEM popup)...')
+        _log_progresso(log_fn, 0, total_barra, extra='iniciando')
+
+    try:
+        driver.set_script_timeout(10)
+    except Exception:
+        pass
+
+    ok = 0
+    via_ok = ''
+    falhas_seguidas = 0
+    for i, cod in enumerate(alvos):
+        _modo_silencioso(driver, True)
+        try:
+            res = driver.execute_async_script(_JS_DETALHAR_UM_ASYNC, cod or '', offset + i)
+        except Exception as exc:
+            falhas_seguidas += 1
+            if log_fn and falhas_seguidas <= 2:
+                log_fn(f'  [API] Falha item {i + 1}: {exc}')
+            if falhas_seguidas >= 3 and ok == 0:
+                break
+            continue
+
+        if isinstance(res, dict) and int(res.get('ok') or 0) > 0:
+            ok += 1
+            falhas_seguidas = 0
+            via_ok = str(res.get('via') or via_ok)
+            marcar_detalhes_ja_extraidos(driver, offset + ok, None)
+            if log_fn and (ok == 1 or ok % 2 == 0 or ok >= total_barra):
+                _log_progresso(log_fn, ok, total_barra, extra=via_ok or 'detalhar-bolao')
+        else:
+            falhas_seguidas += 1
+            motivo = ''
+            if isinstance(res, dict):
+                motivo = str(res.get('motivo') or '')
+            if falhas_seguidas >= 3 and ok == 0:
+                if log_fn:
+                    log_fn(f'  [API] Endpoint indisponível ({motivo or "sem-metodo"}) — fallback clique oculto.')
+                break
+
+    if ok and log_fn:
+        _explicar_via_js(via_ok, log_fn)
+        _log_progresso(log_fn, ok, max(total_barra, ok), extra='API ok')
+        log_fn(f'  [API] {ok} bolão(ões) via endpoint — aguardando JSON...')
+    time.sleep(0.5 if ok else 0.1)
+    return ok
+
+
+def disparar_detalhes(
+    driver,
+    log_fn: Optional[Callable[[str], None]] = None,
+    max_itens: int = 55,
+    offset: int = 0,
+    n_total: int = 0,
+    *,
+    sem_popup: bool = False,
+    manter_oculto: bool = True,
+    codigos: Optional[List[str]] = None,
+) -> int:
+    """
+    Fluxo de Detalhes ([1] e [C] iguais).
+
+    sem_popup=False → [1] clique + popup visível
+    sem_popup=True  → [C] API/endpoint primeiro; se falhar, mesmo clique com popup oculto
+    """
+    if sem_popup:
+        n_api = _disparar_via_api_endpoint(
+            driver, codigos, max_itens=max_itens, offset=offset,
+            log_fn=log_fn, n_total=n_total,
+        )
+        if n_api > 0:
+            if not manter_oculto:
+                _modo_silencioso(driver, False)
+            return n_api
+        if log_fn:
+            log_fn('  [API] Fallback: mesmo clique do [1], popup OCULTO.')
+
+    if sem_popup:
+        _modo_silencioso(driver, True)
+    else:
+        _garantir_modo_visivel(driver)
+
     if offset == 0:
         _scroll_lista_completa(driver)
 
     if log_fn and n_total:
-        log_fn(f'  [TELA] Meta: {n_total} Detalhes nesta pagina (clique visivel).')
+        modo = 'SEM POPUP' if sem_popup else 'popup visível'
+        log_fn(f'  [TELA] Meta: {n_total} Detalhes nesta pagina ({modo}).')
 
     cliques = 0
     sem_progresso = 0
     limite = max_itens if max_itens > 0 else 99
 
     while cliques < limite:
+        if sem_popup:
+            _modo_silencioso(driver, True)
+
         btn = None
         try:
             btn = driver.execute_script(_JS_PEGAR_PROXIMO_BOTAO_DET)
@@ -1287,6 +1424,8 @@ def disparar_detalhes_visivel(
         if not btn:
             try:
                 _scroll_passo_lista(driver)
+                if sem_popup:
+                    _modo_silencioso(driver, True)
                 btn = driver.execute_script(_JS_PEGAR_PROXIMO_BOTAO_DET)
             except Exception:
                 pass
@@ -1302,7 +1441,10 @@ def disparar_detalhes_visivel(
         num = offset + cliques + 1
         if log_fn:
             rotulo = f'{num}/{n_total}' if n_total else str(num)
-            log_fn(f'  [TELA] >>> Clicando Detalhes {rotulo} (voce vera o popup)...')
+            if sem_popup:
+                _log_progresso(log_fn, cliques + 1, max(n_total, limite), prefix='[RÁPIDO]', extra=f'Detalhes {rotulo}')
+            else:
+                log_fn(f'  [TELA] >>> Clicando Detalhes {rotulo} (voce vera o popup)...')
 
         try:
             driver.execute_script('arguments[0].scrollIntoView({block:"center"});', btn)
@@ -1313,11 +1455,18 @@ def disparar_detalhes_visivel(
                 driver.execute_script('arguments[0].click();', btn)
             cliques += 1
             time.sleep(1.15)
-            _fechar_popup_rapido(driver)
+            if sem_popup:
+                _modo_silencioso(driver, True)
+                _fechar_popup_rapido(driver, forcar_escape=True)
+            else:
+                _fechar_popup_rapido(driver)
             time.sleep(0.4)
         except Exception as exc:
             if log_fn:
                 log_fn(f'  [TELA] Falha no clique Detalhes #{num}: {exc}')
+
+    if sem_popup and not manter_oculto:
+        _modo_silencioso(driver, False)
 
     if log_fn:
         if cliques:
@@ -1335,62 +1484,29 @@ def disparar_detalhes_via_js(
     offset_codigos: int = 0,
     codigos_pagina: Optional[List[str]] = None,
 ) -> int:
-    """
-    Tenta detalhar-bolao via Angular/codigoBolao (sem popup visível).
-    Fallback: cliques silenciosos (CSS oculta modal). Último fallback: clique normal.
-    """
-    cfg_cod = filtro_cfg
-    if filtro_cfg and getattr(filtro_cfg, 'qtd_dezenas', None) is not None:
-        try:
-            from boloes_filtro_loterica import cfg_com_qtd
-            cfg_cod = cfg_com_qtd(filtro_cfg, None)
-        except Exception:
-            cfg_cod = filtro_cfg
+    """Alias → [C] API/endpoint."""
+    del filtro_cfg
+    return disparar_detalhes(
+        driver, log_fn=log_fn, max_itens=max_itens, offset=offset_codigos,
+        n_total=0, sem_popup=True, manter_oculto=True, codigos=codigos_pagina,
+    )
 
-    base = list(codigos_pagina or [])
-    if not base:
-        base = extrair_codigos_ultima_lista(driver, cfg_cod, max_itens, filtrar_qtd=False)
-    codigos = codigos_bolao_pendentes(base, offset_codigos)
-    if log_fn:
-        n_pend = len(codigos) if codigos else max(0, max_itens - offset_codigos)
-        if n_pend:
-            log_fn(f'  [TELA] Detalhando {n_pend} bolao(oes) (a partir do botao #{offset_codigos + 1})...')
-        else:
-            log_fn('  [TELA] Nenhum Detalhes pendente — tentando clique nos cards...')
 
-    alvo = codigos[:max_itens]
-
-    resultado: dict = {}
-    try:
-        driver.set_script_timeout(120)
-        resultado = driver.execute_async_script(
-            _JS_DETALHAR_ASYNC, alvo, offset_codigos, max_itens,
-        )
-    except Exception as exc:
-        if log_fn:
-            log_fn(f'  [API] JS silencioso falhou ({exc}) — fallback clique...')
-        _modo_silencioso(driver, False)
-        return disparar_detalhes_api_pagina(driver, log_fn, max_itens)
-
-    ok = int((resultado or {}).get('ok') or 0)
-    via = (resultado or {}).get('via') or '?'
-    novas = int((resultado or {}).get('capturasNovas') or 0)
-
-    if log_fn:
-        log_fn(f'  [API] JS via={via} | disparos={ok} | capturas+={novas}')
-        _explicar_via_js(via, log_fn)
-
-    if ok == 0 or novas == 0:
-        if log_fn:
-            log_fn('  [API] JS nao gerou JSON — fallback clique com modal oculto...')
-            log_fn('  → Clicou nos botoes, mas modal oculto (nao deve piscar na tela).')
-        _modo_silencioso(driver, True)
-        n = disparar_detalhes_api_pagina(driver, log_fn, max_itens, silencioso=True)
-        _modo_silencioso(driver, False)
-        return n
-
-    time.sleep(0.8)
-    return ok
+def disparar_detalhes_oculto(
+    driver,
+    log_fn: Optional[Callable[[str], None]] = None,
+    max_itens: int = 55,
+    offset: int = 0,
+    n_total: int = 0,
+    *,
+    manter_oculto: bool = True,
+    codigos: Optional[List[str]] = None,
+) -> int:
+    """Alias → [C] API/endpoint (+ clique oculto se precisar)."""
+    return disparar_detalhes(
+        driver, log_fn=log_fn, max_itens=max_itens, offset=offset, n_total=n_total,
+        sem_popup=True, manter_oculto=manter_oculto, codigos=codigos,
+    )
 
 
 def disparar_detalhes_sem_popup(
@@ -1401,11 +1517,18 @@ def disparar_detalhes_sem_popup(
     offset_codigos: int = 0,
     codigos_pagina: Optional[List[str]] = None,
     n_total: int = 0,
+    *,
+    forcar_sem_popup: bool = False,
 ) -> int:
-    """Entrada unificada: clique VISIVEL em cada botao Detalhes (popup na tela)."""
-    del filtro_cfg, codigos_pagina
-    return disparar_detalhes_visivel(
-        driver, log_fn, max_itens=max_itens, offset=offset_codigos, n_total=n_total,
+    """
+    forcar_sem_popup=False → [1] clique + popup
+    forcar_sem_popup=True  → [C] API detalhar-bolao (sem popup)
+    """
+    del filtro_cfg
+    return disparar_detalhes(
+        driver, log_fn=log_fn, max_itens=max_itens, offset=offset_codigos,
+        n_total=n_total, sem_popup=bool(forcar_sem_popup), manter_oculto=True,
+        codigos=codigos_pagina,
     )
 
 
@@ -1420,15 +1543,13 @@ def detalhar_pagina_ate_esperado(
     max_rodadas: int = 15,
     on_progresso: Optional[Callable[[List[Dict[str, Any]]], None]] = None,
     ja_coletados: int = 0,
+    *,
+    sem_popup: bool = False,
 ) -> List[Dict[str, Any]]:
     """
     Clica em todos os Detalhes da pagina (rodadas ate bater meta ou esgotar botoes).
 
-    Se on_progresso for informado, e chamado a cada rodada com os bolões
-    coletados ate o momento (permite salvar em tempo real).
-
-    ja_coletados: quantidade já gravada no JSON desta página (retomada).
-    Conta no progresso e marca os primeiros botões para não reclicar.
+    sem_popup=True → [C]: baixa via API detalhar-bolao (sem popup); fallback = clique oculto.
     """
     hashes_inicio = len(hashes_vistos)
     boloes_novos: List[Dict[str, Any]] = []
@@ -1447,81 +1568,123 @@ def detalhar_pagina_ate_esperado(
     if previos:
         marcar_detalhes_ja_extraidos(driver, previos, log_fn)
 
-    for rodada in range(1, max_rodadas + 1):
+    if sem_popup:
+        _modo_silencioso(driver, True)
+        if log_fn:
+            log_fn('  [RÁPIDO] CSS anti-popup ATIVO nesta página (até o fim).')
+
+    try:
+        for rodada in range(1, max_rodadas + 1):
+            if sem_popup:
+                _modo_silencioso(driver, True)
+
+            chunk = coletar_boloes_das_capturas(
+                driver, hashes_vistos, log_fn, filtro_cfg, parser_slug, filtrar_dezenas=False,
+            )
+            boloes_novos.extend(chunk)
+            n_ok_pagina = previos + (len(hashes_vistos) - hashes_inicio)
+
+            # Callback de progresso (salvar em tempo real)
+            if on_progresso and chunk:
+                on_progresso(boloes_novos)
+
+            n_tela = contar_detalhes_pagina(driver, preparar=False, log_fn=log_fn)
+            if n_tela > meta:
+                meta = n_tela
+                if log_fn:
+                    log_fn(f'  [TELA] Contagem atualizada: {meta} botao(oes) Detalhes.')
+
+            if meta and n_ok_pagina >= meta:
+                if log_fn:
+                    log_fn(f'  [TELA] Completo: {n_ok_pagina}/{meta} bolao(oes) nesta pagina.')
+                break
+
+            pendentes = max(0, meta - n_ok_pagina) if meta else 99
+            pendentes_btn = 0
+            try:
+                pendentes_btn = len(driver.execute_script(_JS_COLETAR_BOTOES_DETALHES, True) or [])
+            except Exception:
+                pass
+
+            if pendentes_btn == 0 and meta and n_ok_pagina >= meta:
+                break
+            if pendentes_btn == 0 and not meta:
+                break
+            # Já cobertos no JSON + sem botão pendente → não insiste em reclicar
+            if pendentes_btn == 0 and previos and n_ok_pagina >= previos:
+                if log_fn:
+                    log_fn(
+                        f'  [CHECKPOINT] Sem Detalhes pendentes na tela '
+                        f'(coletados={n_ok_pagina}/{meta or "?"}).'
+                    )
+                break
+
+            if log_fn:
+                modo = 'SEM POPUP' if sem_popup else 'VISÍVEL'
+                log_fn(
+                    f'  [TELA] Rodada {rodada} [{modo}]: meta={meta} | coletados={n_ok_pagina} | '
+                    f'faltam={pendentes} | botoes_pendentes={pendentes_btn}'
+                )
+
+            if pendentes <= 0 and meta:
+                break
+
+            n_disp = disparar_detalhes_sem_popup(
+                driver, log_fn, filtro_cfg, max_itens=max(pendentes, pendentes_btn, 1),
+                offset_codigos=n_ok_pagina, codigos_pagina=codigos_pagina,
+                n_total=meta or n_tela,
+                forcar_sem_popup=sem_popup,
+            )
+            if log_fn and sem_popup:
+                log_fn('  [RÁPIDO] Coletando JSON das capturas API...')
+            aguardar_capturas_api(driver, minimo=1, timeout=8 if sem_popup else 12)
+
+            # Coleta parcial já nesta rodada (grava mais cedo via on_progresso)
+            chunk_mid = coletar_boloes_das_capturas(
+                driver, hashes_vistos, log_fn, filtro_cfg, parser_slug, filtrar_dezenas=False,
+            )
+            if chunk_mid:
+                boloes_novos.extend(chunk_mid)
+                n_ok_pagina = previos + (len(hashes_vistos) - hashes_inicio)
+                if on_progresso:
+                    on_progresso(boloes_novos)
+                if log_fn:
+                    if sem_popup:
+                        _log_progresso(
+                            log_fn, n_ok_pagina, meta or max(n_ok_pagina, 1),
+                            prefix='[SAVE]',
+                            extra=f'+{len(chunk_mid)} no JSON parcial',
+                        )
+                    else:
+                        log_fn(f'  [SAVE] Parcial: {n_ok_pagina}/{meta or "?"} nesta página (+{len(chunk_mid)})')
+
+            if n_disp == 0:
+                estagnacao += 1
+            else:
+                estagnacao = 0
+
+            if estagnacao >= 3:
+                if log_fn:
+                    log_fn('  [TELA] Sem mais Detalhes para clicar nesta pagina.')
+                break
+
+            if meta and n_ok_pagina >= meta:
+                if log_fn:
+                    log_fn(f'  [TELA] Completo: {n_ok_pagina}/{meta} bolao(oes) nesta pagina.')
+                break
+
         chunk = coletar_boloes_das_capturas(
             driver, hashes_vistos, log_fn, filtro_cfg, parser_slug, filtrar_dezenas=False,
         )
         boloes_novos.extend(chunk)
-        n_ok_pagina = previos + (len(hashes_vistos) - hashes_inicio)
-
-        # Callback de progresso (salvar em tempo real)
         if on_progresso and chunk:
             on_progresso(boloes_novos)
-
-        n_tela = contar_detalhes_pagina(driver, preparar=False, log_fn=log_fn)
-        if n_tela > meta:
-            meta = n_tela
+        return boloes_novos
+    finally:
+        if sem_popup:
+            _modo_silencioso(driver, False)
             if log_fn:
-                log_fn(f'  [TELA] Contagem atualizada: {meta} botao(oes) Detalhes.')
-
-        if meta and n_ok_pagina >= meta:
-            if log_fn:
-                log_fn(f'  [TELA] Completo: {n_ok_pagina}/{meta} bolao(oes) nesta pagina.')
-            break
-
-        pendentes = max(0, meta - n_ok_pagina) if meta else 99
-        pendentes_btn = 0
-        try:
-            pendentes_btn = len(driver.execute_script(_JS_COLETAR_BOTOES_DETALHES, True) or [])
-        except Exception:
-            pass
-
-        if pendentes_btn == 0 and meta and n_ok_pagina >= meta:
-            break
-        if pendentes_btn == 0 and not meta:
-            break
-        # Já cobertos no JSON + sem botão pendente → não insiste em reclicar
-        if pendentes_btn == 0 and previos and n_ok_pagina >= previos:
-            if log_fn:
-                log_fn(
-                    f'  [CHECKPOINT] Sem Detalhes pendentes na tela '
-                    f'(coletados={n_ok_pagina}/{meta or "?"}).'
-                )
-            break
-
-        if log_fn:
-            log_fn(
-                f'  [TELA] Rodada {rodada}: meta={meta} | coletados={n_ok_pagina} | '
-                f'faltam={pendentes} | botoes_pendentes={pendentes_btn}'
-            )
-
-        if pendentes <= 0 and meta:
-            break
-
-        n_disp = disparar_detalhes_sem_popup(
-            driver, log_fn, filtro_cfg, max_itens=max(pendentes, pendentes_btn, 1),
-            offset_codigos=n_ok_pagina, codigos_pagina=codigos_pagina,
-            n_total=meta or n_tela,
-        )
-        aguardar_capturas_api(driver, minimo=1, timeout=12)
-
-        if n_disp == 0:
-            estagnacao += 1
-        else:
-            estagnacao = 0
-
-        if estagnacao >= 3:
-            if log_fn:
-                log_fn('  [TELA] Sem mais Detalhes para clicar nesta pagina.')
-            break
-
-    chunk = coletar_boloes_das_capturas(
-        driver, hashes_vistos, log_fn, filtro_cfg, parser_slug, filtrar_dezenas=False,
-    )
-    boloes_novos.extend(chunk)
-    if on_progresso and chunk:
-        on_progresso(boloes_novos)
-    return boloes_novos
+                log_fn('  [RÁPIDO] CSS anti-popup desligado (fim da página).')
 
 
 def _extrair_boloes_de_captura(data: Any, parser_slug: str = '') -> List[Dict[str, Any]]:
@@ -1533,19 +1696,20 @@ def _extrair_boloes_de_captura(data: Any, parser_slug: str = '') -> List[Dict[st
     return parse_lista_boloes_api(data, parser_slug_hint=parser_slug)
 
 
-def _fechar_popup_rapido(driver) -> None:
+def _fechar_popup_rapido(driver, forcar_escape: bool = False) -> None:
     try:
-        for sel in (
-            "button.close, .btn-close, [class*='close']",
-            "button[aria-label='Close']",
-        ):
-            for btn in driver.find_elements(By.CSS_SELECTOR, sel):
-                if btn.is_displayed():
-                    btn.click()
-                    time.sleep(0.25)
-                    return
+        if not forcar_escape:
+            for sel in (
+                "button.close, .btn-close, [class*='close']",
+                "button[aria-label='Close']",
+            ):
+                for btn in driver.find_elements(By.CSS_SELECTOR, sel):
+                    if btn.is_displayed():
+                        btn.click()
+                        time.sleep(0.25)
+                        return
         driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.ESCAPE)
-        time.sleep(0.25)
+        time.sleep(0.2 if forcar_escape else 0.25)
     except Exception:
         pass
 
@@ -1555,18 +1719,20 @@ def disparar_detalhes_api_pagina(
     log_fn: Optional[Callable[[str], None]] = None,
     max_cliques: int = 55,
     silencioso: bool = False,
+    manter_oculto: bool = False,
 ) -> int:
     """
     Clica em Detalhes de cada card — dispara boloes/detalhar-bolao na API.
-    silencioso=True: modal oculto via CSS (fallback).
+    silencioso=True: modal oculto via CSS (SEM popup) + barra.
+    manter_oculto=True: NÃO remove o CSS ao terminar (deixe a página gerenciar).
     """
     if silencioso:
         _modo_silencioso(driver, True)
 
     driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-    time.sleep(0.5 if silencioso else 0.8)
+    time.sleep(0.35 if silencioso else 0.8)
     driver.execute_script('window.scrollTo(0, 0);')
-    time.sleep(0.3 if silencioso else 0.5)
+    time.sleep(0.2 if silencioso else 0.5)
 
     seletores = [
         'button.btn-primary',
@@ -1592,38 +1758,47 @@ def disparar_detalhes_api_pagina(
         except Exception:
             pass
 
+    alvo = botoes[:max_cliques]
+    total = len(alvo)
     if log_fn:
-        modo = 'silencioso' if silencioso else 'clique'
-        log_fn(f'  [API] Disparando detalhar-bolao ({modo}) em {len(botoes[:max_cliques])} cards...')
+        modo = 'SEM POPUP' if silencioso else 'VISÍVEL'
+        log_fn(f'  [API] Disparando detalhar-bolao ({modo}) em {total} cards...')
         if silencioso:
-            log_fn('  → Clicou nos botoes, mas modal oculto (nao deve piscar na tela).')
+            log_fn('  → Popup OCULTO por CSS — se aparecer algo, é bug.')
+            _log_progresso(log_fn, 0, max(total, 1), extra='cliques')
 
-    espera = 0.55 if silencioso else 1.1
+    espera = 0.4 if silencioso else 1.1
     cliques = 0
-    for btn in botoes[:max_cliques]:
+    for btn in alvo:
         try:
+            if silencioso:
+                _modo_silencioso(driver, True)  # reforça a cada clique
             driver.execute_script('arguments[0].scrollIntoView({block:"center"});', btn)
-            time.sleep(0.15 if silencioso else 0.25)
+            time.sleep(0.08 if silencioso else 0.25)
             try:
                 btn.click()
             except Exception:
                 driver.execute_script('arguments[0].click();', btn)
             time.sleep(espera)
-            if not silencioso:
-                _fechar_popup_rapido(driver)
+            # Sempre tenta fechar (mesmo oculto) para não empilhar modais no DOM
+            _fechar_popup_rapido(driver)
             cliques += 1
+            if silencioso and log_fn and (cliques == total or cliques % 2 == 0 or cliques == 1):
+                _log_progresso(log_fn, cliques, total, extra='sem popup')
         except Exception:
             continue
 
-    if silencioso:
+    if silencioso and not manter_oculto:
         _modo_silencioso(driver, False)
 
     if log_fn:
         if cliques:
+            if silencioso:
+                _log_progresso(log_fn, cliques, max(total, cliques), extra='ok — aguardando JSON')
             log_fn(f'  [API] {cliques} detalhes disparados — aguardando JSON...')
         else:
             log_fn('  [API] Nenhum botão Detalhes encontrado na página.')
-    time.sleep(1.5)
+    time.sleep(0.8 if silencioso else 1.5)
     return cliques
 
 

@@ -16,14 +16,29 @@ ID_BOTAO_LOGIN = "login"           # legado — na validação o botão tem name
 ID_CAMPO_CODIGO = "codigo"
 ID_CAMPO_SENHA = "password"
 
-# Botão laranja "Receber código" (Validação de Login) — Inspector: name="login"
+# "Vincular Dispositivo" — hidden input id=vincular; botão Sim chama vincularDisp('true')
+ID_VINCULAR = "vincular"
+BOTAO_VINCULAR_SIM_CANDIDATOS = (
+    ("css", "button[onclick*=\"vincularDisp('true')\"]"),
+    ("css", 'button[onclick*="vincularDisp(\'true\')"]'),
+    ("xpath", "//button[@name='login' and contains(@onclick,\"vincularDisp('true')\")]"),
+    ("xpath", "//button[contains(@onclick,'vincularDisp') and contains(normalize-space(.),'Sim')]"),
+    ("xpath", "//form[@id='form-login']//div[contains(@class,'button-group')]/button[normalize-space()='Sim']"),
+)
+
+# E-mail na Validação de Login (radio name=mail) — já costuma vir marcado
+RADIO_EMAIL_CANDIDATOS = (
+    ("css", "input[name='mail'][type='radio']"),
+    ("css", "div.radio-2fa input[type='radio']"),
+    ("xpath", "//input[@name='mail' and @type='radio']"),
+)
+
+# Botão "Receber código" (Validação de Login) — NÃO confundir com Sim do Vincular
 BOTAO_RECEBER_CODIGO_CANDIDATOS = (
-    ("css", "button[name='login']"),
-    ("css", "#form-login button[name='login']"),
-    ("css", "div.button-group > button[name='login']"),
-    ("id", "login"),
-    ("xpath", "//button[@name='login']"),
-    ("xpath", "//button[contains(normalize-space(.),'Receber')]"),
+    ("xpath", "//button[@name='login' and contains(normalize-space(.),'Receber')]"),
+    ("xpath", "//button[contains(normalize-space(.),'Receber código') or contains(normalize-space(.),'Receber codigo')]"),
+    ("xpath", "//form[@id='form-login']//div[contains(@class,'button-group')]/button[@name='login' and not(contains(@onclick,'vincularDisp'))]"),
+    ("css", "#form-login div.button-group > button[name='login']"),
 )
 
 # Só INPUT. Prioridade: id=username (Keycloak Caixa).

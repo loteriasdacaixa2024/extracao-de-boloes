@@ -1,0 +1,196 @@
+{
+  "versao": 2,
+  "ciclo_id": "20260813-133138",
+  "status": "EM EXECUÇÃO",
+  "inicio": "2026-08-13 13:31:38",
+  "fim": "",
+  "atualizado_em": "2026-08-13 17:09:26",
+  "modalidade_atual": "dia-de-sorte",
+  "uf_atual": "LISTA",
+  "operacao": "Auto card — Dia de Sorte (1/9)",
+  "modalidades": {
+    "mega-sena": {
+      "label": "Mega-Sena",
+      "status": "AGUARDANDO",
+      "concurso": "3044",
+      "arquivo_base": "",
+      "ufs": {
+        "LISTA": {
+          "status": "AGUARDANDO",
+          "pagina_atual": 0,
+          "total_paginas": 0,
+          "boloes": 0,
+          "tentativas": 0,
+          "erro": "",
+          "atualizado_em": ""
+        }
+      },
+      "inicio": "",
+      "fim": ""
+    },
+    "quina": {
+      "label": "Quina",
+      "status": "AGUARDANDO",
+      "concurso": "7091",
+      "arquivo_base": "",
+      "ufs": {
+        "LISTA": {
+          "status": "AGUARDANDO",
+          "pagina_atual": 0,
+          "total_paginas": 0,
+          "boloes": 0,
+          "tentativas": 0,
+          "erro": "",
+          "atualizado_em": ""
+        }
+      },
+      "inicio": "",
+      "fim": ""
+    },
+    "lotofacil": {
+      "label": "Lotofácil",
+      "status": "AGUARDANDO",
+      "concurso": "3761",
+      "arquivo_base": "",
+      "ufs": {
+        "LISTA": {
+          "status": "AGUARDANDO",
+          "pagina_atual": 0,
+          "total_paginas": 0,
+          "boloes": 0,
+          "tentativas": 0,
+          "erro": "",
+          "atualizado_em": ""
+        }
+      },
+      "inicio": "",
+      "fim": ""
+    },
+    "timemania": {
+      "label": "Timemania",
+      "status": "AGUARDANDO",
+      "concurso": "2428",
+      "arquivo_base": "",
+      "ufs": {
+        "LISTA": {
+          "status": "AGUARDANDO",
+          "pagina_atual": 0,
+          "total_paginas": 0,
+          "boloes": 0,
+          "tentativas": 0,
+          "erro": "",
+          "atualizado_em": ""
+        }
+      },
+      "inicio": "",
+      "fim": ""
+    },
+    "dia-de-sorte": {
+      "label": "Dia de Sorte",
+      "status": "EM ANDAMENTO",
+      "concurso": "1271",
+      "arquivo_base": "",
+      "ufs": {
+        "LISTA": {
+          "status": "EM ANDAMENTO",
+          "pagina_atual": 0,
+          "total_paginas": 0,
+          "boloes": 0,
+          "tentativas": 2,
+          "erro": "",
+          "atualizado_em": "2026-08-13 17:09:26"
+        }
+      },
+      "inicio": "2026-08-13 13:33:52",
+      "fim": ""
+    },
+    "super-sete": {
+      "label": "Super Sete",
+      "status": "AGUARDANDO",
+      "concurso": "886",
+      "arquivo_base": "",
+      "ufs": {
+        "LISTA": {
+          "status": "AGUARDANDO",
+          "pagina_atual": 0,
+          "total_paginas": 0,
+          "boloes": 0,
+          "tentativas": 0,
+          "erro": "",
+          "atualizado_em": ""
+        }
+      },
+      "inicio": "",
+      "fim": ""
+    },
+    "dupla-sena": {
+      "label": "Dupla Sena",
+      "status": "AGUARDANDO",
+      "concurso": "2996",
+      "arquivo_base": "",
+      "ufs": {
+        "LISTA": {
+          "status": "AGUARDANDO",
+          "pagina_atual": 0,
+          "total_paginas": 0,
+          "boloes": 0,
+          "tentativas": 0,
+          "erro": "",
+          "atualizado_em": ""
+        }
+      },
+      "inicio": "",
+      "fim": ""
+    },
+    "mais-milionaria": {
+      "label": "+Milionária",
+      "status": "AGUARDANDO",
+      "concurso": "381",
+      "arquivo_base": "",
+      "ufs": {
+        "LISTA": {
+          "status": "AGUARDANDO",
+          "pagina_atual": 0,
+          "total_paginas": 0,
+          "boloes": 0,
+          "tentativas": 0,
+          "erro": "",
+          "atualizado_em": ""
+        }
+      },
+      "inicio": "",
+      "fim": ""
+    },
+    "lotofacil-independencia": {
+      "label": "Lotofácil da Independência",
+      "status": "AGUARDANDO",
+      "concurso": "3780",
+      "arquivo_base": "",
+      "ufs": {
+        "LISTA": {
+          "status": "AGUARDANDO",
+          "pagina_atual": 0,
+          "total_paginas": 0,
+          "boloes": 0,
+          "tentativas": 0,
+          "erro": "",
+          "atualizado_em": ""
+        }
+      },
+      "ufs_encontradas": "",
+      "inicio": "",
+      "fim": ""
+    }
+  },
+  "resumo": {
+    "modalidades_ok": 0,
+    "ufs_ok": 0,
+    "ufs_erro": 0,
+    "ufs_vazio": 0,
+    "ufs_pendente": 0,
+    "boloes_total": 0,
+    "erros": 0
+  },
+  "modo": "cards-auto",
+  "concurso_inicial": ""
+}

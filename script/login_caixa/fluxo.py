@@ -10,7 +10,11 @@ import logging
 import time
 from typing import Optional
 
-from selenium.common.exceptions import InvalidElementStateException, WebDriverException
+from selenium.common.exceptions import (
+    InvalidElementStateException,
+    StaleElementReferenceException,
+    WebDriverException,
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -311,6 +315,145 @@ def _preencher_cpf(
     espera_minima_seguranca()
 
 
+def _tela_vincular_visivel(driver: WebDriver) -> bool:
+    """True se a tela 'Vincular Dispositivo' estiver ativa."""
+    try:
+        if driver.find_elements(By.CSS_SELECTOR, "button[onclick*='vincularDisp']"):
+            return True
+        if driver.find_elements(By.ID, S.ID_VINCULAR):
+            body = (driver.find_element(By.TAG_NAME, "body").text or "").lower()
+            if "vincular" in body and "dispositivo" in body:
+                return True
+    except WebDriverException:
+        return False
+    return False
+
+
+def _tratar_vincular_dispositivo(driver: WebDriver, logger: logging.Logger) -> None:
+    """
+    Após CPF: se aparecer 'Vincular este dispositivo?', clica em Sim.
+    O hidden input id=vincular só marca o form — o clique útil é no botão Sim
+    (onclick=vincularDisp('true')).
+    """
+    logger.info("Etapa 5b — Verificando tela Vincular Dispositivo (id=%s)", S.ID_VINCULAR)
+    fim = time.time() + 20
+    while time.time() < fim:
+        if _tela_vincular_visivel(driver):
+            logger.info("Etapa 5b — Tela Vincular detectada — clicando em Sim")
+            try:
+                _clicar_candidatos(
+                    driver,
+                    S.BOTAO_VINCULAR_SIM_CANDIDATOS,
+                    logger,
+                    "Etapa 5b — Vincular Sim",
+                    timeout=8,
+                )
+            except ElementoNaoEncontrado:
+                # Fallback JS direto (mesmo onclick do Inspector)
+                try:
+                    driver.execute_script(
+                        "if (typeof vincularDisp === 'function') { vincularDisp('true'); }"
+                    )
+                    logger.info("Etapa 5b — Vincular via JS vincularDisp('true')")
+                    espera_minima_seguranca()
+                except WebDriverException as exc:
+                    logger.warning("Etapa 5b — Falha ao vincular: %s", exc)
+                    return
+            # Espera a tela de vincular sumir
+            fim2 = time.time() + 15
+            while time.time() < fim2 and _tela_vincular_visivel(driver):
+                time.sleep(S.POLL_INTERVALO)
+            logger.info("Etapa 5b — Vincular concluído / tela avançou")
+            return
+        # Se já chegou na validação (e-mail / Receber), não espera o timeout cheio
+        if driver.find_elements(By.CSS_SELECTOR, "input[name='mail']") or driver.find_elements(
+            By.ID, S.ID_CAMPO_CODIGO
+        ):
+            logger.info("Etapa 5b — Vincular não apareceu (já na validação)")
+            return
+        time.sleep(S.POLL_INTERVALO)
+    logger.info("Etapa 5b — Vincular não apareceu — seguindo")
+
+
+def _selecionar_email_2fa(driver: WebDriver, logger: logging.Logger) -> None:
+    """Garante o radio de e-mail marcado na Validação de Login (se existir)."""
+    fim = time.time() + 15
+    while time.time() < fim:
+        for tipo, seletor in S.RADIO_EMAIL_CANDIDATOS:
+            try:
+                by = _by_de(tipo)
+                for el in driver.find_elements(by, seletor):
+                    try:
+                        if not el.is_displayed():
+                            continue
+                        if el.is_selected():
+                            logger.info("Etapa 6 — E-mail já selecionado (%s)", seletor)
+                            return
+                        logger.info("Etapa 6 — Selecionando e-mail via %s=%s", tipo, seletor)
+                        try:
+                            el.click()
+                        except Exception:
+                            driver.execute_script("arguments[0].click();", el)
+                        espera_minima_seguranca(1)
+                        return
+                    except (StaleElementReferenceException, WebDriverException):
+                        continue
+            except WebDriverException:
+                continue
+        if driver.find_elements(By.ID, S.ID_CAMPO_CODIGO):
+            return
+        # Botão Receber já visível sem radio → ok
+        for el in driver.find_elements(By.XPATH, "//button[contains(.,'Receber')]"):
+            try:
+                if el.is_displayed():
+                    logger.info("Etapa 6 — Receber código visível (sem radio de e-mail)")
+                    return
+            except WebDriverException:
+                continue
+        time.sleep(S.POLL_INTERVALO)
+    logger.info("Etapa 6 — Radio de e-mail não encontrado; seguindo para Receber código")
+
+
+def _clicar_entrar_robusto(driver: WebDriver, logger: logging.Logger) -> bool:
+    """Clica em Entrar tolerando stale element (página troca no OAuth)."""
+    candidatos = (
+        ("css", S.CSS_BOTAO_ENTRAR),
+        *S.CSS_BOTAO_ENTRAR_ALT,
+    )
+    for tentativa in range(1, 4):
+        if _focar_se_ja_logado(driver, logger):
+            logger.info("Etapa 9 — Já logado antes do clique Entrar")
+            return False
+        try:
+            _clicar_candidatos(
+                driver,
+                candidatos,
+                logger,
+                f"Etapa 9 — Entrar (tentativa {tentativa})",
+                timeout=10,
+            )
+            logger.info("Etapa 9 — Clique em Entrar realizado")
+            return True
+        except ElementoNaoEncontrado:
+            if _focar_se_ja_logado(driver, logger):
+                logger.info("Etapa 9 — Entrar sumiu, mas sessão já ativa")
+                return False
+            logger.warning("Etapa 9 — Entrar não clicável (tentativa %s)", tentativa)
+        except StaleElementReferenceException:
+            logger.warning(
+                "Etapa 9 — stale element no Entrar (tentativa %s) — tentando de novo",
+                tentativa,
+            )
+            time.sleep(1)
+    if _focar_se_ja_logado(driver, logger):
+        return False
+    logger.warning(
+        "Etapa 9 — Botão Entrar não encontrado. "
+        "Se o Edge já estiver logado, o fluxo segue mesmo assim."
+    )
+    return False
+
+
 def executar_etapas(
     driver: WebDriver,
     credenciais: CredenciaisCaixa,
@@ -341,8 +484,12 @@ def executar_etapas(
 
     _clicar_id(driver, S.ID_BOTAO_ENVIAR_CPF, logger, "Etapa 5 — Confirmar CPF / Próximo")
 
-    # Etapa 6 — "Receber código" (name=login, não id)
-    logger.info("Etapa 6 — Clicar em Receber código (name=login)")
+    # Etapa 5b — "Vincular Dispositivo?" (nem sempre aparece)
+    _tratar_vincular_dispositivo(driver, logger)
+
+    # Etapa 6 — e-mail (se existir) + "Receber código"
+    _selecionar_email_2fa(driver, logger)
+    logger.info("Etapa 6 — Clicar em Receber código")
     _clicar_candidatos(
         driver,
         S.BOTAO_RECEBER_CODIGO_CANDIDATOS,
@@ -412,90 +559,21 @@ def executar_etapas(
     logger.info("Etapa 8 — Campo senha preenchido")
     espera_minima_seguranca()
 
-<<<<<<< HEAD
     # Se o redirect/OAuth já concluiu (usuário já logado), não fica preso no Entrar.
     if _focar_se_ja_logado(driver, logger):
         logger.info("Etapa 9 — Já logado no portal; pulando clique em Entrar.")
     else:
-        logger.info("Etapa 9 — Aguardando botão Entrar (%s)", S.CSS_BOTAO_ENTRAR)
-        clicou_entrar = False
-        try:
-            btn = esperar_clicavel(
-                driver,
-                By.CSS_SELECTOR,
-                S.CSS_BOTAO_ENTRAR,
-                timeout=8,
-                descricao="Etapa 9 — button[tabindex='1']",
-            )
-            try:
-                btn.click()
-            except Exception:
-                driver.execute_script("arguments[0].click();", btn)
-            clicou_entrar = True
-            logger.info("Etapa 9 — Clique em Entrar realizado")
-        except ElementoNaoEncontrado:
-            if _focar_se_ja_logado(driver, logger):
-                logger.info(
-                    "Etapa 9 — Entrar não encontrado, mas sessão já ativa no portal."
-                )
-            else:
-                try:
-                    _clicar_candidatos(
-                        driver,
-                        S.CSS_BOTAO_ENTRAR_ALT,
-                        logger,
-                        "Etapa 9 — Entrar (alternativos)",
-                        timeout=10,
-                    )
-                    clicou_entrar = True
-                    logger.info("Etapa 9 — Clique em Entrar (alternativo) realizado")
-                except ElementoNaoEncontrado:
-                    if _focar_se_ja_logado(driver, logger):
-                        logger.info(
-                            "Etapa 9 — Alternativos falharam, mas já está logado."
-                        )
-                    else:
-                        logger.warning(
-                            "Etapa 9 — Botão Entrar não encontrado. "
-                            "Se o Edge já estiver logado, o fluxo segue mesmo assim."
-                        )
+        logger.info("Etapa 9 — Aguardando botão Entrar")
+        clicou_entrar = _clicar_entrar_robusto(driver, logger)
 
         if clicou_entrar or not _parece_logado_no_portal(driver):
             # CRÍTICO: esperar OAuth voltar ao silce-web ANTES de qualquer driver.get()
             _aguardar_retorno_portal_logado(driver, logger)
 
-=======
-    logger.info("Etapa 9 — Aguardando botão Entrar (%s)", S.CSS_BOTAO_ENTRAR)
-    try:
-        btn = esperar_clicavel(
-            driver,
-            By.CSS_SELECTOR,
-            S.CSS_BOTAO_ENTRAR,
-            timeout=15,
-            descricao="Etapa 9 — button[tabindex='1']",
-        )
-        try:
-            btn.click()
-        except Exception:
-            driver.execute_script("arguments[0].click();", btn)
-    except ElementoNaoEncontrado:
-        _clicar_candidatos(
-            driver,
-            S.CSS_BOTAO_ENTRAR_ALT,
-            logger,
-            "Etapa 9 — Entrar (alternativos)",
-        )
-    logger.info("Etapa 9 — Clique em Entrar realizado")
-
-    # CRÍTICO: esperar o OAuth voltar ao silce-web ANTES de qualquer driver.get()
-    # Se navegar cedo demais, a sessão cai e o site pede CPF de novo.
-    _aguardar_retorno_portal_logado(driver, logger)
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
     logger.info(
         "Automação de login ENCERRADA com sessão no portal. "
         "Não recarregue a página de login."
     )
-<<<<<<< HEAD
     if _parece_logado_no_portal(driver) or _focar_se_ja_logado(driver, logger):
         print("\n  [LOGIN] Sessão confirmada — aviso sonoro.", flush=True)
         _aviso_sonoro_login_ok(logger)
@@ -527,8 +605,6 @@ def _focar_se_ja_logado(driver: WebDriver, logger: logging.Logger) -> bool:
     except WebDriverException:
         pass
     return False
-=======
->>>>>>> e95cd8f1f7fb985d4018a7db4e7486f7b80a36bd
 
 
 def _parece_logado_no_portal(driver: WebDriver) -> bool:
